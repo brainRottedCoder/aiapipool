@@ -129,20 +129,34 @@ Platform validates:
 
 # 5.3 Key Pool Management
 
-System maintains multiple upstream provider keys.
+System maintains an **unlimited pool** of upstream provider keys.
 
-Each key contains:
+**Key Economics:**
+
+- Each provider API key is pre-loaded with a **$50 credit cap**.
+- Keys are acquired at **discounted rates** vs. retail pricing.
+- When a key exhausts its $50, it is retired and replaced with a fresh key.
+
+**Key State:**
 
 ```ts
 type ProviderKey = {
     id: string;
     provider: string;
     apiKey: string;
-    remainingCredits: number;
-    status: "ACTIVE" | "EXHAUSTED" | "ERROR";
+    initialCredits: number;      // 50.00
+    remainingCredits: number;    // real-time tracked
+    status: "ACTIVE" | "EXHAUSTED" | "ERROR" | "ROTATING";
     lastUsed: Date;
+    createdAt: Date;
 };
 ```
+
+**Pool Behavior:**
+
+- Keys are provisioned dynamically and on-demand.
+- No upper bound on total keys in the pool.
+- Exhausted keys are archived (not deleted) for audit and cost analysis.
 
 ---
 
@@ -198,15 +212,34 @@ Mandatory for:
 
 ---
 
-# 5.7 Usage Tracking
+# 5.7 Real-Time Usage & Credit Tracking
 
-Track:
+**Per-Request Tracking:**
 
 - request count
-- token usage
+- token usage (input / output)
 - response latency
-- provider cost
-- user quota
+- provider cost (actual upstream cost)
+- user charge (marked-up price)
+- model name
+- provider name
+- key ID used
+- timestamp
+
+**Real-Time Credit Deduction:**
+
+- Deduct upstream cost from `provider_keys.remainingCredits` immediately after response.
+- Deduct user charge from `users.balance` immediately after response.
+- If streaming, deduct estimated cost upfront; reconcile on final chunk.
+
+**Atomic Operations:**
+
+- All credit updates use Redis atomic counters + PostgreSQL ACID transactions.
+- No possibility of double-spending or race-condition overdrafts.
+
+**Usage Ledger:**
+
+Every single API call is recorded as an immutable ledger entry for audit, billing, and margin analysis.
 
 ---
 
@@ -235,6 +268,12 @@ Background workers:
 - validate keys
 - sync balances
 
+**Real-Time Balance Sync:**
+
+- Poll upstream providers for actual credit balances where API allows.
+- Reconcile provider-reported balances against internal ledger every 5 minutes.
+- Alert on any discrepancy > 1%.
+
 ---
 
 # 5.10 Logging & Analytics
@@ -253,9 +292,8 @@ Store:
 
 The following are intentionally excluded initially:
 
-- frontend dashboard
-- billing automation
-- subscriptions
+- frontend dashboard (CLI / API only)
+- subscriptions / prepaid plans (pay-as-you-go only)
 - organization/team support
 - fine-tuning
 - image generation
@@ -355,9 +393,11 @@ Used for:
 
 ```sql
 CREATE TABLE users (
-  id UUID PRIMARY KEY,
-  email TEXT,
-  created_at TIMESTAMP
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  email TEXT UNIQUE NOT NULL,
+  balance DECIMAL(12, 4) NOT NULL DEFAULT 0.00,  -- USD, real-time
+  status TEXT NOT NULL DEFAULT 'active',
+  created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 ```
 
@@ -367,11 +407,14 @@ CREATE TABLE users (
 
 ```sql
 CREATE TABLE api_keys (
-  id UUID PRIMARY KEY,
-  user_id UUID,
-  hashed_key TEXT,
-  quota_remaining FLOAT,
-  created_at TIMESTAMP
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  hashed_key TEXT NOT NULL,         -- HMAC-SHA256 with server pepper
+  name TEXT,                        -- user-friendly label
+  rate_limit_rpm INT DEFAULT 60,
+  rate_limit_tokens_day INT DEFAULT 100000,
+  status TEXT NOT NULL DEFAULT 'active',
+  created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 ```
 
@@ -381,32 +424,58 @@ CREATE TABLE api_keys (
 
 ```sql
 CREATE TABLE provider_keys (
-  id UUID PRIMARY KEY,
-  provider TEXT,
-  api_key TEXT,
-  remaining_credits FLOAT,
-  status TEXT,
-  last_used TIMESTAMP
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  provider TEXT NOT NULL,
+  api_key_encrypted BYTEA NOT NULL, -- AES-256-GCM ciphertext
+  initial_credits DECIMAL(10, 4) NOT NULL DEFAULT 50.00,
+  remaining_credits DECIMAL(10, 4) NOT NULL DEFAULT 50.00,
+  status TEXT NOT NULL DEFAULT 'ACTIVE',
+  last_used TIMESTAMP,
+  created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+  archived_at TIMESTAMP             -- set when EXHAUSTED
 );
 ```
 
 ---
 
-# request_logs
+# request_logs (Immutable Ledger)
 
 ```sql
 CREATE TABLE request_logs (
-  id UUID PRIMARY KEY,
-  user_id UUID,
-  provider TEXT,
-  model TEXT,
-  tokens_input INT,
-  tokens_output INT,
-  cost FLOAT,
-  latency_ms INT,
-  status TEXT,
-  created_at TIMESTAMP
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID NOT NULL REFERENCES users(id),
+  api_key_id UUID NOT NULL REFERENCES api_keys(id),
+  provider_key_id UUID REFERENCES provider_keys(id),
+  provider TEXT NOT NULL,
+  model TEXT NOT NULL,
+  tokens_input INT NOT NULL,
+  tokens_output INT NOT NULL,
+  upstream_cost DECIMAL(12, 6) NOT NULL,   -- what we paid
+  user_charge DECIMAL(12, 6) NOT NULL,     -- what user paid
+  margin DECIMAL(12, 6) NOT NULL,          -- user_charge - upstream_cost
+  latency_ms INT NOT NULL,
+  status TEXT NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
+```
+
+---
+
+# usage_ledger (Real-Time Balance Events)
+
+```sql
+CREATE TABLE usage_ledger (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID NOT NULL REFERENCES users(id),
+  request_log_id UUID REFERENCES request_logs(id),
+  amount DECIMAL(12, 6) NOT NULL,     -- negative = charge, positive = top-up
+  balance_after DECIMAL(12, 4) NOT NULL,
+  type TEXT NOT NULL,                 -- 'api_usage', 'topup', 'refund', 'adjustment'
+  created_at TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+-- Index for fast balance lookups
+CREATE INDEX idx_usage_ledger_user_created ON usage_ledger(user_id, created_at DESC);
 ```
 
 ---
@@ -456,16 +525,19 @@ OpenAI-compatible JSON.
 
 # 11. Routing Logic
 
-# Model Mapping
+# Model Routing
+
+The gateway routes the **exact model name** provided in the `model` parameter to the appropriate upstream provider. No model substitution is performed.
+
+Example:
 
 ```ts
-const MODEL_MAP = {
-    "gpt-4o": {
-        provider: "openrouter",
-        upstreamModel: "deepseek/deepseek-chat-v3",
-    },
-};
+// User requests gpt-4o
+// Gateway routes to provider that supports "gpt-4o"
+// The upstream request uses model: "gpt-4o"
 ```
+
+Supported models depend entirely on provider availability.
 
 ---
 
@@ -536,13 +608,48 @@ Solution:
 
 # 14. Security Requirements
 
-## Must Have
+## Architecture: Secure by Design
 
-- HTTPS
-- encrypted env vars
-- hashed API keys
-- server-side provider keys only
-- request validation
+The gateway handles two highly sensitive asset classes: **upstream provider keys** (our supply) and **user API keys** (our demand). A breach of either is existential.
+
+### Provider Key Protection
+
+| Layer | Control |
+|-------|---------|
+| Storage | AES-256-GCM encryption at rest in PostgreSQL. Keys never stored in env vars or config files. |
+| Encryption | Unique DEK per key, wrapped by a master key in a KMS (e.g., AWS KMS / HashiCorp Vault). |
+| Memory | Keys decrypted only in-memory for the duration of the upstream request, then zeroed. |
+| Access | Gateway process only. No human access. No logging of key values. |
+| Rotation | If a key is ever exposed in a log or error trace, it is instantly revoked and replaced. |
+
+### User Key Protection
+
+- User API keys (`sk_live_xxx`) are stored as **HMAC-SHA256 hashes** with a server-side pepper.
+- Only the gateway can validate a key; raw keys are never stored or logged.
+- Keys are generated with 256-bit entropy.
+
+### Runtime Security
+
+- All traffic over **TLS 1.3** only.
+- **mTLS** between internal services (gateway ↔ database ↔ Redis).
+- **Request signing** and payload validation (max size, allowed fields, regex sanitization).
+- **IP allowlisting** optional per-user API key.
+- **Zero-trust network**: every internal call authenticated and authorized.
+
+### Abuse & Fraud Prevention
+
+- Rate limiting per user, per IP, per model.
+- Anomaly detection: flag sudden token burn spikes, unusual model usage patterns, or geographic impossibilities.
+- Input/output logging disabled by default; if enabled for debugging, PII is redacted.
+- Circuit breaker on suspicious users: auto-suspend if usage pattern suggests key theft or scraping.
+
+### Operational Security
+
+- No SSH access to production nodes; deployment via immutable containers only.
+- Secrets injected at runtime by orchestrator (Kubernetes / Railway), never in Git.
+- Automated dependency scanning (Snyk / Dependabot) on every build.
+- WAF (Cloudflare / AWS WAF) with OWASP Top-10 rulesets.
+- DDoS protection at edge.
 
 ---
 
@@ -578,66 +685,95 @@ Horizontal scaling:
 
 ---
 
-# 17. Monetization
+# 17. Monetization — Pay-As-You-Go
 
-## Pricing Examples
+**Pricing Model:** Users are charged **per API call** based on actual token usage, with a transparent markup over upstream cost.
 
-### Starter
+### Pricing Formula
 
-```text
-$5
+```
+User Charge = (Input Tokens × Input Price) + (Output Tokens × Output Price)
 ```
 
-### Builder
+Where:
 
-```text
-$15
+- **Input / Output Price** = upstream provider cost + platform markup (e.g., 15–30% margin).
+- Prices are published per-model and updated as upstream costs change.
+
+### User Balance System
+
+```ts
+type User = {
+    id: string;
+    email: string;
+    balance: number;           // USD, real-time tracked
+    billingAddress?: string;
+    createdAt: Date;
+};
 ```
 
-### Power
+- Users **pre-fund** their account (minimum $5).
+- Every request deducts from `balance` in real-time.
+- When `balance` drops below $1, all requests return `402 Payment Required`.
+- Users can top up via Stripe / crypto / bank transfer (manual for MVP).
 
-```text
-$50
-```
+### Margin Economics
 
----
+- Upstream keys purchased at **discounted rates**.
+- Platform adds a **fixed percentage markup** on every token.
+- Real-time margin per request = user charge − upstream cost.
+- Daily / weekly margin reports generated automatically.
 
-# 18. MVP Timeline
+### Example Pricing (Illustrative)
 
-# Day 1
+| Model | Upstream Cost (per 1M tokens) | User Price (per 1M tokens) | Platform Margin |
+|-------|-------------------------------|----------------------------|-----------------|
+| gpt-4o | $2.50 input / $10.00 output | $3.00 input / $12.00 output | ~20% |
+| llama-3-70b | $0.90 input / $0.90 output | $1.10 input / $1.10 output | ~22% |
 
-Build:
-
-- chat endpoint
-- provider forwarding
-- streaming
-
----
-
-# Day 2
-
-Add:
-
-- auth
-- key pool
-- rotation
-- usage tracking
+Prices are dynamic and adjusted based on provider discount tiers.
 
 ---
 
-# Day 3
+# 18. Development Approach
 
-Add:
+Timeline is **not a constraint**. Priority is correctness, security, and reliability over speed.
 
-- rate limiting
-- failover
-- logging
+**Phase 1 — Foundation**
 
----
+- Chat completion endpoint (`/v1/chat/completions`)
+- Streaming support (SSE)
+- Provider forwarding with exact model passthrough
+- Basic auth + user API key generation
 
-# Day 4
+**Phase 2 — Key Pool & Routing**
 
-Deploy + testing.
+- Unlimited key pool architecture ($50/key cap)
+- Real-time credit tracking per key
+- Automatic key rotation on exhaustion
+- Multi-provider failover logic
+
+**Phase 3 — Billing & Security**
+
+- Pay-as-you-go balance system
+- Real-time usage ledger
+- AES-256-GCM provider key encryption
+- HMAC user key storage
+- Rate limiting + abuse detection
+
+**Phase 4 — Hardening**
+
+- Health monitoring + circuit breakers
+- Margin analytics + cost reconciliation
+- Load testing (target: 10k–50k requests/day)
+- Security audit (penetration test, dependency scan)
+- Production deployment with WAF + DDoS protection
+
+**Phase 5 — Scale**
+
+- Horizontal scaling (stateless nodes + shared Redis/Postgres)
+- Additional providers
+- Additional endpoints (embeddings, images — if demand exists)
 
 ---
 
@@ -654,15 +790,25 @@ Track:
 
 ---
 
-# 20. Biggest Risks
+# 20. Biggest Risks & Mitigations
 
 ## Operational Risks
 
-- provider outages
-- thin profit margins
-- API abuse
-- key leakage
-- unexpected token burn
+| Risk | Mitigation |
+|------|------------|
+| Provider outages | Multi-provider pool; automatic failover within <1s. |
+| Thin profit margins | Discounted upstream keys + dynamic markup; margin tracked per-request. |
+| API abuse / key theft | Rate limits, anomaly detection, IP allowlists, instant key revocation. |
+| Provider key leakage | AES-256-GCM at rest, memory-only decryption, zero-logging policy. |
+| Unexpected token burn | Real-time balance caps; pre-flight cost estimation on large requests. |
+| User chargebacks / fraud | Pre-paid balance only; no post-paid billing to eliminate chargeback risk. |
+
+## Security Risks
+
+- **Database breach**: Provider keys are encrypted; master key is in external KMS.
+- **Insider threat**: No human has access to raw provider keys; all access is logged.
+- **DDoS / L7 attacks**: Cloudflare WAF + rate limiting + anomaly detection.
+- **Supply-side risk**: Provider bans key-pool behavior. Mitigation: distribute across 5+ providers, no single point of failure.
 
 ---
 

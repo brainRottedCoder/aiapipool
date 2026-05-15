@@ -19,7 +19,6 @@ export async function eventsRoute(app: FastifyInstance): Promise<void> {
     });
 
     const channel = `user_events:${user.id}`;
-    const heartbeatInterval: NodeJS.Timeout | undefined;
     let isClosed = false;
 
     const sendEvent = (data: unknown) => {
@@ -42,18 +41,22 @@ export async function eventsRoute(app: FastifyInstance): Promise<void> {
     await subscriberRedis.subscribe(channel);
     subscriberRedis.on("message", messageHandler);
 
-    // Heartbeat every 30s to keep connection alive
-    heartbeatInterval = setInterval(() => {
-      sendEvent({ type: "heartbeat" });
-    }, 30000);
-
     // Cleanup on client disconnect
     request.raw.on("close", () => {
       isClosed = true;
-      if (heartbeatInterval) clearInterval(heartbeatInterval);
       subscriberRedis.unsubscribe(channel).catch(() => {});
       subscriberRedis.off("message", messageHandler);
       reply.raw.end();
+    });
+
+    // Heartbeat every 30s to keep connection alive
+    const heartbeatInterval = setInterval(() => {
+      sendEvent({ type: "heartbeat" });
+    }, 30000);
+
+    // Wire cleanup to clear heartbeat
+    request.raw.on("close", () => {
+      clearInterval(heartbeatInterval);
     });
   });
 }

@@ -476,9 +476,7 @@ Used for:
 # Deployment
 
 ## Recommended
-
-- Railway or
-- Hetzner VPS
+- Azure Container Apps
 
 ---
 
@@ -799,7 +797,7 @@ Security is split into **MVP** and **Production** tiers to enable rapid shipping
 | Layer | Control |
 |-------|---------|
 | **Storage** | Provider keys encrypted at rest in PostgreSQL using AES-256-GCM. Keys never stored in env vars or config files. |
-| **Encryption** | Master key loaded from a single environment variable or Railway secret at runtime. Unique DEK (Data Encryption Key) per provider key derived from the master key. |
+| **Encryption** | Master key loaded from Azure Key Vault at runtime (or env var in dev). Unique DEK (Data Encryption Key) per provider key derived from the master key. |
 | **Memory** | Keys decrypted only in-memory for the duration of the upstream request. Overwritten with zeros after use (best effort in Node.js). |
 | **Access** | Gateway process only. No logging of key values. |
 | **User Keys** | User API keys (`sk_live_xxx`) stored as **HMAC-SHA256 hashes** with a server-side pepper. Raw keys are never stored or logged. |
@@ -1183,7 +1181,7 @@ The FluxAI Gateway is built as a modern full-stack application with three distin
 | **Styling** | Tailwind CSS + shadcn/ui | Rapid, consistent dashboard UI |
 | **State / Data** | TanStack Query (React Query) | Server-state caching for usage, billing, logs |
 | **Charts** | Recharts | Token burn, latency, margin visualizations |
-| **Auth** | Clerk (or NextAuth.js) | Email/password + OAuth (Google/GitHub), JWT sessions, MFA-ready |
+| **Auth** | NextAuth.js (Auth.js v5) | OAuth (Google/GitHub) + Credentials, database session strategy, instant revocation |
 | **Payments** | Stripe Elements / Checkout | Hosted checkout for balance top-ups |
 | **API Client** | tRPC or typed REST client | Type-safe calls to Fastify backend |
 
@@ -1205,8 +1203,9 @@ The FluxAI Gateway is built as a modern full-stack application with three distin
 | Layer | Technology |
 |-------|-----------|
 | **Reverse Proxy / Edge** | Cloudflare (WAF, DDoS, SSL, DNS) |
-| **API Hosting** | Railway or Hetzner VPS (Docker) |
-| **Frontend Hosting** | Vercel or Railway (Next.js) |
+| **API Hosting** | Azure Container Apps (Docker) |
+| **Secrets** | Azure Key Vault |
+| **Frontend Hosting** | Vercel (Next.js) |
 | **Monitoring** | Prometheus + Grafana + BetterStack + Sentry |
 | **Process Manager** | PM2 (VPS mode) |
 
@@ -1214,7 +1213,7 @@ The FluxAI Gateway is built as a modern full-stack application with three distin
 
 # 30. User Interface
 
-The user-facing web application gives customers self-service access to usage analytics, billing, API key management, and support. All dashboard routes require authentication (Clerk/NextAuth session).
+The user-facing web application gives customers self-service access to usage analytics, billing, API key management, and support. All dashboard routes require authentication (NextAuth database session).
 
 ## 30.1 Marketing & Public Pages (No Auth)
 
@@ -1380,7 +1379,7 @@ Response to User (JSON ChatCompletion or SSE data: ... stream)
 ## 33.2 User Dashboard API (REST)
 
 **Base:** `https://api.fluxai.gateway/api/user` (or `/api/user` via Next.js BFF)
-**Auth:** Clerk/NextAuth JWT session cookie + CSRF token
+**Auth:** NextAuth database session cookie (`next-auth.session-token`) + CSRF token
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
@@ -1456,9 +1455,10 @@ Response to User (JSON ChatCompletion or SSE data: ... stream)
 |---------|-------|
 | Public Inference API | 1 |
 | User Dashboard API | 9 |
-| Admin API | 18 |
+| Admin API | 21 |
 | Webhooks | 1 |
-| **Backend Total** | **29** |
+| Health | 1 |
+| **Backend Total** | **33** |
 | Marketing / Public Pages | 9 |
 | Auth Pages | 5 |
 | User Dashboard Pages | 10 |
@@ -1466,7 +1466,7 @@ Response to User (JSON ChatCompletion or SSE data: ... stream)
 | Help Center Pages | 3 |
 | Admin Dashboard Pages | 11 |
 | **Frontend Total** | **43** |
-| **Grand Total** | **72 routes/endpoints** |
+| **Grand Total** | **76 routes/endpoints** |
 
 ---
 
@@ -1481,8 +1481,8 @@ Response to User (JSON ChatCompletion or SSE data: ... stream)
 
 ## 34.2 Auth Flow
 
-1. User signs up via Clerk/NextAuth (`/register`).
-2. Clerk creates user in PostgreSQL `users` table via webhook (`POST /webhooks/clerk/user.created`) or NextAuth adapter.
+1. User signs up via NextAuth (`/register` or OAuth redirect).
+2. NextAuth adapter (`@auth/drizzle-adapter`) creates/updates user in PostgreSQL `users` table automatically on first sign-in.
 3. User receives dashboard session cookie.
 4. Dashboard API calls include session cookie; Fastify `AuthService` validates JWT and extracts `userId`.
 5. **API key auth** (`sk_live_xxx`) remains entirely separate from session auth. API keys are for programmatic access; sessions are for dashboard access.

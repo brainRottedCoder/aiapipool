@@ -1,9 +1,11 @@
 import { z } from "zod";
 
-export const MessageSchema = z.object({
-  role: z.enum(["system", "user", "assistant"]),
-  content: z.string().max(102400),
-});
+export const MessageSchema = z
+  .object({
+    role: z.enum(["system", "user", "assistant"]),
+    content: z.string().max(102400),
+  })
+  .strict();
 
 export const OpenAIChatRequestSchema = z
   .object({

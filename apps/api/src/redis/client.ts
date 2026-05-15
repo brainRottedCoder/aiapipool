@@ -6,6 +6,7 @@ const logger = pino({ name: "redis" });
 
 const baseRedisOptions: RedisOptions = {
   enableOfflineQueue: false,
+  tls: env.NODE_ENV === "production" ? {} : undefined,
   retryStrategy(times) {
     const delay = Math.min(times * 50, 2000);
     return delay;

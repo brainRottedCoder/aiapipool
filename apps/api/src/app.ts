@@ -55,7 +55,7 @@ export async function buildApp() {
   // ── Metrics middleware ──
   app.addHook("onResponse", async (request, reply) => {
     const path = request.url;
-    const provider = "unknown";
+    const provider = (request as unknown as Record<string, unknown>).provider as string ?? "unknown";
     httpRequestsTotal.inc({
       method: request.method,
       path,
@@ -83,11 +83,15 @@ export async function buildApp() {
         type:
           statusCode === 400
             ? "invalid_request_error"
-            : statusCode === 401
+            : statusCode === 401 || statusCode === 403
               ? "authentication_error"
-              : statusCode === 429
-                ? "rate_limit_error"
-                : "server_error",
+              : statusCode === 402
+                ? "billing_error"
+                : statusCode === 404
+                  ? "not_found_error"
+                  : statusCode === 429
+                    ? "rate_limit_error"
+                    : "server_error",
         code,
         param: null,
       },

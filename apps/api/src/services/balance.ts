@@ -8,6 +8,27 @@ import type { ModelMapping } from "./provider-mapper.js";
 
 const logger = pino({ name: "balance" });
 
+function toCents(value: string): bigint {
+  const match = String(value).match(/^(-?\d+)\.?(\d+)?$/);
+  if (!match) return 0n;
+  const whole = match[1] ?? "0";
+  const frac = (match[2] ?? "").padEnd(4, "0").slice(0, 4);
+  return BigInt(`${whole}${frac}`);
+}
+
+function fromCents(cents: bigint): string {
+  const neg = cents < 0n;
+  const abs = neg ? -cents : cents;
+  const s = abs.toString().padStart(5, "0");
+  const whole = s.slice(0, -4);
+  const frac = s.slice(-4);
+  return `${neg ? "-" : ""}${whole || "0"}.${frac}`;
+}
+
+function parseDecimal(s: string): number {
+  return Number(s);
+}
+
 /**
  * Check if a user has a positive balance.
  *

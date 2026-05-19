@@ -12,6 +12,7 @@ import {
   ScrollText,
   HeartPulse,
   AlertTriangle,
+  Activity,
   ChevronLeft,
   Shield,
 } from "lucide-react";
@@ -28,6 +29,7 @@ const iconMap: Record<string, React.ElementType> = {
   ScrollText,
   HeartPulse,
   AlertTriangle,
+  Activity,
   Shield,
 };
 

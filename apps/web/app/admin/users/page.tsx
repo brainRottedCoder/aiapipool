@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { apiClient, ENDPOINTS } from "@/lib/api-client";
+import { adminApiClient, ADMIN_ENDPOINTS } from "@/lib/admin-api-client";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -14,9 +14,12 @@ import { toast } from "sonner";
 
 export default function AdminUsersPage() {
   const [search, setSearch] = useState("");
-  const { data: users, isLoading, refetch } = useQuery<UserAdmin[]>({
+  const { data: users, isLoading, refetch } = useQuery({
     queryKey: ["admin-users"],
-    queryFn: () => apiClient.get(ENDPOINTS.admin.users),
+    queryFn: async () => {
+      const res = await adminApiClient.get<{ data: UserAdmin[] }>(ADMIN_ENDPOINTS.users);
+      return res.data;
+    },
   });
 
   const filtered = users?.filter((u) =>
@@ -25,21 +28,21 @@ export default function AdminUsersPage() {
 
   const handleSuspend = async (id: string) => {
     try {
-      await apiClient.patch(ENDPOINTS.admin.userSuspend(id), {});
-      toast.success("User suspended");
+      await adminApiClient.patch(ADMIN_ENDPOINTS.userSuspend(id), {});
+      toast.success("User banned");
       refetch();
     } catch {
-      toast.error("Failed to suspend user");
+      toast.error("Failed to ban user");
     }
   };
 
   const handleUnsuspend = async (id: string) => {
     try {
-      await apiClient.patch(ENDPOINTS.admin.userUnsuspend(id), {});
-      toast.success("User unsuspended");
+      await adminApiClient.patch(ADMIN_ENDPOINTS.userUnsuspend(id), {});
+      toast.success("User unbanned");
       refetch();
     } catch {
-      toast.error("Failed to unsuspend user");
+      toast.error("Failed to unban user");
     }
   };
 
@@ -78,7 +81,6 @@ export default function AdminUsersPage() {
                   <th className="text-left p-4 font-mono text-label-sm text-on-surface-variant">Email</th>
                   <th className="text-left p-4 font-mono text-label-sm text-on-surface-variant">Balance</th>
                   <th className="text-left p-4 font-mono text-label-sm text-on-surface-variant">Status</th>
-                  <th className="text-left p-4 font-mono text-label-sm text-on-surface-variant">Role</th>
                   <th className="text-left p-4 font-mono text-label-sm text-on-surface-variant">Joined</th>
                   <th className="text-right p-4 font-mono text-label-sm text-on-surface-variant">Actions</th>
                 </tr>
@@ -87,18 +89,15 @@ export default function AdminUsersPage() {
                 {filtered?.map((u) => (
                   <tr key={u.id} className="hover:bg-surface-hover/50">
                     <td className="p-4 font-sans text-body-md text-on-surface">{u.email}</td>
-                    <td className="p-4 font-mono text-code-md text-on-surface">${Number(u.balance).toFixed(2)}</td>
+                    <td className="p-4 font-mono text-code-md text-on-surface">
+                      ${Number(u.balance).toFixed(2)}
+                    </td>
                     <td className="p-4">
                       <Badge
                         variant={u.status === "active" ? "success" : "destructive"}
                         className="text-xs"
                       >
                         {u.status}
-                      </Badge>
-                    </td>
-                    <td className="p-4">
-                      <Badge variant={u.role === "admin" ? "default" : "outline"} className="text-xs">
-                        {u.role}
                       </Badge>
                     </td>
                     <td className="p-4 font-mono text-code-md text-on-surface-variant">
@@ -117,6 +116,7 @@ export default function AdminUsersPage() {
                             size="sm"
                             className="text-red-400 hover:text-red-300"
                             onClick={() => handleSuspend(u.id)}
+                            title="Ban user"
                           >
                             <Ban className="w-4 h-4" />
                           </Button>
@@ -126,6 +126,7 @@ export default function AdminUsersPage() {
                             size="sm"
                             className="text-green-400 hover:text-green-300"
                             onClick={() => handleUnsuspend(u.id)}
+                            title="Unban user"
                           >
                             <CheckCircle className="w-4 h-4" />
                           </Button>

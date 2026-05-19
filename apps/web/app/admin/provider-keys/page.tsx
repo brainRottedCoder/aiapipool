@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiClient, ENDPOINTS } from "@/lib/api-client";
+import { adminApiClient, ADMIN_ENDPOINTS } from "@/lib/admin-api-client";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -31,12 +31,12 @@ export default function AdminProviderKeysPage() {
 
   const { data: keys, isLoading } = useQuery<ProviderKey[]>({
     queryKey: ["admin-provider-keys"],
-    queryFn: () => apiClient.get(ENDPOINTS.admin.providerKeys),
+    queryFn: () => adminApiClient.get(ADMIN_ENDPOINTS.providerKeys),
   });
 
   const addKey = useMutation({
     mutationFn: (body: { provider: string; api_key: string }) =>
-      apiClient.post(ENDPOINTS.admin.providerKeys, body),
+      adminApiClient.post(ADMIN_ENDPOINTS.providerKeys, body),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["admin-provider-keys"] });
       toast.success("Provider key added");
@@ -48,7 +48,7 @@ export default function AdminProviderKeysPage() {
   });
 
   const rotateKey = useMutation({
-    mutationFn: (id: string) => apiClient.patch(ENDPOINTS.admin.providerKeyRotate(id), {}),
+    mutationFn: (id: string) => adminApiClient.patch(ADMIN_ENDPOINTS.providerKeyRotate(id), {}),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["admin-provider-keys"] });
       toast.success("Key rotated");
@@ -57,7 +57,7 @@ export default function AdminProviderKeysPage() {
   });
 
   const deleteKey = useMutation({
-    mutationFn: (id: string) => apiClient.delete(ENDPOINTS.admin.providerKeyDetail(id)),
+    mutationFn: (id: string) => adminApiClient.delete(ADMIN_ENDPOINTS.providerKeyDetail(id)),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["admin-provider-keys"] });
       toast.success("Key deleted");

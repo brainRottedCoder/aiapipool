@@ -29,6 +29,11 @@ export const ENDPOINTS = {
 
   // Admin API
   admin: {
+    authLogin: `${API_BASE}/admin/auth/login`,
+    authLogout: `${API_BASE}/admin/auth/logout`,
+    authMe: `${API_BASE}/admin/auth/me`,
+    overview: `${API_BASE}/admin/overview`,
+    activity: `${API_BASE}/admin/activity`,
     providerKeys: `${API_BASE}/admin/provider-keys`,
     providerKeyRotate: (id: string) => `${API_BASE}/admin/provider-keys/${id}/rotate`,
     providerKeyStatus: (id: string) => `${API_BASE}/admin/provider-keys/${id}/status`,
@@ -36,8 +41,12 @@ export const ENDPOINTS = {
     modelMappings: `${API_BASE}/admin/model-mappings`,
     modelMappingDetail: (id: string) => `${API_BASE}/admin/model-mappings/${id}`,
     users: `${API_BASE}/admin/users`,
+    userDetail: (id: string) => `${API_BASE}/admin/users/${id}`,
+    userSummary: (id: string) => `${API_BASE}/admin/users/${id}/summary`,
+    userLedger: (id: string) => `${API_BASE}/admin/users/${id}/ledger`,
     userSuspend: (id: string) => `${API_BASE}/admin/users/${id}/suspend`,
     userUnsuspend: (id: string) => `${API_BASE}/admin/users/${id}/unsuspend`,
+    userBalance: (id: string) => `${API_BASE}/admin/users/${id}/balance`,
     userUsage: (id: string) => `${API_BASE}/admin/users/${id}/usage`,
     margins: `${API_BASE}/admin/margins`,
     ledgers: `${API_BASE}/admin/ledgers`,
@@ -54,3 +63,6 @@ export const ENDPOINTS = {
     stripe: `${API_BASE}/webhooks/stripe`,
   },
 } as const;
+
+/** Alias for admin portal API client */
+export const ADMIN_ENDPOINTS = ENDPOINTS.admin;

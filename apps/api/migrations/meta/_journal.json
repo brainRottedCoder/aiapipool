@@ -15,6 +15,13 @@
       "when": 1778821955744,
       "tag": "0001_loose_green_goblin",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1779202783429,
+      "tag": "0002_wandering_adam_warlock",
+      "breakpoints": true
     }
   ]
 }

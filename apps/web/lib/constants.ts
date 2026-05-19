@@ -235,6 +235,7 @@ export const ADMIN_SIDEBAR = [
   {
     section: "Analytics",
     items: [
+      { label: "Activity", href: "/admin/activity", icon: "Activity" },
       { label: "Margins", href: "/admin/margins", icon: "TrendingUp" },
       { label: "Ledgers", href: "/admin/ledgers", icon: "ScrollText" },
       { label: "Health", href: "/admin/health", icon: "HeartPulse" },

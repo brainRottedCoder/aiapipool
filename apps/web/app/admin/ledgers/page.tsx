@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { apiClient, ENDPOINTS } from "@/lib/api-client";
+import { adminApiClient, ADMIN_ENDPOINTS } from "@/lib/admin-api-client";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -18,10 +18,10 @@ export default function AdminLedgersPage() {
   const { data: ledger, isLoading } = useQuery<PaginatedResponse<LedgerEntry>>({
     queryKey: ["admin-ledgers", limit, search],
     queryFn: () => {
-      const url = new URL(ENDPOINTS.admin.ledgers);
+      const url = new URL(ADMIN_ENDPOINTS.ledgers);
       url.searchParams.set("limit", String(limit));
       if (search) url.searchParams.set("user_id", search);
-      return apiClient.get(url.toString());
+      return adminApiClient.get(url.toString());
     },
   });
 

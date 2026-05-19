@@ -24,7 +24,6 @@ export const authConfig: NextAuthConfig = {
     async session({ session, user }) {
       if (session.user) {
         session.user.id = user.id;
-        session.user.role = (user as unknown as { role: "user" | "admin" }).role;
         session.user.balance = (user as unknown as { balance: string }).balance;
         session.user.status = (user as unknown as { status: "active" | "suspended" }).status;
       }
@@ -33,7 +32,6 @@ export const authConfig: NextAuthConfig = {
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
-        token.role = (user as unknown as { role: "user" | "admin" }).role;
       }
       return token;
     },

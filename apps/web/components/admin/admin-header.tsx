@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { ChevronRight, Shield, LogOut } from "lucide-react";
-import { signOut } from "next-auth/react";
+import { useAdminLogout, useAdminSession } from "@/hooks/use-admin-session";
 
 function breadcrumbs(path: string) {
   if (path === "/admin") return [{ label: "Admin", href: "/admin" }];
@@ -17,6 +17,8 @@ function breadcrumbs(path: string) {
 export function AdminHeader() {
   const pathname = usePathname() ?? "/admin";
   const crumbs = breadcrumbs(pathname);
+  const { data: admin } = useAdminSession();
+  const logout = useAdminLogout();
 
   return (
     <header className="h-16 border-b border-outline-subtle flex items-center justify-between px-8 bg-background/80 backdrop-blur-xl sticky top-0 z-30">
@@ -34,12 +36,18 @@ export function AdminHeader() {
         ))}
       </nav>
       <div className="flex items-center gap-3">
+        {admin?.email && (
+          <span className="font-mono text-label-sm text-on-surface-variant hidden sm:inline">
+            {admin.email}
+          </span>
+        )}
         <div className="flex items-center gap-2 px-3 py-1 rounded border border-outline-subtle bg-surface">
           <Shield className="w-3.5 h-3.5 text-primary" />
           <span className="font-mono text-label-sm text-on-surface-variant">Admin</span>
         </div>
         <button
-          onClick={() => signOut({ callbackUrl: "/" })}
+          onClick={() => logout.mutate()}
+          disabled={logout.isPending}
           className="p-2 rounded-lg text-on-surface-variant hover:text-red-400 hover:bg-red-400/10 transition-colors"
           title="Sign out"
         >

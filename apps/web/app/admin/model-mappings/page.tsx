@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiClient, ENDPOINTS } from "@/lib/api-client";
+import { adminApiClient, ADMIN_ENDPOINTS } from "@/lib/admin-api-client";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -23,11 +23,11 @@ export default function AdminModelMappingsPage() {
 
   const { data: mappings, isLoading } = useQuery<ModelMapping[]>({
     queryKey: ["admin-model-mappings"],
-    queryFn: () => apiClient.get(ENDPOINTS.admin.modelMappings),
+    queryFn: () => adminApiClient.get(ADMIN_ENDPOINTS.modelMappings),
   });
 
   const addMapping = useMutation({
-    mutationFn: (body: unknown) => apiClient.post(ENDPOINTS.admin.modelMappings, body),
+    mutationFn: (body: unknown) => adminApiClient.post(ADMIN_ENDPOINTS.modelMappings, body),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["admin-model-mappings"] });
       toast.success("Model mapping added");
@@ -38,7 +38,7 @@ export default function AdminModelMappingsPage() {
   });
 
   const deleteMapping = useMutation({
-    mutationFn: (id: string) => apiClient.delete(ENDPOINTS.admin.modelMappingDetail(id)),
+    mutationFn: (id: string) => adminApiClient.delete(ADMIN_ENDPOINTS.modelMappingDetail(id)),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["admin-model-mappings"] });
       toast.success("Mapping deleted");

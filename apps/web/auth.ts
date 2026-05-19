@@ -64,7 +64,6 @@ export const {
           email: user.email,
           name: user.name,
           image: user.image,
-          role: user.role,
           balance: user.balance,
           status: user.status,
         };
@@ -75,7 +74,6 @@ export const {
     async session({ session, user }) {
       if (session.user) {
         session.user.id = user.id;
-        session.user.role = (user as unknown as { role: "user" | "admin" }).role;
         session.user.balance = (user as unknown as { balance: string }).balance;
         session.user.status = (user as unknown as { status: "active" | "suspended" }).status;
       }
@@ -84,7 +82,6 @@ export const {
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
-        token.role = (user as unknown as { role: "user" | "admin" }).role;
       }
       return token;
     },
@@ -96,7 +93,6 @@ export type SessionUser = {
   email: string;
   name?: string | null;
   image?: string | null;
-  role: "user" | "admin";
   balance: string;
   status: "active" | "suspended";
 };

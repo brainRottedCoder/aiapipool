@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { apiClient, ENDPOINTS } from "@/lib/api-client";
+import { adminApiClient, ADMIN_ENDPOINTS } from "@/lib/admin-api-client";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,14 +15,14 @@ export default function AdminEmergencyPage() {
 
   const drainMutation = useMutation({
     mutationFn: (provider: string) =>
-      apiClient.post(ENDPOINTS.admin.emergencyDrain, { provider }),
+      adminApiClient.post(ADMIN_ENDPOINTS.emergencyDrain, { provider }),
     onSuccess: () => toast.success(`Drained provider: ${drainProvider}`),
     onError: () => toast.error("Failed to drain provider"),
   });
 
   const rotateMutation = useMutation({
     mutationFn: (provider: string) =>
-      apiClient.post(ENDPOINTS.admin.emergencyRotate, { provider }),
+      adminApiClient.post(ADMIN_ENDPOINTS.emergencyRotate, { provider }),
     onSuccess: () => toast.success("Rotated all keys"),
     onError: () => toast.error("Failed to rotate keys"),
   });

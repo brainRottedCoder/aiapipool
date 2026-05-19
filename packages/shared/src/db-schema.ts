@@ -45,6 +45,7 @@ export const ledgerTypeEnum = pgEnum("ledger_type", [
   "refund",
   "adjustment",
 ]);
+export const adminStatusEnum = pgEnum("admin_status", ["active", "suspended"]);
 
 export const users = pgTable(
   "users",
@@ -247,4 +248,68 @@ export const verificationTokens = pgTable(
     expires: timestamp("expires", { mode: "date", withTimezone: true }).notNull(),
   },
   (table) => [primaryKey({ columns: [table.identifier, table.token] })]
+);
+
+export const admins = pgTable(
+  "admins",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    email: varchar("email", { length: 255 }).notNull().unique(),
+    password_hash: text("password_hash").notNull(),
+    name: text("name"),
+    status: adminStatusEnum("status").notNull().default("active"),
+    last_login_at: timestamp("last_login_at", { mode: "date", withTimezone: true }),
+    created_at: timestamp("created_at", { mode: "date", withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    updated_at: timestamp("updated_at", { mode: "date", withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [
+    uniqueIndex("admins_email_idx").on(table.email),
+    index("admins_status_idx").on(table.status),
+  ]
+);
+
+export const adminSessions = pgTable(
+  "admin_sessions",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    sessionToken: varchar("session_token", { length: 255 }).notNull().unique(),
+    adminId: uuid("admin_id")
+      .notNull()
+      .references(() => admins.id, { onDelete: "cascade" }),
+    expires: timestamp("expires", { mode: "date", withTimezone: true }).notNull(),
+    created_at: timestamp("created_at", { mode: "date", withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [
+    uniqueIndex("admin_sessions_session_token_idx").on(table.sessionToken),
+    index("admin_sessions_admin_id_idx").on(table.adminId),
+  ]
+);
+
+export const adminAuditLogs = pgTable(
+  "admin_audit_logs",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    admin_id: uuid("admin_id")
+      .notNull()
+      .references(() => admins.id, { onDelete: "cascade" }),
+    action: varchar("action", { length: 100 }).notNull(),
+    target_type: varchar("target_type", { length: 50 }),
+    target_id: varchar("target_id", { length: 255 }),
+    metadata: jsonb("metadata").$type<Record<string, unknown>>().default({}),
+    ip: varchar("ip", { length: 45 }),
+    created_at: timestamp("created_at", { mode: "date", withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [
+    index("admin_audit_logs_admin_id_idx").on(table.admin_id),
+    index("admin_audit_logs_created_at_idx").on(table.created_at.desc()),
+    index("admin_audit_logs_action_idx").on(table.action),
+  ]
 );

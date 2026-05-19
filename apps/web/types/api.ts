@@ -71,7 +71,64 @@ export interface UserAdmin {
   name: string | null;
   balance: string;
   status: "active" | "suspended";
-  role: "user" | "admin";
+  created_at: string;
+  stripe_customer_id?: string | null;
+  oauth_providers?: string[];
+}
+
+export interface AdminOverview {
+  total_users: number;
+  active_users: number;
+  suspended_users: number;
+  total_balance: string;
+  requests_24h: number;
+  errors_24h: number;
+  revenue_24h: string;
+  provider_key_counts: Record<string, number>;
+  recent_alerts: Array<{ level: string; message: string }>;
+}
+
+export interface AdminActivityFeed {
+  requests: Array<{
+    id: string;
+    type: string;
+    user_email: string;
+    model: string;
+    user_charge: string;
+    status: string;
+    latency_ms: number;
+    created_at: string;
+  }>;
+  ledger: Array<{
+    id: string;
+    type: string;
+    user_email: string;
+    amount: string;
+    ledger_type: string;
+    balance_after: string;
+    created_at: string;
+  }>;
+  audits: Array<{
+    id: string;
+    type: string;
+    admin_email: string;
+    action: string;
+    target_type: string | null;
+    target_id: string | null;
+    metadata: Record<string, unknown> | null;
+    created_at: string;
+  }>;
+}
+
+export interface UserUsageLog {
+  id: string;
+  model: string;
+  provider: string;
+  tokens_input: number;
+  tokens_output: number;
+  user_charge: string;
+  latency_ms: number;
+  status: string;
   created_at: string;
 }
 

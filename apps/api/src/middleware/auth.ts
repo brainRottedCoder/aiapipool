@@ -21,6 +21,11 @@ declare module "fastify" {
         rate_limit_rpm: number;
         rate_limit_tokens_day: number;
       };
+      admin?: {
+        id: string;
+        email: string;
+        name: string | null;
+      };
     };
   }
 }

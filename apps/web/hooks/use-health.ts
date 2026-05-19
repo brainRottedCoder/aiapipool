@@ -2,6 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { apiClient, ENDPOINTS } from "@/lib/api-client";
+import { adminApiClient, ADMIN_ENDPOINTS } from "@/lib/admin-api-client";
 import type { ProviderHealth } from "@/types/api";
 
 export function useHealth() {
@@ -17,9 +18,9 @@ export function useAdminHealth() {
     queryKey: ["admin-health"],
     queryFn: () =>
       Promise.all([
-        apiClient.get(ENDPOINTS.admin.healthProviders),
-        apiClient.get(ENDPOINTS.admin.healthKeys),
-        apiClient.get(ENDPOINTS.admin.healthQueues),
+        adminApiClient.get(ADMIN_ENDPOINTS.healthProviders),
+        adminApiClient.get(ADMIN_ENDPOINTS.healthKeys),
+        adminApiClient.get(ADMIN_ENDPOINTS.healthQueues),
       ]).then(([providers, keys, queues]) => ({ providers, keys, queues })),
     refetchInterval: 30_000,
   });

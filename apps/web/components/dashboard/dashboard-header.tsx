@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
+import { clearSessionCache } from "@/lib/api-client";
 import { ChevronRight, Bell, LogOut, User } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -89,7 +90,7 @@ export function DashboardHeader() {
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem
-              onClick={() => signOut({ callbackUrl: "/" })}
+              onClick={() => { clearSessionCache(); signOut({ callbackUrl: "/" }); }}
               className="text-red-400 focus:text-red-400 focus:bg-red-400/10 cursor-pointer"
             >
               <LogOut className="w-4 h-4 mr-2" />

@@ -1,9 +1,6 @@
-import NextAuth from "next-auth";
-import { authConfig } from "@/auth.config";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-
-const { auth } = NextAuth(authConfig);
+import { hasDashboardSession } from "@/lib/session-cookies";
 
 const ADMIN_SESSION_COOKIE = "flux-admin.session-token";
 
@@ -12,8 +9,8 @@ function hasAdminSession(req: NextRequest): boolean {
   return Boolean(token?.length);
 }
 
-export default auth((req) => {
-  const isLoggedIn = !!req.auth;
+export default function middleware(req: NextRequest) {
+  const isLoggedIn = hasDashboardSession(req);
   const pathname = req.nextUrl.pathname;
 
   if (pathname === "/admin/login") {
@@ -46,7 +43,7 @@ export default auth((req) => {
   }
 
   return NextResponse.next();
-});
+}
 
 export const config = {
   matcher: [

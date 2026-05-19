@@ -16,6 +16,11 @@ export class ApiError extends Error {
 let cachedSessionToken: string | null | undefined;
 let sessionTokenCacheExpiresAt = 0;
 
+export function clearSessionCache() {
+  cachedSessionToken = undefined;
+  sessionTokenCacheExpiresAt = 0;
+}
+
 async function getSessionToken(): Promise<string | null> {
   if (cachedSessionToken !== undefined && Date.now() < sessionTokenCacheExpiresAt) {
     return cachedSessionToken;

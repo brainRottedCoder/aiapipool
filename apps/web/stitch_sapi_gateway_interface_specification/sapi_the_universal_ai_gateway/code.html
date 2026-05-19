@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SAPI - One API. Every model. Zero overhead.</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-highest": "#353434",
+                        "accent-lime": "#E4F222",
+                        "on-tertiary-container": "#461f00",
+                        "tertiary-fixed-dim": "#ffb786",
+                        "inverse-surface": "#e5e2e1",
+                        "secondary-container": "#571bc1",
+                        "secondary": "#d0bcff",
+                        "on-tertiary": "#502400",
+                        "on-secondary-fixed": "#23005c",
+                        "on-tertiary-fixed": "#311400",
+                        "on-primary-container": "#00285d",
+                        "surface-variant": "#353434",
+                        "inverse-on-surface": "#313030",
+                        "surface-container": "#201f1f",
+                        "on-primary-fixed-variant": "#004395",
+                        "surface-overlay": "#121212",
+                        "secondary-fixed-dim": "#d0bcff",
+                        "primary-fixed-dim": "#adc6ff",
+                        "on-background": "#e5e2e1",
+                        "surface-elevated": "#0A0A0A",
+                        "on-primary-fixed": "#001a42",
+                        "on-tertiary-fixed-variant": "#723600",
+                        "tertiary-container": "#df7412",
+                        "surface": "#141313",
+                        "on-secondary-fixed-variant": "#5516be",
+                        "surface-tint": "#adc6ff",
+                        "surface-container-high": "#2a2a2a",
+                        "surface-bright": "#3a3939",
+                        "on-surface-variant": "#c2c6d6",
+                        "primary": "#adc6ff",
+                        "primary-fixed": "#d8e2ff",
+                        "on-secondary": "#3c0091",
+                        "tertiary": "#ffb786",
+                        "outline": "#8c909f",
+                        "surface-dim": "#141313",
+                        "error-container": "#93000a",
+                        "tertiary-fixed": "#ffdcc6",
+                        "on-secondary-container": "#c4abff",
+                        "on-primary": "#002e6a",
+                        "surface-container-low": "#1c1b1b",
+                        "background": "#141313",
+                        "inverse-primary": "#005ac2",
+                        "secondary-fixed": "#e9ddff",
+                        "primary-container": "#4d8eff",
+                        "error": "#ffb4ab",
+                        "accent-pink": "#EC4899",
+                        "surface-base": "#030303",
+                        "border-subtle": "rgba(255, 255, 255, 0.08)",
+                        "on-error-container": "#ffdad6",
+                        "surface-container-lowest": "#0e0e0e",
+                        "border-bright": "rgba(255, 255, 255, 0.15)",
+                        "outline-variant": "#424754",
+                        "on-surface": "#e5e2e1",
+                        "on-error": "#690005"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "base": "4px",
+                        "max-width": "1440px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "48px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["JetBrains Mono"],
+                        "headline-lg-mobile": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "headline-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #030303;
+            color: #e5e2e1;
+        }
+        .bg-glass {
+            background-color: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+        }
+        .glow-indigo {
+            box-shadow: 0 0 80px rgba(173, 198, 255, 0.15);
+        }
+        .text-gradient {
+            background: linear-gradient(90deg, #adc6ff 0%, #d0bcff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="font-body-md text-on-surface antialiased overflow-x-hidden selection:bg-primary selection:text-on-primary">
+<!-- TopNavBar (From Shared Components JSON) -->
+<nav class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-surface/80 backdrop-blur-xl border-b border-border-subtle">
+<div class="flex justify-between items-center max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop h-16">
+<div class="flex items-center gap-4">
+<a class="font-headline-md text-headline-md font-bold tracking-tighter text-on-surface dark:text-on-surface flex items-center gap-2" href="#">
+<img alt="SAPI Logo" class="h-6 w-auto object-contain brightness-0 invert" src="https://lh3.googleusercontent.com/aida/ADBb0uiTObJk1b30lEQu2u2CRxq9ln9GC2NQ5ZVPHL00QlGifGhjOzvUJHuRbjSEhibBqxBj2Tblqb0cLQ_hJY0QPLCzeikFZf9NlxCe9g_gReXIswDgQVdXf6IzkJg78vMWCqlCMg5wT-WrpPBjsDkg7UEHOv3uWuEWwIC9CLlyWnYvG4u2XH0XtqoIAkKeQD7WToEtKOeCXgm3dSfm-ftQStBrdJbNL5fDhI8_MptWawY2l1c084OSUjRbTkM"/>
+                    SAPI
+                </a>
+<div class="hidden md:flex items-center gap-6 ml-8">
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Platform</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Infrastructure</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">SDKs</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Pricing</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<a class="hidden md:inline-flex font-body-md text-body-md text-on-surface hover:text-primary transition-colors duration-200" href="#">Sign in</a>
+<a class="font-body-md text-body-md bg-primary text-on-primary px-4 py-2 rounded font-medium hover:opacity-90 transition-opacity flex items-center gap-2" href="#">
+                    Get Started
+                </a>
+</div>
+</div>
+</nav>
+<main class="pt-24 pb-32 flex flex-col gap-32">
+<!-- Hero Section -->
+<section class="relative max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop pt-16 flex flex-col items-center text-center">
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-primary/10 blur-[120px] rounded-full pointer-events-none"></div>
+<h1 class="font-display-lg text-display-lg md:text-[72px] md:leading-[80px] font-bold tracking-tighter mb-6 max-w-4xl relative z-10 glow-indigo">
+                One API. <span class="text-gradient">Every model.</span> Zero overhead.
+            </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mb-10 relative z-10">
+                The universal gateway for AI. Route requests globally, aggregate API keys, stream responses in real-time, and monitor everything with military-grade precision.
+            </p>
+<div class="flex flex-col sm:flex-row gap-4 relative z-10">
+<button class="bg-primary text-on-primary font-body-md text-body-md font-medium px-6 py-3 rounded flex items-center justify-center gap-2 hover:opacity-90 transition-opacity">
+                    Start building for free
+                    <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+<button class="bg-glass text-on-surface font-body-md text-body-md font-medium px-6 py-3 rounded flex items-center justify-center gap-2 hover:bg-white/5 transition-colors">
+<span class="material-symbols-outlined text-[18px]">terminal</span>
+                    Read Docs
+                </button>
+</div>
+</section>
+<!-- Gateway Visual Diagram -->
+<section class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop w-full">
+<div class="w-full h-[400px] md:h-[500px] bg-glass rounded-xl flex items-center justify-center relative overflow-hidden border border-border-bright p-8">
+<!-- Abstract Representation of Diagram (SVG) -->
+<svg height="100%" preserveaspectratio="xMidYMid meet" viewbox="0 0 1000 400" width="100%" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<lineargradient id="lineGrad" x1="0%" x2="100%" y1="0%" y2="0%">
+<stop offset="0%" stop-color="rgba(173, 198, 255, 0.1)"></stop>
+<stop offset="50%" stop-color="rgba(173, 198, 255, 0.6)"></stop>
+<stop offset="100%" stop-color="rgba(173, 198, 255, 0.1)"></stop>
+</lineargradient>
+</defs>
+<!-- Nodes -->
+<rect fill="rgba(255,255,255,0.05)" height="100" rx="8" stroke="rgba(255,255,255,0.15)" stroke-width="1" width="120" x="50" y="150"></rect>
+<text fill="#e5e2e1" font-family="Inter" font-size="14" font-weight="500" text-anchor="middle" x="110" y="205">Client App</text>
+<rect fill="rgba(173,198,255,0.05)" height="140" rx="12" stroke="#adc6ff" stroke-width="1.5" width="200" x="400" y="130"></rect>
+<text fill="#adc6ff" font-family="Inter" font-size="20" font-weight="700" text-anchor="middle" x="500" y="195">SAPI Gateway</text>
+<text fill="rgba(173,198,255,0.7)" font-family="Inter" font-size="12" text-anchor="middle" x="500" y="220">Routing Engine</text>
+<rect fill="rgba(255,255,255,0.05)" height="60" rx="8" stroke="rgba(255,255,255,0.15)" stroke-width="1" width="120" x="800" y="50"></rect>
+<text fill="#e5e2e1" font-family="Inter" font-size="14" font-weight="500" text-anchor="middle" x="860" y="85">OpenAI</text>
+<rect fill="rgba(255,255,255,0.05)" height="60" rx="8" stroke="rgba(255,255,255,0.15)" stroke-width="1" width="120" x="800" y="170"></rect>
+<text fill="#e5e2e1" font-family="Inter" font-size="14" font-weight="500" text-anchor="middle" x="860" y="205">Anthropic</text>
+<rect fill="rgba(255,255,255,0.05)" height="60" rx="8" stroke="rgba(255,255,255,0.15)" stroke-width="1" width="120" x="800" y="290"></rect>
+<text fill="#e5e2e1" font-family="Inter" font-size="14" font-weight="500" text-anchor="middle" x="860" y="325">Groq</text>
+<!-- Lines -->
+<path d="M170 200 L400 200" fill="none" stroke="url(#lineGrad)" stroke-dasharray="4 4" stroke-width="2"></path>
+<path d="M600 160 L800 80" fill="none" stroke="url(#lineGrad)" stroke-width="2"></path>
+<path d="M600 200 L800 200" fill="none" stroke="url(#lineGrad)" stroke-width="2"></path>
+<path d="M600 240 L800 320" fill="none" stroke="url(#lineGrad)" stroke-dasharray="4 4" stroke-width="2"></path>
+<!-- Failover Node Indicator -->
+<circle cx="780" cy="80" fill="#ffb4ab" r="4"></circle>
+<path d="M780 80 Q 700 140 800 200" fill="none" stroke="#ffb4ab" stroke-dasharray="4 4" stroke-width="1.5"></path>
+<text fill="#ffb4ab" font-family="JetBrains Mono" font-size="10" transform="rotate(45 730 130)" x="730" y="130">Failover Reroute</text>
+</svg>
+</div>
+</section>
+<!-- Feature Grid -->
+<section class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop">
+<div class="mb-12">
+<h2 class="font-headline-md text-headline-md font-semibold mb-4">Infrastructure designed for scale</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Everything you need to build robust AI applications, instantly available.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Card 1 -->
+<div class="bg-glass p-8 rounded-xl flex flex-col gap-4">
+<div class="w-10 h-10 rounded bg-primary/10 flex items-center justify-center border border-primary/20 text-primary">
+<span class="material-symbols-outlined">api</span>
+</div>
+<h3 class="font-body-lg text-body-lg font-medium text-on-surface">Universal Compatibility</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Swap models with a single line of code. Compatible with OpenAI format out of the box.</p>
+</div>
+<!-- Card 2 -->
+<div class="bg-glass p-8 rounded-xl flex flex-col gap-4">
+<div class="w-10 h-10 rounded bg-primary/10 flex items-center justify-center border border-primary/20 text-primary">
+<span class="material-symbols-outlined">key</span>
+</div>
+<h3 class="font-body-lg text-body-lg font-medium text-on-surface">Key Pooling</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Rotate and balance requests across hundreds of API keys automatically to avoid rate limits.</p>
+</div>
+<!-- Card 3 -->
+<div class="bg-glass p-8 rounded-xl flex flex-col gap-4">
+<div class="w-10 h-10 rounded bg-primary/10 flex items-center justify-center border border-primary/20 text-primary">
+<span class="material-symbols-outlined">stream</span>
+</div>
+<h3 class="font-body-lg text-body-lg font-medium text-on-surface">Real-time Streaming</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Low-latency SSE streaming optimized for chat interfaces and generative UI responses.</p>
+</div>
+<!-- Card 4 -->
+<div class="bg-glass p-8 rounded-xl flex flex-col gap-4">
+<div class="w-10 h-10 rounded bg-primary/10 flex items-center justify-center border border-primary/20 text-primary">
+<span class="material-symbols-outlined">hub</span>
+</div>
+<h3 class="font-body-lg text-body-lg font-medium text-on-surface">Provider Agnostic</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Never get locked in. Support for local OSS models, cloud providers, and specialized engines.</p>
+</div>
+<!-- Card 5 -->
+<div class="bg-glass p-8 rounded-xl flex flex-col gap-4">
+<div class="w-10 h-10 rounded bg-primary/10 flex items-center justify-center border border-primary/20 text-primary">
+<span class="material-symbols-outlined">monitoring</span>
+</div>
+<h3 class="font-body-lg text-body-lg font-medium text-on-surface">Observability</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Log every prompt, response, and token count. Export to Datadog or view in our dashboard.</p>
+</div>
+<!-- Card 6 -->
+<div class="bg-glass p-8 rounded-xl flex flex-col gap-4">
+<div class="w-10 h-10 rounded bg-primary/10 flex items-center justify-center border border-primary/20 text-primary">
+<span class="material-symbols-outlined">shield_person</span>
+</div>
+<h3 class="font-body-lg text-body-lg font-medium text-on-surface">Enterprise Security</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">SOC2 compliant infrastructure. PII redaction and strict data retention policies built-in.</p>
+</div>
+</div>
+</section>
+<!-- Code Section -->
+<section class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop w-full">
+<div class="bg-[#0A0A0A] border border-border-bright rounded-xl overflow-hidden shadow-2xl flex flex-col">
+<div class="h-10 border-b border-border-subtle bg-surface-container flex items-center px-4 gap-2">
+<div class="flex gap-1.5">
+<div class="w-3 h-3 rounded-full bg-[#FF5F56]"></div>
+<div class="w-3 h-3 rounded-full bg-[#FFBD2E]"></div>
+<div class="w-3 h-3 rounded-full bg-[#27C93F]"></div>
+</div>
+<div class="ml-4 flex gap-4">
+<span class="font-label-sm text-label-sm text-on-surface-variant border-b border-primary pb-2 mt-2">curl</span>
+<span class="font-label-sm text-label-sm text-outline pb-2 mt-2">python</span>
+<span class="font-label-sm text-label-sm text-outline pb-2 mt-2">node</span>
+</div>
+</div>
+<div class="p-6 font-label-sm text-label-sm text-on-surface overflow-x-auto">
+<pre><code><span class="text-primary">curl</span> https://api.sapi.dev/v1/chat/completions \
+  -H <span class="text-accent-lime">"Content-Type: application/json"</span> \
+  -H <span class="text-accent-lime">"Authorization: Bearer sk-sapi-..."</span> \
+  -d '{
+    <span class="text-primary-fixed-dim">"model"</span>: <span class="text-accent-lime">"anthropic/claude-3-opus"</span>,
+    <span class="text-primary-fixed-dim">"messages"</span>: [{"role": "user", "content": "Explain quantum computing."}],
+    <span class="text-primary-fixed-dim">"fallback_models"</span>: [<span class="text-accent-lime">"openai/gpt-4-turbo"</span>]
+  }'</code></pre>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="max-w-[800px] mx-auto px-margin-mobile md:px-margin-desktop w-full text-center">
+<div class="bg-glass p-12 rounded-xl border border-primary/20 glow-indigo flex flex-col items-center gap-6">
+<h2 class="font-display-lg text-[32px] md:text-[40px] leading-tight font-bold text-on-surface">Ready to scale your AI layer?</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-lg">Get up and running in minutes. No credit card required for the developer tier.</p>
+<button class="mt-4 bg-primary text-on-primary font-body-md text-body-md font-medium px-8 py-4 rounded-lg flex items-center justify-center gap-2 hover:bg-primary-fixed transition-colors shadow-[0_0_20px_rgba(173,198,255,0.4)]">
+                    Start building now
+                </button>
+</div>
+</section>
+</main>
+<!-- Footer (From Shared Components JSON) -->
+<footer class="bg-surface dark:bg-surface border-t border-border-subtle w-full py-16 mt-auto">
+<div class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop flex flex-col md:flex-row justify-between items-center gap-gutter">
+<div class="font-headline-md text-headline-md font-bold text-on-surface flex items-center gap-2">
+<img alt="SAPI Logo Footer" class="h-5 w-auto object-contain brightness-0 invert opacity-80" src="https://lh3.googleusercontent.com/aida/ADBb0uiTObJk1b30lEQu2u2CRxq9ln9GC2NQ5ZVPHL00QlGifGhjOzvUJHuRbjSEhibBqxBj2Tblqb0cLQ_hJY0QPLCzeikFZf9NlxCe9g_gReXIswDgQVdXf6IzkJg78vMWCqlCMg5wT-WrpPBjsDkg7UEHOv3uWuEWwIC9CLlyWnYvG4u2XH0XtqoIAkKeQD7WToEtKOeCXgm3dSfm-ftQStBrdJbNL5fDhI8_MptWawY2l1c084OSUjRbTkM"/>
+                 SAPI
+            </div>
+<div class="flex flex-wrap items-center justify-center gap-6">
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-accent-lime transition-colors" href="#">Documentation</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-accent-lime transition-colors" href="#">Changelog</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-accent-lime transition-colors" href="#">Status</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-accent-lime transition-colors" href="#">Privacy</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-accent-lime transition-colors" href="#">Terms</a>
+</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">
+                © 2024 SAPI Infrastructure. Powered by Softix.
+            </div>
+</div>
+</footer>
+</body></html>

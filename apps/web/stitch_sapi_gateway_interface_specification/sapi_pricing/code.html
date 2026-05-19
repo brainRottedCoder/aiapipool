@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SAPI - Pricing</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed": "#1b1b1d",
+                        "on-tertiary": "#303032",
+                        "secondary": "#9dcaff",
+                        "on-secondary-fixed": "#001d35",
+                        "surface-tint": "#9acbff",
+                        "tertiary-fixed": "#e4e2e4",
+                        "on-secondary": "#003257",
+                        "background": "#131314",
+                        "secondary-fixed-dim": "#9dcaff",
+                        "tertiary-fixed-dim": "#c8c6c8",
+                        "secondary-container": "#024c7f",
+                        "error-container": "#93000a",
+                        "on-tertiary-fixed-variant": "#474649",
+                        "on-secondary-fixed-variant": "#00497b",
+                        "on-primary": "#003355",
+                        "error": "#ffb4ab",
+                        "primary-fixed-dim": "#9acbff",
+                        "surface-container": "#201f20",
+                        "surface-container-highest": "#353436",
+                        "on-primary-fixed": "#001d34",
+                        "outline-variant": "#41474f",
+                        "inverse-primary": "#286293",
+                        "tertiary": "#c8c6c8",
+                        "surface": "#131314",
+                        "on-surface": "#e5e2e3",
+                        "surface-container-low": "#1c1b1c",
+                        "surface-dim": "#131314",
+                        "primary-container": "#6b9fd4",
+                        "primary": "#9acbff",
+                        "inverse-on-surface": "#313031",
+                        "on-tertiary-container": "#333234",
+                        "tertiary-container": "#9c9a9d",
+                        "surface-variant": "#353436",
+                        "surface-container-high": "#2a2a2b",
+                        "on-surface-variant": "#c1c7d0",
+                        "on-error-container": "#ffdad6",
+                        "secondary-fixed": "#d1e4ff",
+                        "primary-fixed": "#d0e4ff",
+                        "on-primary-fixed-variant": "#004a79",
+                        "surface-container-lowest": "#0e0e0f",
+                        "outline": "#8b919a",
+                        "surface-bright": "#3a393a",
+                        "on-background": "#e5e2e3",
+                        "on-error": "#690005",
+                        "inverse-surface": "#e5e2e3",
+                        "on-primary-container": "#003559",
+                        "on-secondary-container": "#89bcf6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "md": "16px",
+                        "margin-desktop": "32px",
+                        "lg": "24px",
+                        "xs": "4px",
+                        "sm": "8px",
+                        "base": "4px",
+                        "margin-mobile": "16px",
+                        "gutter": "16px",
+                        "xl": "48px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "code-md": ["JetBrains Mono"],
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-xl": ["Inter"],
+                        "label-sm": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "code-md": ["13px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "headline-lg": ["30px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "1.3", "fontWeight": "500" }],
+                        "headline-xl": ["40px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "label-sm": ["11px", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #0a0a0b;
+            color: #e5e2e3;
+        }
+        .card-bg {
+            background-color: #121214;
+            border: 1px solid rgba(154, 203, 255, 0.1);
+        }
+        .popover-bg {
+            background-color: #1a1a1c;
+            border: 1px solid rgba(154, 203, 255, 0.15);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+        .btn-primary {
+            background-color: #6b9fd4;
+            color: #ffffff;
+        }
+        .btn-secondary {
+            background-color: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+        }
+        .input-dark {
+            background-color: #070708;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .input-dark:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px #6b9fd4;
+        }
+        .grid-bg {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            mask-image: radial-gradient(circle at center, black, transparent 80%);
+            -webkit-mask-image: radial-gradient(circle at center, black, transparent 80%);
+        }
+    </style>
+</head>
+<body class="antialiased font-body-md text-body-md selection:bg-primary-container selection:text-white flex flex-col min-h-screen">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-surface/80 backdrop-blur-xl border-b border-border-subtle" style="border-bottom-color: rgba(255,255,255,0.08);">
+<div class="flex justify-between items-center max-w-[1600px] mx-auto px-margin-desktop h-16">
+<div class="font-headline-md text-headline-md font-bold tracking-tighter text-on-surface dark:text-on-surface">
+                SAPI
+            </div>
+<div class="hidden md:flex gap-lg items-center">
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary transition-colors duration-200" href="#">Platform</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary transition-colors duration-200" href="#">Infrastructure</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary transition-colors duration-200" href="#">SDKs</a>
+<a class="text-primary dark:text-primary font-medium hover:text-primary dark:hover:text-primary transition-colors duration-200" href="#">Pricing</a>
+</div>
+<div class="flex items-center gap-md">
+<button class="btn-primary px-lg py-sm rounded font-body-md text-body-md font-medium hover:bg-opacity-90 transition-colors">
+                    Get Started
+                </button>
+</div>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="flex-grow pt-32 pb-24 px-margin-mobile md:px-margin-desktop max-w-[1600px] mx-auto w-full relative">
+<!-- Background Grid -->
+<div class="absolute inset-0 grid-bg pointer-events-none -z-10"></div>
+<!-- Hero Section -->
+<section class="text-center mb-24 max-w-3xl mx-auto">
+<h1 class="font-headline-xl text-headline-xl text-on-surface mb-md">Transparent pricing for infrastructure at scale.</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">Usage-based billing designed for modern AI architectures. No minimums, no hidden fees.</p>
+</section>
+<!-- Pricing Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter mb-24">
+<!-- Main Pay-as-you-go Card (Left/Top) -->
+<div class="lg:col-span-4 card-bg rounded-lg p-lg flex flex-col justify-between relative overflow-hidden group hover:border-primary/50 transition-colors duration-300">
+<div class="absolute top-0 right-0 p-md opacity-20 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-primary" style="font-size: 48px;">receipt_long</span>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-sm">Pay-as-you-go</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-lg">Zero commitment, infinite scale.</p>
+<div class="mb-lg">
+<span class="font-headline-xl text-headline-xl text-on-surface">$0</span>
+<span class="font-body-md text-body-md text-on-surface-variant">/mo base</span>
+</div>
+<ul class="space-y-sm mb-xl">
+<li class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary" style="font-size: 16px;">check</span>
+<span class="font-body-md text-body-md text-on-surface">Unlimited projects</span>
+</li>
+<li class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary" style="font-size: 16px;">check</span>
+<span class="font-body-md text-body-md text-on-surface">Community support</span>
+</li>
+<li class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary" style="font-size: 16px;">check</span>
+<span class="font-body-md text-body-md text-on-surface">Global edge routing</span>
+</li>
+</ul>
+</div>
+<button class="w-full btn-secondary py-md rounded font-body-md text-body-md hover:bg-white/5 transition-colors">Start Building</button>
+</div>
+<!-- Model Pricing Table (Right/Bottom) -->
+<div class="lg:col-span-8 card-bg rounded-lg p-lg flex flex-col">
+<div class="flex justify-between items-end mb-lg pb-md border-b" style="border-color: rgba(255,255,255,0.08);">
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Model Pricing</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Cost per 1M tokens.</p>
+</div>
+<div class="font-label-sm text-label-sm bg-primary/10 text-primary px-sm py-xs rounded">UPDATED TODAY</div>
+</div>
+<div class="overflow-x-auto flex-grow">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider" style="border-color: rgba(255,255,255,0.08);">
+<th class="pb-sm font-medium">Model</th>
+<th class="pb-sm font-medium text-right">Input</th>
+<th class="pb-sm font-medium text-right">Output</th>
+</tr>
+</thead>
+<tbody class="font-code-md text-code-md text-on-surface">
+<tr class="border-b hover:bg-white/[0.02] transition-colors" style="border-color: rgba(255,255,255,0.04);">
+<td class="py-md flex items-center gap-sm">
+<span class="w-2 h-2 rounded-full bg-primary shadow-[0_0_8px_rgba(154,203,255,0.6)]"></span>
+                                    GPT-4o
+                                </td>
+<td class="py-md text-right text-on-surface-variant">$5.00</td>
+<td class="py-md text-right text-on-surface-variant">$15.00</td>
+</tr>
+<tr class="border-b hover:bg-white/[0.02] transition-colors" style="border-color: rgba(255,255,255,0.04);">
+<td class="py-md flex items-center gap-sm">
+<span class="w-2 h-2 rounded-full bg-secondary shadow-[0_0_8px_rgba(157,202,255,0.6)]"></span>
+                                    Claude-3.5 Sonnet
+                                </td>
+<td class="py-md text-right text-on-surface-variant">$3.00</td>
+<td class="py-md text-right text-on-surface-variant">$15.00</td>
+</tr>
+<tr class="border-b hover:bg-white/[0.02] transition-colors" style="border-color: rgba(255,255,255,0.04);">
+<td class="py-md flex items-center gap-sm">
+<span class="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_rgba(200,198,200,0.6)]"></span>
+                                    Llama-3 70B
+                                </td>
+<td class="py-md text-right text-on-surface-variant">$0.90</td>
+<td class="py-md text-right text-on-surface-variant">$0.90</td>
+</tr>
+<tr class="hover:bg-white/[0.02] transition-colors">
+<td class="py-md flex items-center gap-sm">
+<span class="w-2 h-2 rounded-full bg-surface-variant"></span>
+                                    Mixtral 8x7B
+                                </td>
+<td class="py-md text-right text-on-surface-variant">$0.60</td>
+<td class="py-md text-right text-on-surface-variant">$0.60</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Calculator Widget -->
+<section class="card-bg rounded-lg p-xl mb-24 relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent pointer-events-none"></div>
+<div class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-xl items-center">
+<div>
+<h3 class="font-headline-lg text-headline-lg text-on-surface mb-sm">Estimate Monthly Burn</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-lg">Calculate your projected costs based on average request volume and token counts.</p>
+<div class="space-y-lg">
+<div>
+<div class="flex justify-between font-label-sm text-label-sm text-on-surface-variant mb-sm">
+<span>Requests / Month</span>
+<span class="font-code-md text-primary">10M</span>
+</div>
+<input class="w-full h-1 bg-surface-variant rounded-lg appearance-none cursor-pointer accent-primary" max="100" min="1" type="range" value="10"/>
+</div>
+<div>
+<div class="flex justify-between font-label-sm text-label-sm text-on-surface-variant mb-sm">
+<span>Avg Tokens / Request</span>
+<span class="font-code-md text-primary">2,500</span>
+</div>
+<input class="w-full h-1 bg-surface-variant rounded-lg appearance-none cursor-pointer accent-primary" max="10000" min="100" type="range" value="2500"/>
+</div>
+</div>
+</div>
+<div class="popover-bg rounded-lg p-lg flex flex-col items-center justify-center min-h-[200px]">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest mb-sm">Estimated Cost</span>
+<div class="flex items-baseline gap-sm mb-md">
+<span class="font-headline-xl text-headline-xl text-primary">$125</span>
+<span class="font-body-md text-body-md text-on-surface-variant">/mo</span>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant text-center max-w-[200px]">Based on a blended average of current tier 1 models.</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-16 bg-surface dark:bg-surface border-t border-border-subtle" style="border-top-color: rgba(255,255,255,0.08);">
+<div class="max-w-[1600px] mx-auto px-margin-desktop flex flex-col md:flex-row justify-between items-center gap-gutter">
+<div class="font-headline-md text-headline-md font-bold text-on-surface">
+                SAPI
+            </div>
+<div class="flex gap-lg items-center">
+<a class="font-label-sm text-label-sm text-on-surface-variant dark:text-on-surface-variant hover:text-accent-lime transition-colors" href="#">Documentation</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant dark:text-on-surface-variant hover:text-accent-lime transition-colors" href="#">Changelog</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant dark:text-on-surface-variant hover:text-accent-lime transition-colors" href="#">Status</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant dark:text-on-surface-variant hover:text-accent-lime transition-colors" href="#">Privacy</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant dark:text-on-surface-variant hover:text-accent-lime transition-colors" href="#">Terms</a>
+</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant dark:text-on-surface-variant">
+                © 2024 SAPI Infrastructure. Powered by Softix.
+            </div>
+</div>
+</footer>
+</body></html>

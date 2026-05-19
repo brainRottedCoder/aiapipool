@@ -1,0 +1,83 @@
+# Environment files (never commit secrets)
+.env
+.env.local
+.env.*.local
+apps/api/.env
+packages/*/.env
+!.env.example
+
+# Dependencies
+node_modules
+apps/*/node_modules
+packages/*/node_modules
+
+# Build outputs
+dist
+.build
+apps/api/dist
+packages/shared/dist
+.next
+apps/web/.next
+
+# Turborepo cache
+.turbo
+apps/*/.turbo
+packages/*/.turbo
+
+# TypeScript build info (generated)
+*.tsbuildinfo
+apps/web/*.tsbuildinfo
+apps/api/*.tsbuildinfo
+packages/shared/*.tsbuildinfo
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Editor directories
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Coverage
+coverage
+.nyc_output
+*.lcov
+
+# Docker
+.dockerignore
+
+# Vercel
+.vercel
+
+# pnpm
+.pnpm
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Encryption keys (if any stored locally)
+*.pem
+*.key
+!apps/api/drizzle.config.ts
+
+
+.next
+.next/
+.next/**

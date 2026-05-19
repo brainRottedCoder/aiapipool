@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>API Documentation - SAPI by Softix</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container-highest": "#353436",
+                      "background": "#131314",
+                      "surface-bright": "#3a393a",
+                      "on-secondary-container": "#89bcf6",
+                      "primary": "#9acbff",
+                      "on-secondary-fixed-variant": "#00497b",
+                      "on-tertiary-fixed-variant": "#474649",
+                      "on-tertiary": "#303032",
+                      "primary-container": "#6b9fd4",
+                      "primary-fixed": "#d0e4ff",
+                      "on-secondary": "#003257",
+                      "inverse-surface": "#e5e2e3",
+                      "surface-container-high": "#2a2a2b",
+                      "surface-tint": "#9acbff",
+                      "surface-container-low": "#1c1b1c",
+                      "tertiary-container": "#9c9a9d",
+                      "tertiary": "#c8c6c8",
+                      "tertiary-fixed": "#e4e2e4",
+                      "on-background": "#e5e2e3",
+                      "surface-container": "#201f20",
+                      "secondary": "#9dcaff",
+                      "on-primary-container": "#003559",
+                      "secondary-fixed": "#d1e4ff",
+                      "outline": "#8b919a",
+                      "surface": "#131314",
+                      "surface-container-lowest": "#0e0e0f",
+                      "error-container": "#93000a",
+                      "outline-variant": "#41474f",
+                      "inverse-primary": "#286293",
+                      "primary-fixed-dim": "#9acbff",
+                      "secondary-container": "#024c7f",
+                      "on-primary": "#003355",
+                      "on-surface": "#e5e2e3",
+                      "on-secondary-fixed": "#001d35",
+                      "on-surface-variant": "#c1c7d0",
+                      "on-tertiary-fixed": "#1b1b1d",
+                      "on-tertiary-container": "#333234",
+                      "tertiary-fixed-dim": "#c8c6c8",
+                      "surface-dim": "#131314",
+                      "on-error": "#690005",
+                      "error": "#ffb4ab",
+                      "secondary-fixed-dim": "#9dcaff",
+                      "on-error-container": "#ffdad6",
+                      "surface-variant": "#353436",
+                      "inverse-on-surface": "#313031",
+                      "on-primary-fixed-variant": "#004a79",
+                      "on-primary-fixed": "#001d34"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "16px",
+                      "xl": "48px",
+                      "xs": "4px",
+                      "md": "16px",
+                      "sm": "8px",
+                      "base": "4px",
+                      "margin-desktop": "32px",
+                      "lg": "24px",
+                      "margin-mobile": "16px"
+              },
+              "fontFamily": {
+                      "code-md": [
+                              "JetBrains Mono"
+                      ],
+                      "label-sm": [
+                              "JetBrains Mono"
+                      ],
+                      "headline-lg": [
+                              "Inter"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "headline-md": [
+                              "Inter"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "headline-xl": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "code-md": [
+                              "13px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-sm": [
+                              "11px",
+                              {
+                                      "lineHeight": "1",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-lg": [
+                              "30px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-lg": [
+                              "16px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "1.3",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "body-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-xl": [
+                              "40px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<nav class="bg-surface-container-low dark:bg-surface-container-low font-headline-md text-headline-md font-body-md text-body-md font-label-sm text-label-sm fixed top-0 w-full z-50 h-16 border-b border-outline-variant bg-surface-container-low/80 backdrop-blur-md">
+<div class="flex justify-between items-center px-gutter max-w-[1600px] mx-auto w-full h-full">
+<div class="flex items-center gap-6">
+<span class="font-headline-md text-headline-md font-bold text-on-surface tracking-tighter">SAPI</span>
+<div class="hidden md:flex gap-6 items-center h-full">
+<a class="text-on-surface-variant font-medium hover:text-on-surface transition-colors h-full flex items-center hover:bg-surface-container-highest transition-all duration-200 px-3" href="#">Models</a>
+<a class="text-on-surface-variant font-medium hover:text-on-surface transition-colors h-full flex items-center hover:bg-surface-container-highest transition-all duration-200 px-3" href="#">Deployments</a>
+<a class="text-on-surface-variant font-medium hover:text-on-surface transition-colors h-full flex items-center hover:bg-surface-container-highest transition-all duration-200 px-3" href="#">Monitoring</a>
+<a class="text-on-surface-variant font-medium hover:text-on-surface transition-colors h-full flex items-center hover:bg-surface-container-highest transition-all duration-200 px-3" href="#">Logs</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden md:flex relative text-on-surface-variant focus-within:text-primary">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[18px]">search</span>
+<input class="bg-[#070708] border-none rounded-[8px] pl-10 pr-4 py-1.5 font-body-md text-body-md focus:ring-2 focus:ring-primary focus:outline-none w-64 text-on-surface placeholder:text-outline" placeholder="Search Docs..." type="text"/>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-highest transition-all duration-200 rounded-full flex items-center justify-center scale-98 active:opacity-80 transition-transform">
+<span class="material-symbols-outlined">terminal</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-highest transition-all duration-200 rounded-full flex items-center justify-center scale-98 active:opacity-80 transition-transform">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-highest transition-all duration-200 rounded-full flex items-center justify-center scale-98 active:opacity-80 transition-transform">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</div>
+<button class="bg-primary-container text-on-primary-container font-label-sm text-label-sm px-4 py-2 rounded-DEFAULT font-medium hover:bg-primary-fixed transition-colors scale-98 active:opacity-80 transition-transform hidden sm:block">
+                    Deploy Node
+                </button>
+<img alt="System Architect Avatar" class="w-8 h-8 rounded-full border border-outline-variant object-cover" data-alt="A small, circular avatar portrait of a professional in a dark, high-tech control room setting. The lighting is moody with subtle blue accents reflecting on their face, fitting the technical minimalist aesthetic of the UI." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBtkihxv9GCzzakDyi51wvSJt7mbchuBXrJY5n4A2opR01_Ncsqu7BXDZX2vQv1dvFTSmn0VQYgjdz3g_9qe_1cUEDwvP4lCn4nV8r12sOCFHPfJcHYhgoz0YoFJK13wV76Ci8vzghZCOvG9OoyrFny03q6u6E-WVkO-c9c9jllIFk1LDbmatXqx6_ooDn3fCdaNPhkgVt9Hkq7JyiQdg5nZWMMogU-JLUzc3F9gBe-tXkyvGJ7fn4jT0cno2kMPcZmFD_PxxWWQI"/>
+</div>
+</div>
+</nav>
+<div class="flex flex-1 pt-16 h-[calc(100vh-64px)] overflow-hidden max-w-[1600px] mx-auto w-full">
+<!-- SideNavBar -->
+<aside class="hidden md:flex flex-col bg-surface-container-lowest dark:bg-surface-container-lowest font-label-sm text-label-sm font-code-md text-code-md w-64 h-full border-r border-outline-variant flex-shrink-0 py-4 gap-2 overflow-y-auto">
+<div class="px-6 mb-6">
+<div class="flex items-center gap-3 mb-1">
+<div class="w-6 h-6 rounded bg-primary-container/20 border border-primary/30 flex items-center justify-center">
+<span class="material-symbols-outlined text-[14px] text-primary">hub</span>
+</div>
+<div>
+<div class="font-label-sm text-label-sm font-black uppercase tracking-widest text-primary">System Core</div>
+<div class="text-[10px] text-on-surface-variant mt-0.5">Powered by Softix</div>
+</div>
+</div>
+<div class="mt-4 flex items-center gap-2 font-label-sm text-label-sm text-on-surface-variant bg-surface-container px-3 py-1.5 rounded border border-[rgba(255,255,255,0.08)]">
+<div class="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.6)]"></div>
+                    System Status: Active
+                </div>
+</div>
+<nav class="flex-1 flex flex-col gap-1 px-2">
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high hover:bg-surface-container-high group transition-colors rounded-DEFAULT cursor-pointer transition-all duration-150" href="#">
+<span class="material-symbols-outlined text-[18px]">dashboard</span>
+<span class="font-label-sm text-label-sm">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high hover:bg-surface-container-high group transition-colors rounded-DEFAULT cursor-pointer transition-all duration-150" href="#">
+<span class="material-symbols-outlined text-[18px]">vpn_key</span>
+<span class="font-label-sm text-label-sm">API Keys</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high hover:bg-surface-container-high group transition-colors rounded-DEFAULT cursor-pointer transition-all duration-150" href="#">
+<span class="material-symbols-outlined text-[18px]">router</span>
+<span class="font-label-sm text-label-sm">Traffic Control</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high hover:bg-surface-container-high group transition-colors rounded-DEFAULT cursor-pointer transition-all duration-150" href="#">
+<span class="material-symbols-outlined text-[18px]">error</span>
+<span class="font-label-sm text-label-sm">Error Rates</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high hover:bg-surface-container-high group transition-colors rounded-DEFAULT cursor-pointer transition-all duration-150" href="#">
+<span class="material-symbols-outlined text-[18px]">payments</span>
+<span class="font-label-sm text-label-sm">Billing</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 bg-secondary-container/20 text-on-secondary-container border-l-4 border-primary hover:bg-surface-container-high group transition-colors rounded-r-DEFAULT cursor-pointer transition-all duration-150" href="#">
+<span class="material-symbols-outlined text-[18px]">description</span>
+<span class="font-label-sm text-label-sm font-medium">Documentation</span>
+</a>
+<!-- Expanded Doc Section -->
+<div class="ml-9 flex flex-col gap-1 mt-1 mb-2 border-l border-outline-variant/30 pl-2">
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary py-1.5 px-2 rounded hover:bg-surface-container-highest transition-colors" href="#">Authentication</a>
+<a class="font-label-sm text-label-sm text-primary font-medium py-1.5 px-2 rounded bg-surface-container-highest transition-colors" href="#">Chat Completions</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary py-1.5 px-2 rounded hover:bg-surface-container-highest transition-colors" href="#">Embeddings</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary py-1.5 px-2 rounded hover:bg-surface-container-highest transition-colors" href="#">Fine-tuning</a>
+</div>
+</nav>
+<div class="mt-auto px-2 border-t border-outline-variant pt-4 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high hover:bg-surface-container-high group transition-colors rounded-DEFAULT cursor-pointer transition-all duration-150" href="#">
+<span class="material-symbols-outlined text-[18px]">code</span>
+<span class="font-label-sm text-label-sm">Terminal</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high hover:bg-surface-container-high group transition-colors rounded-DEFAULT cursor-pointer transition-all duration-150" href="#">
+<span class="material-symbols-outlined text-[18px]">contact_support</span>
+<span class="font-label-sm text-label-sm">Support</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 overflow-y-auto bg-background p-6 md:p-8 lg:p-12 relative flex">
+<!-- Central Doc Content -->
+<div class="flex-1 max-w-4xl lg:pr-8 xl:pr-12">
+<div class="mb-2 flex items-center gap-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant px-2 py-1 bg-surface-container rounded border border-[rgba(255,255,255,0.08)]">POST</span>
+<code class="font-code-md text-code-md text-primary">https://api.softix.ai/v1/chat/completions</code>
+</div>
+<h1 class="font-headline-xl text-headline-xl text-on-surface mb-4">Create chat completion</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-8 max-w-3xl">
+                    Creates a model response for the given chat conversation. This endpoint serves as the primary interface for our instruct models, supporting streaming, function calling, and structured JSON outputs.
+                </p>
+<!-- Example Request Section -->
+<div class="mb-12 bg-[#121214] border border-[rgba(255,255,255,0.08)] rounded-lg overflow-hidden">
+<div class="flex items-center justify-between px-4 py-2 border-b border-[rgba(255,255,255,0.08)] bg-[#1a1a1c]">
+<div class="flex gap-1">
+<button class="px-3 py-1.5 font-label-sm text-label-sm text-primary border-b-2 border-primary">cURL</button>
+<button class="px-3 py-1.5 font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface">Python</button>
+<button class="px-3 py-1.5 font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface">Node.js</button>
+</div>
+<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">content_copy</span>
+<span class="font-label-sm text-label-sm">Copy</span>
+</button>
+</div>
+<div class="p-4 overflow-x-auto">
+<pre class="font-code-md text-code-md text-on-surface-variant leading-relaxed"><span class="text-secondary">curl</span> https://api.softix.ai/v1/chat/completions \
+  <span class="text-secondary">-H</span> <span class="text-error">"Content-Type: application/json"</span> \
+  <span class="text-secondary">-H</span> <span class="text-error">"Authorization: Bearer $SAPI_API_KEY"</span> \
+  <span class="text-secondary">-d</span> '{
+    <span class="text-primary">"model"</span>: <span class="text-error">"sapi-4-turbo"</span>,
+    <span class="text-primary">"messages"</span>: [
+      {
+        <span class="text-primary">"role"</span>: <span class="text-error">"system"</span>,
+        <span class="text-primary">"content"</span>: <span class="text-error">"You are a helpful assistant."</span>
+      },
+      {
+        <span class="text-primary">"role"</span>: <span class="text-error">"user"</span>,
+        <span class="text-primary">"content"</span>: <span class="text-error">"Hello!"</span>
+      }
+    ]
+  }'
+</pre>
+</div>
+</div>
+<!-- Request Body Schema -->
+<h2 class="font-headline-md text-headline-md text-on-surface mb-6 border-b border-outline-variant pb-2">Request Body</h2>
+<div class="space-y-6 mb-12">
+<!-- Prop 1 -->
+<div class="flex flex-col md:flex-row gap-4 py-4 border-b border-[rgba(255,255,255,0.04)]">
+<div class="w-full md:w-1/4 flex flex-col gap-1">
+<span class="font-code-md text-code-md text-on-surface font-semibold">messages</span>
+<span class="font-label-sm text-label-sm text-error">Required</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">array</span>
+</div>
+<div class="w-full md:w-3/4">
+<p class="font-body-md text-body-md text-on-surface-variant mb-2">A list of messages comprising the conversation so far.</p>
+<div class="bg-[#121214] p-3 rounded border border-[rgba(255,255,255,0.08)]">
+<span class="font-code-md text-code-md text-on-surface-variant">Array of <span class="text-primary">MessageObject</span></span>
+</div>
+</div>
+</div>
+<!-- Prop 2 -->
+<div class="flex flex-col md:flex-row gap-4 py-4 border-b border-[rgba(255,255,255,0.04)]">
+<div class="w-full md:w-1/4 flex flex-col gap-1">
+<span class="font-code-md text-code-md text-on-surface font-semibold">model</span>
+<span class="font-label-sm text-label-sm text-error">Required</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">string</span>
+</div>
+<div class="w-full md:w-3/4">
+<p class="font-body-md text-body-md text-on-surface-variant mb-2">ID of the model to use. See the <a class="text-primary hover:underline" href="#">model endpoint compatibility</a> table for details on which models work with the Chat API.</p>
+</div>
+</div>
+<!-- Prop 3 -->
+<div class="flex flex-col md:flex-row gap-4 py-4 border-b border-[rgba(255,255,255,0.04)]">
+<div class="w-full md:w-1/4 flex flex-col gap-1">
+<span class="font-code-md text-code-md text-on-surface font-semibold">temperature</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Optional</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">number</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Defaults to 1</span>
+</div>
+<div class="w-full md:w-3/4">
+<p class="font-body-md text-body-md text-on-surface-variant mb-2">What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.</p>
+</div>
+</div>
+</div>
+<!-- Example Response Section -->
+<h2 class="font-headline-md text-headline-md text-on-surface mb-6 border-b border-outline-variant pb-2">Response</h2>
+<div class="mb-12 bg-[#121214] border border-[rgba(255,255,255,0.08)] rounded-lg overflow-hidden">
+<div class="flex items-center px-4 py-2 border-b border-[rgba(255,255,255,0.08)] bg-[#1a1a1c]">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Returns a chat completion object, or a streamed sequence of chat completion chunk objects if the request is streamed.</span>
+</div>
+<div class="p-4 overflow-x-auto">
+<pre class="font-code-md text-code-md text-on-surface-variant leading-relaxed">{
+  <span class="text-primary">"id"</span>: <span class="text-error">"chatcmpl-123"</span>,
+  <span class="text-primary">"object"</span>: <span class="text-error">"chat.completion"</span>,
+  <span class="text-primary">"created"</span>: <span class="text-secondary">1677652288</span>,
+  <span class="text-primary">"model"</span>: <span class="text-error">"sapi-4-turbo"</span>,
+  <span class="text-primary">"system_fingerprint"</span>: <span class="text-error">"fp_44709d6fcb"</span>,
+  <span class="text-primary">"choices"</span>: [{
+    <span class="text-primary">"index"</span>: <span class="text-secondary">0</span>,
+    <span class="text-primary">"message"</span>: {
+      <span class="text-primary">"role"</span>: <span class="text-error">"assistant"</span>,
+      <span class="text-primary">"content"</span>: <span class="text-error">"\n\nHello there, how may I assist you today?"</span>,
+    },
+    <span class="text-primary">"logprobs"</span>: <span class="text-secondary">null</span>,
+    <span class="text-primary">"finish_reason"</span>: <span class="text-error">"stop"</span>
+  }],
+  <span class="text-primary">"usage"</span>: {
+    <span class="text-primary">"prompt_tokens"</span>: <span class="text-secondary">9</span>,
+    <span class="text-primary">"completion_tokens"</span>: <span class="text-secondary">12</span>,
+    <span class="text-primary">"total_tokens"</span>: <span class="text-secondary">21</span>
+  }
+}
+</pre>
+</div>
+</div>
+</div>
+<!-- Right Sidebar TOC -->
+<aside class="hidden xl:block w-56 flex-shrink-0 sticky top-0 h-max pt-2">
+<div class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant mb-4 font-bold">On this page</div>
+<nav class="flex flex-col gap-2 border-l border-outline-variant/30 pl-3">
+<a class="font-label-sm text-label-sm text-primary hover:text-primary transition-colors" href="#">Create chat completion</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-colors pl-2" href="#">Example Request</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-colors pl-2" href="#">Request Body</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-colors pl-4" href="#">messages</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-colors pl-4" href="#">model</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-colors pl-4" href="#">temperature</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-colors pl-2" href="#">Response</a>
+</nav>
+</aside>
+</main>
+</div>
+</body></html>

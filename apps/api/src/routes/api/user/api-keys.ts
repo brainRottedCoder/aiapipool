@@ -62,7 +62,7 @@ export async function apiKeysRoute(app: FastifyInstance): Promise<void> {
 
     return reply.status(201).send({
       id: inserted[0]?.id,
-      key: rawKey, // shown ONCE only
+      raw_key: rawKey, // shown ONCE only
       key_prefix: keyPrefix,
       name: body.name ?? "API Key",
       rate_limit_rpm: body.rate_limit_rpm ?? env.DEFAULT_RPM,

@@ -9,18 +9,29 @@ const KEYS_QUERY_KEY = ["api-keys"];
 export function useApiKeys() {
   return useQuery<ApiKey[]>({
     queryKey: KEYS_QUERY_KEY,
-    queryFn: () => apiClient.get(ENDPOINTS.user.apiKeys),
+    queryFn: async () => {
+      const res = await apiClient.get<{ data: ApiKey[] }>(ENDPOINTS.user.apiKeys);
+      return res.data;
+    },
   });
 }
 
 export function useCreateApiKey() {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: (name: string) =>
-      apiClient.post<{ id: string; raw_key: string; key_prefix: string }>(
-        ENDPOINTS.user.apiKeys,
-        { name }
-      ),
+    mutationFn: async (name: string) => {
+      const res = await apiClient.post<{
+        id: string;
+        key?: string;
+        raw_key?: string;
+        key_prefix: string;
+      }>(ENDPOINTS.user.apiKeys, { name });
+      const raw_key = res.raw_key ?? res.key;
+      if (!raw_key) {
+        throw new Error("API key was created but the secret was not returned");
+      }
+      return { id: res.id, raw_key, key_prefix: res.key_prefix };
+    },
     onSuccess: () => qc.invalidateQueries({ queryKey: KEYS_QUERY_KEY }),
   });
 }

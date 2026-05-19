@@ -23,8 +23,8 @@ async function loadEnv() {
     ADMIN_API_KEY: z.string().min(32),
 
     // Stripe
-    STRIPE_SECRET_KEY: z.string().startsWith("sk_"),
-    STRIPE_WEBHOOK_SECRET: z.string().startsWith("whsec_"),
+    STRIPE_SECRET_KEY: z.string().min(1),
+    STRIPE_WEBHOOK_SECRET: z.string().min(1),
 
     // Auth (NextAuth)
     NEXTAUTH_SECRET: z.string().min(32),
@@ -45,6 +45,10 @@ async function loadEnv() {
     DEFAULT_RPM: z.coerce.number().default(60),
     DEFAULT_TOKENS_PER_DAY: z.coerce.number().default(100_000),
     MAX_CONCURRENT_REQUESTS: z.coerce.number().default(10),
+
+    // Email (Resend) — optional in development
+    RESEND_API_KEY: z.string().min(1).optional(),
+    FROM_EMAIL: z.string().min(1).default("FluxAI <noreply@fluxai.dev>"),
   }).strict();
 
   const raw: Record<string, string | undefined> = { ...process.env };

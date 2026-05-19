@@ -7,6 +7,7 @@ import { eventsRoute } from "./events.js";
 import { apiKeysRoute } from "./api-keys.js";
 import { topUpRoute } from "./top-up.js";
 import { invoicesRoute } from "./invoices.js";
+import { changePasswordRoute } from "./password.js";
 
 /**
  * User dashboard API routes — protected by NextAuth session auth.
@@ -14,6 +15,7 @@ import { invoicesRoute } from "./invoices.js";
 export async function userRoutes(app: FastifyInstance): Promise<void> {
   app.addHook("preHandler", authenticateSession);
 
+  await app.register(changePasswordRoute);
   await app.register(meRoute, { prefix: "/me" });
   await app.register(usageRoute, { prefix: "/usage" });
   await app.register(ledgerRoute, { prefix: "/ledger" });

@@ -1,8 +1,68 @@
 {
+  "..\\..\\node_modules\\.pnpm\\@splinetool+runtime@1.12.94\\node_modules\\@splinetool\\runtime\\build\\runtime.js -> ./boolean.js": {
+    "id": "..\\..\\node_modules\\.pnpm\\@splinetool+runtime@1.12.94\\node_modules\\@splinetool\\runtime\\build\\runtime.js -> ./boolean.js",
+    "files": [
+      "static/chunks/_app-pages-browser_node_modules_pnpm_splinetool_runtime_1_12_94_node_modules_splinetool_runti-d62fb0.js"
+    ]
+  },
+  "..\\..\\node_modules\\.pnpm\\@splinetool+runtime@1.12.94\\node_modules\\@splinetool\\runtime\\build\\runtime.js -> ./gaussian-splat-compression.js": {
+    "id": "..\\..\\node_modules\\.pnpm\\@splinetool+runtime@1.12.94\\node_modules\\@splinetool\\runtime\\build\\runtime.js -> ./gaussian-splat-compression.js",
+    "files": [
+      "static/chunks/_app-pages-browser_node_modules_pnpm_splinetool_runtime_1_12_94_node_modules_splinetool_runti-a40f24.js"
+    ]
+  },
+  "..\\..\\node_modules\\.pnpm\\@splinetool+runtime@1.12.94\\node_modules\\@splinetool\\runtime\\build\\runtime.js -> ./howler.js": {
+    "id": "..\\..\\node_modules\\.pnpm\\@splinetool+runtime@1.12.94\\node_modules\\@splinetool\\runtime\\build\\runtime.js -> ./howler.js",
+    "files": [
+      "static/chunks/_app-pages-browser_node_modules_pnpm_splinetool_runtime_1_12_94_node_modules_splinetool_runti-cf9a0e.js"
+    ]
+  },
+  "..\\..\\node_modules\\.pnpm\\@splinetool+runtime@1.12.94\\node_modules\\@splinetool\\runtime\\build\\runtime.js -> ./navmesh.js": {
+    "id": "..\\..\\node_modules\\.pnpm\\@splinetool+runtime@1.12.94\\node_modules\\@splinetool\\runtime\\build\\runtime.js -> ./navmesh.js",
+    "files": [
+      "static/chunks/_app-pages-browser_node_modules_pnpm_splinetool_runtime_1_12_94_node_modules_splinetool_runti-c7b088.js"
+    ]
+  },
+  "..\\..\\node_modules\\.pnpm\\@splinetool+runtime@1.12.94\\node_modules\\@splinetool\\runtime\\build\\runtime.js -> ./opentype.js": {
+    "id": "..\\..\\node_modules\\.pnpm\\@splinetool+runtime@1.12.94\\node_modules\\@splinetool\\runtime\\build\\runtime.js -> ./opentype.js",
+    "files": [
+      "static/chunks/_app-pages-browser_node_modules_pnpm_splinetool_runtime_1_12_94_node_modules_splinetool_runti-1c95ce.js"
+    ]
+  },
+  "..\\..\\node_modules\\.pnpm\\@splinetool+runtime@1.12.94\\node_modules\\@splinetool\\runtime\\build\\runtime.js -> ./physics.js": {
+    "id": "..\\..\\node_modules\\.pnpm\\@splinetool+runtime@1.12.94\\node_modules\\@splinetool\\runtime\\build\\runtime.js -> ./physics.js",
+    "files": [
+      "static/chunks/_app-pages-browser_node_modules_pnpm_splinetool_runtime_1_12_94_node_modules_splinetool_runti-5d652f.js"
+    ]
+  },
+  "..\\..\\node_modules\\.pnpm\\@splinetool+runtime@1.12.94\\node_modules\\@splinetool\\runtime\\build\\runtime.js -> ./process.js": {
+    "id": "..\\..\\node_modules\\.pnpm\\@splinetool+runtime@1.12.94\\node_modules\\@splinetool\\runtime\\build\\runtime.js -> ./process.js",
+    "files": [
+      "static/chunks/_app-pages-browser_node_modules_pnpm_splinetool_runtime_1_12_94_node_modules_splinetool_runti-a37c70.js"
+    ]
+  },
+  "..\\..\\node_modules\\.pnpm\\@splinetool+runtime@1.12.94\\node_modules\\@splinetool\\runtime\\build\\runtime.js -> ./ui.js": {
+    "id": "..\\..\\node_modules\\.pnpm\\@splinetool+runtime@1.12.94\\node_modules\\@splinetool\\runtime\\build\\runtime.js -> ./ui.js",
+    "files": [
+      "static/chunks/_app-pages-browser_node_modules_pnpm_splinetool_runtime_1_12_94_node_modules_splinetool_runti-5debfb.js"
+    ]
+  },
   "..\\..\\node_modules\\.pnpm\\next@15.5.18_@opentelemetry_98cddba01972df96a43ba72fb1bcddac\\node_modules\\next\\dist\\client\\dev\\hot-reloader\\app\\use-websocket.js -> @vercel/turbopack-ecmascript-runtime/browser/dev/hmr-client/hmr-client.ts": {
     "id": "..\\..\\node_modules\\.pnpm\\next@15.5.18_@opentelemetry_98cddba01972df96a43ba72fb1bcddac\\node_modules\\next\\dist\\client\\dev\\hot-reloader\\app\\use-websocket.js -> @vercel/turbopack-ecmascript-runtime/browser/dev/hmr-client/hmr-client.ts",
     "files": [
       "static/chunks/_app-pages-browser_node_modules_pnpm_next_15_5_18__opentelemetry_98cddba01972df96a43ba72fb1bc-cfeb6b.js"
+    ]
+  },
+  "..\\..\\node_modules\\.pnpm\\next@15.5.18_@opentelemetry_98cddba01972df96a43ba72fb1bcddac\\node_modules\\next\\dist\\client\\index.js -> ../pages/_app": {
+    "id": "..\\..\\node_modules\\.pnpm\\next@15.5.18_@opentelemetry_98cddba01972df96a43ba72fb1bcddac\\node_modules\\next\\dist\\client\\index.js -> ../pages/_app",
+    "files": [
+      "static/chunks/_pages-dir-browser_node_modules_pnpm_next_15_5_18__opentelemetry_98cddba01972df96a43ba72fb1bc-3d3997.js"
+    ]
+  },
+  "..\\..\\node_modules\\.pnpm\\next@15.5.18_@opentelemetry_98cddba01972df96a43ba72fb1bcddac\\node_modules\\next\\dist\\client\\index.js -> ../pages/_error": {
+    "id": "..\\..\\node_modules\\.pnpm\\next@15.5.18_@opentelemetry_98cddba01972df96a43ba72fb1bcddac\\node_modules\\next\\dist\\client\\index.js -> ../pages/_error",
+    "files": [
+      "static/chunks/_pages-dir-browser_node_modules_pnpm_next_15_5_18__opentelemetry_98cddba01972df96a43ba72fb1bc-69c47f.js"
     ]
   }
 }

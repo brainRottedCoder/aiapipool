@@ -1,5 +1,5 @@
 {
-  "name": "@fluxai/shared",
+  "name": "@sapi/shared",
   "version": "0.0.1",
   "private": true,
   "type": "module",

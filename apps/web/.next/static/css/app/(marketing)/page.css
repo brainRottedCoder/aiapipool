@@ -1,0 +1,295 @@
+/*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../node_modules/.pnpm/next@15.5.18_@opentelemetry_98cddba01972df96a43ba72fb1bcddac/node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[10].use[2]!../../node_modules/.pnpm/next@15.5.18_@opentelemetry_98cddba01972df96a43ba72fb1bcddac/node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[10].use[3]!./app/(marketing)/landing.css ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/* ── SAPI Landing Page — Geodo-inspired premium dark aesthetic ── */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,900;1,400&display=swap');
+@import url('https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700&display=swap');
+
+.landing-root {
+  font-family: 'Satoshi', 'Inter', sans-serif;
+  --sapi-blue: #9acbff;
+  --sapi-blue-bright: #6b9fd4;
+}
+.font-display { font-family: 'Playfair Display', serif; }
+
+/* ── Noise overlay ── */
+.landing-noise {
+  position: fixed; inset: 0; z-index: 50;
+  pointer-events: none; opacity: 0.03; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+}
+
+/* ── Hero atmosphere ── */
+.hero-glow {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% -5%, rgba(154,203,255,0.12) 0%, rgba(107,159,212,0.04) 40%, transparent 65%),
+    radial-gradient(ellipse 60% 50% at 15% 30%, rgba(154,203,255,0.06) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 50% at 85% 30%, rgba(154,203,255,0.06) 0%, transparent 55%),
+    radial-gradient(ellipse 100% 80% at 50% 100%, rgba(154,203,255,0.03) 0%, transparent 60%);
+}
+.hero-fade {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 35%;
+  background: linear-gradient(to bottom, transparent, #0a0a0b);
+  z-index: 1; pointer-events: none;
+}
+
+/* ── Floating orbs ── */
+@keyframes float-orb-1 {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50%      { transform: translateY(-30px) scale(1.05); }
+}
+@keyframes float-orb-2 {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50%      { transform: translateY(25px) scale(0.96); }
+}
+.orb-1 { animation: float-orb-1 14s ease-in-out infinite; }
+.orb-2 { animation: float-orb-2 16s ease-in-out infinite; }
+
+/* ── Typewriter cursor ── */
+.cursor-blink {
+  display: inline-block; width: 2px; height: 1.1em;
+  background: var(--sapi-blue); margin-left: 2px;
+  vertical-align: text-bottom;
+  animation: blink-cursor 0.9s steps(1) infinite;
+}
+@keyframes blink-cursor {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* ── Terminal chrome ── */
+.terminal-box {
+  border-radius: 16px;
+  border: 1px solid rgba(154,203,255,0.12);
+  background: rgba(10,10,11,0.85);
+  backdrop-filter: blur(20px);
+  overflow: hidden;
+}
+.terminal-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.terminal-dots { display: flex; gap: 6px; }
+.terminal-dots span {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+}
+.terminal-body {
+  padding: 20px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px; line-height: 1.7;
+  color: rgba(255,255,255,0.7);
+}
+
+/* ── Dashboard card (GTM-inspired) ── */
+.dash-card {
+  max-width: 1024px;
+  border: 3px solid rgba(154,203,255,0.2);
+  border-radius: 24px;
+  background: rgba(18,18,20,0.9);
+  padding: 20px;
+  box-shadow:
+    0 0 0 1px rgba(154,203,255,0.05),
+    0 20px 60px rgba(0,0,0,0.4),
+    0 80px 80px rgba(0,0,0,0.2);
+  transition: transform 0.6s cubic-bezier(0.16,1,0.3,1);
+}
+
+/* ── Glow cards (solution cards) ── */
+.glow-card {
+  position: relative; overflow: hidden;
+  border-radius: 2rem;
+}
+.glow-card::before {
+  content: '';
+  position: absolute;
+  top: var(--glow-y, 50%); left: var(--glow-x, 50%);
+  width: 400px; height: 400px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none; z-index: 0;
+}
+.glow-card:hover::before { opacity: 1; }
+.glow-card-blue::before {
+  background: radial-gradient(circle, rgba(154,203,255,0.25) 0%, rgba(107,159,212,0.08) 40%, transparent 70%);
+}
+.glow-card-blue {
+  border: 2px solid transparent;
+  transition: border-color 0.4s ease, box-shadow 0.7s ease !important;
+}
+.glow-card-blue:hover {
+  border-color: rgba(154,203,255,0.4) !important;
+  box-shadow: 0 40px 80px rgba(154,203,255,0.12), 0 0 60px rgba(107,159,212,0.06) !important;
+}
+.glow-card-dark::before {
+  background: radial-gradient(circle, rgba(154,203,255,0.15) 0%, rgba(107,159,212,0.05) 40%, transparent 70%);
+}
+.glow-card-dark:hover {
+  border-color: rgba(154,203,255,0.2) !important;
+  box-shadow: 0 40px 80px rgba(154,203,255,0.06), 0 0 40px rgba(107,159,212,0.04);
+}
+.glow-card > * { position: relative; z-index: 1; }
+
+/* ── Parallax stagger ── */
+.parallax-up { transform: translateY(var(--scroll-up, 0px)); }
+.parallax-down { transform: translateY(var(--scroll-down, 0px)); }
+
+/* ── Stats counter animation ── */
+@keyframes count-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── CTA flowing paths ── */
+@keyframes ctaFlow {
+  0%   { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -2; }
+}
+
+/* ── Scroll reveal ── */
+.scroll-reveal {
+  opacity: 0; transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.scroll-reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ── Pulse dot ── */
+@keyframes sapi-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.4; transform: scale(0.75); }
+}
+
+/* ── Cinematic Volumetric Lighting ── */
+.ambient-particles {
+  background-image: 
+    radial-gradient(1px 1px at 20px 30px, rgba(103, 232, 249, 0.15), rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 80px 140px, rgba(56, 189, 248, 0.1), rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 150px 60px, rgba(255, 255, 255, 0.08), rgba(0,0,0,0));
+  background-repeat: repeat;
+  background-size: 250px 250px;
+  animation: drift-particles 100s linear infinite;
+  opacity: 0.8;
+}
+
+@keyframes drift-particles {
+  0% { background-position: 0 0; }
+  100% { background-position: 250px 250px; }
+}
+
+.volumetric-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(150px);
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+.glow-center {
+  top: 50%;
+  left: 50%;
+  width: 60vw;
+  height: 60vh;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.12) 0%, transparent 70%);
+  animation: pulse-glow 15s ease-in-out infinite alternate;
+}
+
+.glow-left {
+  top: 10%;
+  left: -10%;
+  width: 70vw;
+  height: 80vh;
+  background: radial-gradient(ellipse, rgba(103, 232, 249, 0.08) 0%, transparent 60%);
+  animation: drift-glow-left 25s ease-in-out infinite alternate;
+}
+
+.glow-right {
+  bottom: -10%;
+  right: -10%;
+  width: 80vw;
+  height: 70vh;
+  background: radial-gradient(ellipse, rgba(56, 189, 248, 0.06) 0%, transparent 60%);
+  animation: drift-glow-right 30s ease-in-out infinite alternate-reverse;
+}
+
+.vignette-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at center, transparent 30%, #050816 100%);
+  z-index: 5;
+}
+
+@keyframes pulse-glow {
+  0% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+  100% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+}
+
+@keyframes drift-glow-left {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(50px, 30px) scale(1.2); }
+}
+
+@keyframes drift-glow-right {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(-60px, -40px) scale(1.15); }
+}
+
+/* ── Robot Background Animation ── */
+@keyframes robot-idle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+.animate-robot-idle {
+  animation: robot-idle 8s ease-in-out infinite;
+}
+
+/* ── Floating Hands ── */
+@keyframes float-hand-left {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-25px) rotate(-2deg); }
+}
+
+@keyframes float-hand-right {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(25px) rotate(2deg); }
+}
+
+.hero-hand-left {
+  position: absolute;
+  top: -15%;
+  left: -10%;
+  width: 50vw;
+  max-width: 700px;
+  z-index: 10;
+  pointer-events: none;
+  animation: float-hand-left 12s ease-in-out infinite;
+  opacity: 0.9;
+  filter: drop-shadow(0 30px 60px rgba(0,0,0,0.8));
+}
+
+.hero-hand-right {
+  position: absolute;
+  bottom: -5%;
+  right: -10%;
+  width: 50vw;
+  max-width: 700px;
+  z-index: 10;
+  pointer-events: none;
+  animation: float-hand-right 14s ease-in-out infinite;
+  opacity: 0.7;
+  filter: drop-shadow(0 30px 60px rgba(0,0,0,0.8));
+}
+
+/* ── Responsive ── */
+@media (max-width: 767px) {
+  .dash-card { border-radius: 16px; padding: 12px; }
+  .feature-grid { grid-template-columns: 1fr !important; }
+  .hero-orbs .orb-1, .hero-orbs .orb-2 { display: none; }
+}
+

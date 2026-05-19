@@ -1,4 +1,4 @@
-// File: C:\Users\Abhi7\OneDrive\Desktop\Softix\aiapipool\apps\web\app\layout.tsx
+// File: C:\softix\aiapipool\apps\web\app\layout.tsx
 import * as entry from '../../../app/layout.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

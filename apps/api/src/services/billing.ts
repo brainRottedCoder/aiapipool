@@ -58,8 +58,8 @@ export async function createCheckoutSession(
       idempotency_key: idempotencyKey,
       amount: String(amount),
     },
-    success_url: `${env.NEXTAUTH_URL}/dashboard/billing?success=true`,
-    cancel_url: `${env.NEXTAUTH_URL}/dashboard/billing?canceled=true`,
+    success_url: `${env.WEB_APP_URL ?? env.NEXTAUTH_URL}/dashboard/billing?success=true`,
+    cancel_url: `${env.WEB_APP_URL ?? env.NEXTAUTH_URL}/dashboard/billing?canceled=true`,
   });
 
   if (!session.url) {

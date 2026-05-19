@@ -26,9 +26,10 @@ async function loadEnv() {
     STRIPE_SECRET_KEY: z.string().min(1),
     STRIPE_WEBHOOK_SECRET: z.string().min(1),
 
-    // Auth (NextAuth)
+    // Auth (NextAuth) — NEXTAUTH_URL is the public web app origin (CORS, Stripe redirects)
     NEXTAUTH_SECRET: z.string().min(32),
     NEXTAUTH_URL: z.string().url(),
+    WEB_APP_URL: z.string().url().optional(),
     GOOGLE_CLIENT_ID: z.string().optional(),
     GOOGLE_CLIENT_SECRET: z.string().optional(),
     GITHUB_CLIENT_ID: z.string().optional(),

@@ -40,6 +40,45 @@ describe("authenticateSession", () => {
     expect(body.error.type).toBe("authentication_error");
   });
 
+  it("authenticates via authjs.session-token cookie", async () => {
+    const future = new Date(Date.now() + 86400000);
+    const sessionRow = {
+      id: "sess-1",
+      sessionToken: "token-abc",
+      userId: "user-1",
+      expires: future,
+    };
+    const userRow = {
+      id: "user-1",
+      email: "test@example.com",
+      balance: "50.00",
+      status: "active",
+      role: "user",
+    };
+
+    (db.select as any)
+      .mockReturnValueOnce({
+        from: vi.fn(() => ({
+          where: vi.fn(() => ({
+            limit: vi.fn(() => Promise.resolve([sessionRow])),
+          })),
+        })),
+      })
+      .mockReturnValueOnce({
+        from: vi.fn(() => ({
+          where: vi.fn(() => ({
+            limit: vi.fn(() => Promise.resolve([userRow])),
+          })),
+        })),
+      });
+
+    request.headers.cookie = "authjs.session-token=token-abc";
+    await authenticateSession(request as any, reply as any);
+
+    expect(reply.status).not.toHaveBeenCalled();
+    expect(request.locals?.user?.id).toBe("user-1");
+  });
+
   it("authenticates via next-auth.session-token cookie", async () => {
     const future = new Date(Date.now() + 86400000);
     const sessionRow = {

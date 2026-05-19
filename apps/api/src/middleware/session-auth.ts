@@ -1,4 +1,5 @@
 import type { FastifyReply, FastifyRequest } from "fastify";
+import { parseSessionTokenFromCookieHeader } from "../utils/session-cookies.js";
 import { db } from "../db/client.js";
 import { sessions, users } from "../db/schema.js";
 import { eq, and, gt } from "drizzle-orm";
@@ -8,7 +9,7 @@ import { sendOpenAIError } from "../utils/errors.js";
  * NextAuth session authentication middleware for /api/user/* dashboard routes.
  *
  * Supports two session token sources:
- *   a) Cookie: next-auth.session-token (same-domain / subdomain)
+ *   a) Cookie: authjs.session-token / next-auth.session-token (same-domain)
  *   b) Authorization: Bearer <token> (cross-domain: Vercel → Azure)
  *
  * Steps:
@@ -26,14 +27,8 @@ export async function authenticateSession(
 ): Promise<void> {
   let sessionToken: string | undefined;
 
-  // Source A: Cookie header (next-auth.session-token)
-  const cookieHeader = request.headers.cookie;
-  if (cookieHeader) {
-    const match = cookieHeader.match(/next-auth\.session-token=([^;]+)/);
-    if (match && match[1]) {
-      sessionToken = decodeURIComponent(match[1]);
-    }
-  }
+  // Source A: Cookie header (Auth.js / legacy NextAuth session cookies)
+  sessionToken = parseSessionTokenFromCookieHeader(request.headers.cookie);
 
   // Source B: Authorization Bearer header (cross-domain)
   if (!sessionToken) {

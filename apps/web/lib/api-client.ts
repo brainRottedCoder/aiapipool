@@ -1,3 +1,4 @@
+import { parseSessionTokenFromCookieHeader } from "./session-cookies";
 import { ENDPOINTS } from "./api-endpoints";
 
 export class ApiError extends Error {
@@ -12,14 +13,47 @@ export class ApiError extends Error {
   }
 }
 
+let cachedSessionToken: string | null | undefined;
+let sessionTokenCacheExpiresAt = 0;
+
 async function getSessionToken(): Promise<string | null> {
-  // NextAuth session token is stored in cookies by default
-  // For cross-domain, we can also use localStorage as fallback
-  if (typeof document === "undefined") return null;
-  const match = document.cookie.match(/next-auth\.session-token=([^;]+)/);
-  if (match) return decodeURIComponent(match[1]);
-  // Fallback for cross-domain
-  return localStorage.getItem("session-token");
+  if (cachedSessionToken !== undefined && Date.now() < sessionTokenCacheExpiresAt) {
+    return cachedSessionToken;
+  }
+
+  if (typeof window !== "undefined") {
+    try {
+      const res = await fetch("/api/auth/session-token", { credentials: "include" });
+      if (res.ok) {
+        const body = (await res.json()) as { token?: string };
+        if (body.token) {
+          cachedSessionToken = body.token;
+          sessionTokenCacheExpiresAt = Date.now() + 60_000;
+          return body.token;
+        }
+      }
+    } catch {
+      // fall through to legacy reads
+    }
+
+    const fromCookie = parseSessionTokenFromCookieHeader(document.cookie);
+    if (fromCookie) {
+      cachedSessionToken = fromCookie;
+      sessionTokenCacheExpiresAt = Date.now() + 60_000;
+      return fromCookie;
+    }
+
+    const fromStorage = localStorage.getItem("session-token");
+    if (fromStorage) {
+      cachedSessionToken = fromStorage;
+      sessionTokenCacheExpiresAt = Date.now() + 60_000;
+      return fromStorage;
+    }
+  }
+
+  cachedSessionToken = null;
+  sessionTokenCacheExpiresAt = Date.now() + 5_000;
+  return null;
 }
 
 async function fetchWithAuth(

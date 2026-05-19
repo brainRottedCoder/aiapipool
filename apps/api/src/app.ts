@@ -35,8 +35,23 @@ export async function buildApp() {
   });
 
   // ── Plugins ──
+  const corsOrigins = new Set<string>([
+    env.WEB_APP_URL ?? env.NEXTAUTH_URL,
+    env.NEXTAUTH_URL,
+  ]);
+  if (env.NODE_ENV === "development") {
+    corsOrigins.add("http://localhost:3001");
+    corsOrigins.add("http://localhost:3000");
+  }
+
   await app.register(cors, {
-    origin: env.NEXTAUTH_URL,
+    origin: (origin, callback) => {
+      if (!origin || corsOrigins.has(origin)) {
+        callback(null, true);
+        return;
+      }
+      callback(null, false);
+    },
     credentials: true,
     allowedHeaders: [
       "Authorization",

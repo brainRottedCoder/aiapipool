@@ -1,33 +1,13 @@
 "use client";
 
 import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
-import { toast } from "sonner";
+import { ChangePasswordForm } from "@/components/settings/change-password-form";
 import { useState } from "react";
 
 export default function SecuritySettingsPage() {
-  const [currentPassword, setCurrentPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const [twoFactorEnabled, setTwoFactorEnabled] = useState(false);
-
-  const handleChangePassword = async () => {
-    if (newPassword !== confirmPassword) {
-      toast.error("Passwords do not match");
-      return;
-    }
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-      toast.success("Password updated (mock)");
-      setCurrentPassword(""); setNewPassword(""); setConfirmPassword("");
-    }, 500);
-  };
 
   return (
     <div className="max-w-2xl space-y-8">
@@ -41,40 +21,7 @@ export default function SecuritySettingsPage() {
       <Card className="card-panel">
         <CardContent className="p-6 space-y-6">
           <h3 className="font-sans text-headline-md text-on-surface">Change Password</h3>
-          <div className="space-y-4">
-            <div>
-              <Label htmlFor="current">Current Password</Label>
-              <Input
-                id="current"
-                type="password"
-                value={currentPassword}
-                onChange={(e) => setCurrentPassword(e.target.value)}
-              />
-            </div>
-            <div>
-              <Label htmlFor="new">New Password</Label>
-              <Input
-                id="new"
-                type="password"
-                value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
-              />
-            </div>
-            <div>
-              <Label htmlFor="confirm">Confirm New Password</Label>
-              <Input
-                id="confirm"
-                type="password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-              />
-            </div>
-          </div>
-          <div className="flex justify-end">
-            <Button variant="primary" onClick={handleChangePassword} disabled={isLoading}>
-              {isLoading ? "Updating..." : "Update Password"}
-            </Button>
-          </div>
+          <ChangePasswordForm />
         </CardContent>
       </Card>
 

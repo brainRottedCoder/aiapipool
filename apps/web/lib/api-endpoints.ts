@@ -24,6 +24,7 @@ export const ENDPOINTS = {
     apiKeyDetail: (id: string) => `${API_BASE}/api/user/api-keys/${id}`,
     topUp: `${API_BASE}/api/user/top-up`,
     invoices: `${API_BASE}/api/user/invoices`,
+    changePassword: `${API_BASE}/api/user/change-password`,
   },
 
   // Admin API

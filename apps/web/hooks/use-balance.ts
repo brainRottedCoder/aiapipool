@@ -10,6 +10,8 @@ interface MeResponse {
   balance: string;
   status: "active" | "suspended";
   role: "user" | "admin";
+  has_password: boolean;
+  oauth_providers: string[];
 }
 
 export function useMe() {

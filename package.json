@@ -8,7 +8,8 @@
     "lint": "turbo lint",
     "test": "turbo test",
     "db:generate": "turbo db:generate --filter=@fluxai/api",
-    "db:migrate": "turbo db:migrate --filter=@fluxai/api"
+    "db:migrate": "turbo db:migrate --filter=@fluxai/api",
+    "db:seed": "pnpm --filter @fluxai/api db:seed"
   },
   "devDependencies": {
     "turbo": "^2.0.0"

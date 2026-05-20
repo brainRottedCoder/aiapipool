@@ -13,7 +13,7 @@
     "./db-schema": "./dist/db-schema.js"
   },
   "dependencies": {
-    "drizzle-orm": "^0.35.0",
+    "drizzle-orm": "^0.45.2",
     "pg": "^8.13.0",
     "zod": "^3.23.0"
   },

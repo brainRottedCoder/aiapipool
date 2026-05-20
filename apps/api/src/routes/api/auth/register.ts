@@ -1,14 +1,14 @@
 import type { FastifyInstance, FastifyRequest, FastifyReply } from "fastify";
-import { hash } from "bcryptjs";
+import bcrypt from "bcryptjs";
 import { randomInt } from "crypto";
 import { resolveMx } from "dns/promises";
 import { eq } from "drizzle-orm";
 import { RegisterRequestSchema } from "@fluxai/shared";
-import { db } from "../../db/client.js";
-import { users, accounts, verificationTokens } from "../../db/schema.js";
-import { sendOpenAIError } from "../../utils/errors.js";
-import { redis } from "../../redis/client.js";
-import { sendVerificationEmail } from "../../services/email.js";
+import { db } from "../../../db/client.js";
+import { users, accounts, verificationTokens } from "../../../db/schema.js";
+import { sendOpenAIError } from "../../../utils/errors.js";
+import { redis } from "../../../redis/client.js";
+import { sendVerificationEmail } from "../../../services/email.js";
 import pino from "pino";
 
 const logger = pino({ name: "register" });
@@ -143,7 +143,7 @@ export async function registerRoute(app: FastifyInstance): Promise<void> {
         );
       }
 
-      const passwordHash = await hash(password, BCRYPT_ROUNDS);
+      const passwordHash = await bcrypt.hash(password, BCRYPT_ROUNDS);
 
       const [newUser] = await db
         .insert(users)

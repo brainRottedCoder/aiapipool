@@ -1,4 +1,11 @@
-export const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000";
+const serverApiBase =
+  process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000";
+
+/** Browser dev requests go through Next rewrite (`/api/proxy` → API) to avoid CORS issues */
+export const API_BASE =
+  typeof window !== "undefined" && process.env.NODE_ENV !== "production"
+    ? "/api/proxy"
+    : serverApiBase;
 
 export const ENDPOINTS = {
   // Auth

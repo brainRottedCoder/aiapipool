@@ -1,12 +1,34 @@
 import NextAuth from "next-auth";
-import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import Credentials from "next-auth/providers/credentials";
 import GitHub from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
+import { authAdapter } from "@/lib/auth-adapter";
 import { db } from "@/lib/db";
 import { eq } from "drizzle-orm";
 import { users } from "@fluxai/shared/db-schema";
 import bcrypt from "bcryptjs";
+
+// #region agent log
+fetch("http://127.0.0.1:7686/ingest/193e14e7-baa8-49ac-a5cb-fbbfc48f0ac6", {
+  method: "POST",
+  headers: { "Content-Type": "application/json", "X-Debug-Session-Id": "9cec04" },
+  body: JSON.stringify({
+    sessionId: "9cec04",
+    runId: "post-fix",
+    hypothesisId: "A",
+    location: "auth.ts:init",
+    message: "Auth env snapshot",
+    data: {
+      hasSecret: Boolean(process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET),
+      hasGoogleId: Boolean(process.env.GOOGLE_CLIENT_ID),
+      hasGoogleSecret: Boolean(process.env.GOOGLE_CLIENT_SECRET),
+      hasDatabaseUrl: Boolean(process.env.DATABASE_URL),
+      nextAuthUrl: process.env.AUTH_URL ?? process.env.NEXTAUTH_URL ?? null,
+    },
+    timestamp: Date.now(),
+  }),
+}).catch(() => {});
+// #endregion
 
 export const {
   handlers: { GET, POST },
@@ -16,7 +38,7 @@ export const {
 } = NextAuth({
   secret: process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET,
   trustHost: true,
-  adapter: DrizzleAdapter(db),
+  adapter: authAdapter,
   session: {
     strategy: "database",
     maxAge: 30 * 24 * 60 * 60, // 30 days

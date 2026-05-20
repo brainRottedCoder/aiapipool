@@ -1,3 +1,4 @@
+import "./config/load-env.js";
 import { env } from "./config/env.js";
 import { buildApp } from "./app.js";
 import { pool } from "./db/client.js";
@@ -6,15 +7,19 @@ import { bootstrapWorkers, closeWorkers } from "./workers/index.js";
 
 const app = await buildApp();
 
-// Bootstrap background workers (Phase 10 — stubbed here, full logic in Phase 10)
-await bootstrapWorkers();
-
 app.listen({ port: env.PORT, host: env.HOST }, (err, address) => {
   if (err) {
     app.log.error(err);
     process.exit(1);
   }
-  app.log.info(`Server listening at ${address}`);
+  app.log.info({ redisUrl: env.REDIS_URL }, `Server listening at ${address}`);
+
+  void bootstrapWorkers().catch((workerErr) => {
+    app.log.warn(
+      { err: workerErr },
+      "Background workers not started (is Redis running on REDIS_URL?)"
+    );
+  });
 });
 
 async function shutdown(signal: string) {

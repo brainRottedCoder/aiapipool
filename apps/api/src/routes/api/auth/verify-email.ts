@@ -1,10 +1,10 @@
 import type { FastifyInstance, FastifyRequest, FastifyReply } from "fastify";
 import { eq, and, gt } from "drizzle-orm";
 import { VerifyEmailRequestSchema } from "@fluxai/shared";
-import { db } from "../../db/client.js";
-import { users, verificationTokens } from "../../db/schema.js";
-import { sendOpenAIError } from "../../utils/errors.js";
-import { redis } from "../../redis/client.js";
+import { db } from "../../../db/client.js";
+import { users, verificationTokens } from "../../../db/schema.js";
+import { sendOpenAIError } from "../../../utils/errors.js";
+import { redis } from "../../../redis/client.js";
 import pino from "pino";
 
 const logger = pino({ name: "verify-email" });

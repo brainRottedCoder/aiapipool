@@ -1,3 +1,4 @@
+import "./load-env.js";
 import { z } from "zod";
 import pino from "pino";
 import { DefaultAzureCredential } from "@azure/identity";
@@ -52,7 +53,12 @@ async function loadEnv() {
     FROM_EMAIL: z.string().min(1).default("FluxAI <noreply@fluxai.dev>"),
   }).strict();
 
-  const raw: Record<string, string | undefined> = { ...process.env };
+  const keys = Object.keys(envSchema.shape) as (keyof z.infer<typeof envSchema>)[];
+  const raw: Record<string, string | undefined> = {};
+  for (const key of keys) {
+    const value = process.env[key];
+    raw[key] = value === "" ? undefined : value;
+  }
 
   if (raw.AZURE_KEY_VAULT_URL) {
     try {

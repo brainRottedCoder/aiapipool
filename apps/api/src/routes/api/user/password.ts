@@ -1,5 +1,5 @@
 import type { FastifyInstance, FastifyRequest, FastifyReply } from "fastify";
-import { compare, hash } from "bcryptjs";
+import bcrypt from "bcryptjs";
 import { eq } from "drizzle-orm";
 import { ChangePasswordRequestSchema } from "@fluxai/shared";
 import { db } from "../../../db/client.js";
@@ -107,7 +107,7 @@ export async function changePasswordRoute(app: FastifyInstance): Promise<void> {
         return;
       }
 
-      const newHash = await hash(newPassword, BCRYPT_ROUNDS);
+      const newHash = await bcrypt.hash(newPassword, BCRYPT_ROUNDS);
       await db
         .update(users)
         .set({ password_hash: newHash })

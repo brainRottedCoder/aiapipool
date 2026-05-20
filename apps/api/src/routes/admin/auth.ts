@@ -1,5 +1,5 @@
 import type { FastifyInstance, FastifyRequest, FastifyReply } from "fastify";
-import { compare } from "bcryptjs";
+import bcrypt from "bcryptjs";
 import { randomBytes } from "crypto";
 import { eq } from "drizzle-orm";
 import { db } from "../../db/client.js";
@@ -82,7 +82,7 @@ export async function adminAuthRoute(app: FastifyInstance): Promise<void> {
       return sendOpenAIError(reply, 401, "Invalid email or password", "invalid_credentials", null);
     }
 
-    const valid = await compare(password, admin.password_hash);
+    const valid = await bcrypt.compare(password, admin.password_hash);
     if (!valid) {
       return sendOpenAIError(reply, 401, "Invalid email or password", "invalid_credentials", null);
     }

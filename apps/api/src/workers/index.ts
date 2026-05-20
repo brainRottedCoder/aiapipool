@@ -30,7 +30,7 @@ const queues: Queue[] = [];
 
 export async function bootstrapWorkers(): Promise<void> {
   for (const config of queueConfigs) {
-    const queue = new Queue(config.name, { connection: redis });
+    const queue = new Queue(config.name, { connection: bullmqRedis });
     queues.push(queue);
 
     // Add repeatable scheduled job

@@ -11,6 +11,7 @@
 | App | Command | Port | Notes |
 |---|---|---|---|
 | Both (root) | `pnpm dev` | 3000 (API), 3001 (web) | Uses turbo |
+| Database | `docker compose up -d postgres` then `pnpm db:migrate` | 5432 | **Required** for OAuth/login (Auth.js Drizzle adapter) |
 | API only | `cd apps/api && pnpm dev` | 3000 | `tsx watch src/index.ts` |
 | Web only | `cd apps/web && pnpm dev` | 3001 | `next dev --port 3001` |
 

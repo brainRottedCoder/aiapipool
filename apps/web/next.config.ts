@@ -1,6 +1,17 @@
 import type { NextConfig } from "next";
+import { loadEnvConfig } from "@next/env";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+// Monorepo root `.env` (see AGENTS.md); Next.js only auto-loads env from apps/web by default.
+const monorepoRoot = path.join(__dirname, "../..");
+loadEnvConfig(monorepoRoot, process.env.NODE_ENV !== "production", console, true);
 
 const nextConfig: NextConfig = {
+  outputFileTracingRoot: path.join(__dirname, "../.."),
+  transpilePackages: ["@splinetool/react-spline"],
   reactStrictMode: true,
   images: {
     remotePatterns: [

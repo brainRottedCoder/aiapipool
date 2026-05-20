@@ -7,6 +7,7 @@ import { registerRequestIdHook } from "./middleware/request-id.js";
 import { healthRoute } from "./routes/health.js";
 import { v1Routes } from "./routes/v1/index.js";
 import { userRoutes } from "./routes/api/user/index.js";
+import { authRoutes } from "./routes/api/auth/index.js";
 import { webhookRoutes } from "./routes/webhooks/index.js";
 import { adminRoutes } from "./routes/admin/index.js";
 import { registry, httpRequestsTotal, requestDuration } from "./metrics/metrics.js";
@@ -117,6 +118,7 @@ export async function buildApp() {
   // Order: health (public) → v1 (API key + rate limit) → user (session) → webhooks (signature) → admin (admin key) → metrics (internal)
   await app.register(healthRoute, { prefix: "/health" });
   await app.register(v1Routes, { prefix: "/v1" });
+  await app.register(authRoutes, { prefix: "/api/auth" });
   await app.register(userRoutes, { prefix: "/api/user" });
   await app.register(webhookRoutes, { prefix: "/webhooks" });
   await app.register(adminRoutes, { prefix: "/admin" });

@@ -1,23 +1,22 @@
-import { HeroSection } from "@/components/marketing/hero-section";
-import { ArchitectureSection } from "@/components/marketing/architecture-section";
-import { FeatureGrid } from "@/components/marketing/feature-grid";
-import { CodeExampleSection } from "@/components/marketing/code-example-section";
-import { IntegrationsSection } from "@/components/marketing/integrations-section";
-import { PricingTable } from "@/components/marketing/pricing-table";
-import { SecuritySection } from "@/components/marketing/security-section";
-import { CTASection } from "@/components/marketing/cta-section";
+"use client";
+
+import "./landing.css";
+import { HeroSection } from "./sections/hero";
+import { DashboardSection } from "./sections/dashboard";
+import { FeaturesSection, CardsSection } from "./sections/features";
+import { StatsSection, CodeSection, CtaSection } from "./sections/stats-cta";
 
 export default function LandingPage() {
   return (
-    <main className="flex flex-col">
+    <main className="landing-root flex flex-col bg-[#0a0a0b] text-white overflow-x-hidden">
+      <div className="landing-noise" />
       <HeroSection />
-      <ArchitectureSection />
-      <FeatureGrid />
-      <CodeExampleSection />
-      <IntegrationsSection />
-      <PricingTable />
-      <SecuritySection />
-      <CTASection />
+      <DashboardSection />
+      <CodeSection />
+      <FeaturesSection />
+      <CardsSection />
+      <StatsSection />
+      <CtaSection />
     </main>
   );
 }

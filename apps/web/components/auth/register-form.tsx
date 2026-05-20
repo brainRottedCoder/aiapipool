@@ -2,11 +2,12 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { apiClient, ENDPOINTS } from "@/lib/api-client";
+import { ENDPOINTS } from "@/lib/api-endpoints";
 
 export function RegisterForm() {
   const router = useRouter();
@@ -24,11 +25,34 @@ export function RegisterForm() {
     }
     setIsLoading(true);
     try {
-      // Use the backend API to register (we need to add a register endpoint or use NextAuth)
-      // For now, we'll show a message that registration is via OAuth or admin
-      toast.info("Registration via email requires backend setup. Please use GitHub or Google.");
-    } catch {
-      toast.error("Something went wrong");
+      const res = await fetch(ENDPOINTS.api.register, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password, confirmPassword }),
+      });
+
+      if (!res.ok) {
+        const body = await res.json().catch(() => null);
+        throw new Error(body?.error?.message ?? "Registration failed. Please try again.");
+      }
+
+      const signInRes = await signIn("credentials", {
+        email,
+        password,
+        redirect: false,
+        callbackUrl: "/dashboard",
+      });
+
+      if (signInRes?.error) {
+        toast.error("Account created. Please sign in with your credentials.");
+        router.push("/login");
+        return;
+      }
+
+      router.push(`/verify-email?email=${encodeURIComponent(email)}`);
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Something went wrong";
+      toast.error(msg);
     } finally {
       setIsLoading(false);
     }

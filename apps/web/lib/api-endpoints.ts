@@ -10,6 +10,12 @@ export const ENDPOINTS = {
     signout: "/api/auth/signout",
   },
 
+  // Public API
+  api: {
+    register: `${API_BASE}/api/auth/register`,
+    verifyEmail: `${API_BASE}/api/auth/verify-email`,
+  },
+
   // Public
   health: `${API_BASE}/health`,
 

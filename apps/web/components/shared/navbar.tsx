@@ -26,6 +26,7 @@ export function Navbar() {
   }, [pathname]);
 
   const isDashboard = pathname.startsWith("/dashboard") || pathname.startsWith("/settings") || pathname.startsWith("/admin");
+  const isLanding = pathname === "/";
   if (isDashboard) return null;
 
   return (
@@ -34,7 +35,9 @@ export function Navbar() {
         className={cn(
           "fixed top-0 w-full z-50 transition-all duration-300",
           isScrolled
-            ? "bg-background/80 backdrop-blur-xl border-b border-outline-subtle"
+            ? isLanding
+              ? "bg-[#0a0a0b]/80 backdrop-blur-xl border-b border-white/[0.06]"
+              : "bg-background/80 backdrop-blur-xl border-b border-outline-subtle"
             : "bg-transparent"
         )}
       >
@@ -49,8 +52,8 @@ export function Navbar() {
                   className={cn(
                     "font-sans text-body-md transition-colors duration-200",
                     pathname === link.href
-                      ? "text-primary font-medium"
-                      : "text-on-surface-variant hover:text-on-surface"
+                      ? isLanding ? "text-[#9acbff] font-medium" : "text-primary font-medium"
+                      : isLanding ? "text-white/60 hover:text-white" : "text-on-surface-variant hover:text-on-surface",
                   )}
                 >
                   {link.label}
@@ -61,7 +64,10 @@ export function Navbar() {
           <div className="flex items-center gap-3">
             <Link
               href="/login"
-              className="hidden md:flex font-sans text-body-md text-on-surface-variant hover:text-on-surface transition-colors"
+              className={cn(
+                "hidden md:flex font-sans text-body-md transition-colors",
+                isLanding ? "text-white/60 hover:text-white" : "text-on-surface-variant hover:text-on-surface",
+              )}
             >
               Sign in
             </Link>

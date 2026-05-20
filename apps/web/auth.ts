@@ -14,6 +14,8 @@ export const {
   signIn,
   signOut,
 } = NextAuth({
+  secret: process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET,
+  trustHost: true,
   adapter: DrizzleAdapter(db),
   session: {
     strategy: "database",

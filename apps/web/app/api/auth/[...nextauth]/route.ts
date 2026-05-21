@@ -1,3 +1,4 @@
+import type { NextRequest } from "next/server";
 import { GET as authGET, POST as authPOST } from "@/auth";
 
 export const runtime = "nodejs";
@@ -20,7 +21,7 @@ async function logAuthRequest(method: string, url: string) {
   // #endregion
 }
 
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
   await logAuthRequest("GET", req.url);
   try {
     return await authGET(req);
@@ -44,7 +45,7 @@ export async function GET(req: Request) {
   }
 }
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   await logAuthRequest("POST", req.url);
   try {
     return await authPOST(req);

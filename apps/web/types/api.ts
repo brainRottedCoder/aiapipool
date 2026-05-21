@@ -132,6 +132,19 @@ export interface UserUsageLog {
   created_at: string;
 }
 
+export interface UserUsagePeriodSummary {
+  request_count: number;
+  tokens_input: number;
+  tokens_output: number;
+  total_charged: string;
+}
+
+export interface UserUsageSummary {
+  all_time: UserUsagePeriodSummary;
+  last_7d: UserUsagePeriodSummary;
+  last_30d: UserUsagePeriodSummary;
+}
+
 export interface MarginReport {
   period: string;
   total_upstream_cost: string;

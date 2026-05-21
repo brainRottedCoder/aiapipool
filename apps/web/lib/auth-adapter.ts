@@ -36,4 +36,7 @@ fetch("http://127.0.0.1:7686/ingest/193e14e7-baa8-49ac-a5cb-fbbfc48f0ac6", {
 }).catch(() => {});
 // #endregion
 
-export const authAdapter = DrizzleAdapter(db, authSchema);
+export const authAdapter = DrizzleAdapter(
+  db,
+  authSchema as unknown as Parameters<typeof DrizzleAdapter<typeof db>>[1],
+);

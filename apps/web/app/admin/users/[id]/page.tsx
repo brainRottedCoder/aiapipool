@@ -10,7 +10,7 @@ import { useQuery } from "@tanstack/react-query";
 import { adminApiClient, ADMIN_ENDPOINTS } from "@/lib/admin-api-client";
 import { EmptyState } from "@/components/shared/empty-state";
 import { ArrowLeft, User, Ban, CheckCircle, Activity } from "lucide-react";
-import type { UserAdmin, UserUsageLog, LedgerEntry } from "@/types/api";
+import type { UserAdmin, UserUsageLog, UserUsageSummary, LedgerEntry } from "@/types/api";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
@@ -27,9 +27,9 @@ export default function AdminUserDetailPage() {
     enabled: !!id,
   });
 
-  const { data: summary } = useQuery({
+  const { data: summary } = useQuery<UserUsageSummary>({
     queryKey: ["admin-user-summary", id],
-    queryFn: () => adminApiClient.get(ADMIN_ENDPOINTS.userSummary(id)),
+    queryFn: () => adminApiClient.get<UserUsageSummary>(ADMIN_ENDPOINTS.userSummary(id)),
     enabled: !!id,
   });
 
@@ -102,9 +102,7 @@ export default function AdminUserDetailPage() {
     );
   }
 
-  const allTime = summary?.all_time as
-    | { request_count: number; total_charged: string; tokens_input: number; tokens_output: number }
-    | undefined;
+  const allTime = summary?.all_time;
 
   return (
     <div className="space-y-8">

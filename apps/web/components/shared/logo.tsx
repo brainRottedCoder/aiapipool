@@ -29,7 +29,7 @@ export function LogoSmall() {
     >
       <Image
         src="/logo-white.png"
-        alt="SAPI"
+        alt="SOFTIX"
         width={28}
         height={28}
         className="w-7 h-7 rounded"

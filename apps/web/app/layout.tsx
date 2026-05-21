@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    siteName: "SAPI",
+    siteName: "SOFTIX",
     title: "SAPI — One API. Every model. Zero overhead.",
     description:
       "Universal OpenAI-compatible gateway with intelligent key pooling and real-time credit tracking.",

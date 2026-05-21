@@ -66,15 +66,15 @@ export function HeroSection() {
 
       <div className="max-w-4xl mx-auto px-6 relative z-20 text-center flex flex-col items-center">
         {/* Badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[rgba(154,203,255,0.15)] text-[11px] tracking-[4px] uppercase mb-8"
+        {/* <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[rgba(154,203,255,0.15)] text-[11px] tracking-[4px] uppercase mb-8"
           style={{ color: "rgba(154,203,255,0.6)" }}>
           <span className="w-1.5 h-1.5 rounded-full bg-[#9acbff]" style={{ animation: "sapi-pulse 2s ease-in-out infinite" }} />
           AI INFRASTRUCTURE
-        </div>
+        </div> */}
 
         {/* Headline */}
         <h1 className="font-display text-6xl md:text-8xl lg:text-[7rem] font-medium leading-[1] tracking-tight mb-8 text-white">
-          SAPI. <br />
+          SOFTIX. <br />
           <span className="italic font-light" style={{ color: "rgba(255,255,255,0.4)" }}>
             One API for all AI.
           </span>

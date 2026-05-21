@@ -1,5 +1,5 @@
 export const SITE = {
-  name: "SAPI",
+  name: "SOFTIX",
   tagline: "One API. Every model. Zero overhead.",
   description:
     "Universal OpenAI-compatible gateway with intelligent key pooling, automatic failover, and real-time credit tracking.",

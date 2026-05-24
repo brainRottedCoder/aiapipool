@@ -62,7 +62,8 @@ export function Navbar() {
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <Link
+            {/* Sign in hidden while in early access mode */}
+            {/* <Link
               href="/login"
               className={cn(
                 "hidden md:flex font-sans text-body-md transition-colors",
@@ -70,8 +71,8 @@ export function Navbar() {
               )}
             >
               Sign in
-            </Link>
-            <Link href="/register">
+            </Link> */}
+            <Link href="/waitlist">
               <Button variant="primary" size="sm" className="hidden md:flex">
                 Get Started
               </Button>
@@ -119,12 +120,13 @@ export function Navbar() {
                   </Link>
                 ))}
                 <hr className="border-outline-subtle my-2" />
-                <Link href="/login">
+                {/* Sign in hidden while in early access mode */}
+                {/* <Link href="/login">
                   <Button variant="secondary" className="w-full">
                     Sign in
                   </Button>
-                </Link>
-                <Link href="/register">
+                </Link> */}
+                <Link href="/waitlist">
                   <Button variant="primary" className="w-full">
                     Get Started
                   </Button>

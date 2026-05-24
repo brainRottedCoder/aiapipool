@@ -115,7 +115,7 @@ export function CodeSection() {
             </div>
 
             <div className="flex flex-wrap gap-3">
-              <Link href="/register"
+              <Link href="/waitlist"
                 className="inline-block px-8 py-3 rounded-full bg-[#9acbff] text-[#0a0a0b] font-bold text-sm tracking-wide hover:opacity-90 transition-opacity no-underline">
                 Start Building →
               </Link>
@@ -151,7 +151,7 @@ export function CtaSection() {
           The gateway is live. The agent data layer is launching soon — one platform for inference and operational data.
         </p>
 
-        <Link href="/register"
+        <Link href="/waitlist"
           className="inline-flex items-center justify-center px-10 md:px-12 py-4 md:py-5 bg-[#9acbff] text-[#0a0a0b] font-bold uppercase tracking-widest text-sm rounded-full hover:opacity-90 transition-opacity no-underline">
           Join Early Access
         </Link>

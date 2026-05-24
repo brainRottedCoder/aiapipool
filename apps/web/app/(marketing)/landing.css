@@ -395,6 +395,49 @@
   filter: drop-shadow(0 30px 60px rgba(0,0,0,0.8));
 }
 
+/* ── Waitlist form ── */
+.waitlist-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(154, 203, 255, 0.14);
+  border-radius: 14px;
+  padding: 14px 18px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.85);
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+.waitlist-input::placeholder {
+  color: rgba(255, 255, 255, 0.22);
+}
+.waitlist-input:focus {
+  border-color: rgba(154, 203, 255, 0.35);
+  background: rgba(154, 203, 255, 0.04);
+}
+.waitlist-btn {
+  padding: 16px 24px;
+  border-radius: 14px;
+  background: #9acbff;
+  color: #0a0a0b;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.15s;
+  font-family: inherit;
+}
+.waitlist-btn:hover:not(:disabled) {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+.waitlist-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 /* ── Responsive ── */
 @media (max-width: 767px) {
   .dash-card { border-radius: 16px; padding: 12px; }

@@ -90,7 +90,7 @@ export default function BlogPage() {
       <p className="font-sans text-body-md text-on-surface-variant mt-12 text-center">
         Want to stay updated? Follow us on{" "}
         <a
-          href="https://x.com/softix"
+          href="https://x.com/softix_in"
           target="_blank"
           rel="noopener noreferrer"
           className="text-primary hover:underline"

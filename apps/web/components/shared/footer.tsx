@@ -74,9 +74,9 @@ export function Footer() {
                 { label: "About", href: "/about" },
                 { label: "Blog", href: "/blog" },
                 { label: "Contact", href: "/help/contact" },
-                { label: "Twitter", href: "https://x.com/softix", external: true },
+                { label: "Twitter", href: "https://x.com/softix_in",external: true },
               ].map((link) => (
-                <li key={link.label}>
+                <li key={link.label}> 
                   {link.external ? (
                     <a
                       href={link.href}

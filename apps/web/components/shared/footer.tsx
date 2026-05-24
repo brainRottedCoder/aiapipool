@@ -74,7 +74,8 @@ export function Footer() {
                 { label: "About", href: "/about" },
                 { label: "Blog", href: "/blog" },
                 { label: "Contact", href: "/help/contact" },
-                { label: "Twitter", href: "https://x.com/softix_in",external: true },
+                { label: SITE.contactEmail, href: `mailto:${SITE.contactEmail}`, external: true },
+                { label: "Twitter", href: "https://x.com/softix_in", external: true },
               ].map((link) => (
                 <li key={link.label}> 
                   {link.external ? (
@@ -131,6 +132,15 @@ export function Footer() {
           <p className={cn("text-body-md", isLanding ? "text-white/40" : "text-on-surface-variant")}>
             &copy; {new Date().getFullYear()} {SITE.name}. Built for developers.
           </p>
+          <a
+            href={`mailto:${SITE.contactEmail}`}
+            className={cn(
+              "font-mono text-label-sm transition-colors hover:underline",
+              isLanding ? "text-white/50 hover:text-[#9acbff]" : "text-on-surface-variant hover:text-primary",
+            )}
+          >
+            {SITE.contactEmail}
+          </a>
           <p className={cn("text-body-md font-mono text-label-sm", isLanding ? "text-white/40" : "text-on-surface-variant")}>
             Powered by Softix
           </p>

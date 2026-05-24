@@ -97,7 +97,7 @@ const POSTS: Record<
       {
         title: "Your Data, Your Control",
         paragraphs: [
-          "You can request deletion of your account and associated metadata at any time by contacting support@softix.in. We do not sell user data to third parties.",
+          `You can request deletion of your account and associated metadata at any time by contacting ${SITE.contactEmail}. We do not sell user data to third parties.`,
           "Read our full Security page and Privacy Policy for complete details on our data handling practices.",
         ],
       },

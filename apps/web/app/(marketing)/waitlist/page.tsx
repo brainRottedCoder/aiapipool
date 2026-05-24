@@ -67,10 +67,16 @@ export default function WaitlistPage() {
       </main>
 
       {/* Footer line */}
-      <footer className="relative z-20 text-center pb-8">
+      <footer className="relative z-20 text-center pb-8 space-y-2">
         <p className="text-[11px] tracking-[3px] uppercase text-white/20">
           {SITE.name} · {SITE.tagline}
         </p>
+        <a
+          href={`mailto:${SITE.contactEmail}`}
+          className="font-mono text-[12px] text-white/35 hover:text-[#9acbff] transition-colors"
+        >
+          {SITE.contactEmail}
+        </a>
       </footer>
     </div>
   );
@@ -161,7 +167,10 @@ function FormState({
       </form>
 
       <p className="mt-6 text-[11px] text-white/25 tracking-wide text-center">
-        No spam. No credit card. We&apos;ll only email you about your access.
+        No spam. No credit card. Questions?{" "}
+        <a href={`mailto:${SITE.contactEmail}`} className="text-white/40 hover:text-[#9acbff] transition-colors">
+          {SITE.contactEmail}
+        </a>
       </p>
     </>
   );
@@ -185,6 +194,12 @@ function SuccessState({ email }: { email: string }) {
       </p>
       <p className="text-base text-white/35 font-light leading-relaxed mb-10">
         We&apos;ll reach out personally when your spot is ready. Until then, explore the docs.
+      </p>
+      <p className="text-sm text-white/30 mb-10">
+        Questions? Reach us at{" "}
+        <a href={`mailto:${SITE.contactEmail}`} className="font-mono text-[13px] text-[rgba(154,203,255,0.7)] hover:underline">
+          {SITE.contactEmail}
+        </a>
       </p>
       <div className="flex flex-wrap justify-center gap-3">
         <Link

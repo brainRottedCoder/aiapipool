@@ -3,26 +3,25 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { adminApiClient, ADMIN_ENDPOINTS } from "@/lib/admin-api-client";
+import { buildApiUrl } from "@/lib/api-endpoints";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search, ScrollText } from "lucide-react";
 import { EmptyState } from "@/components/shared/empty-state";
-import type { LedgerEntry, PaginatedResponse } from "@/types/api";
+import type { LedgerEntry, LedgerListResponse } from "@/types/api";
 
 export default function AdminLedgersPage() {
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(100);
 
-  const { data: ledger, isLoading } = useQuery<PaginatedResponse<LedgerEntry>>({
+  const { data: ledger, isLoading } = useQuery<LedgerListResponse>({
     queryKey: ["admin-ledgers", limit, search],
-    queryFn: () => {
-      const url = new URL(ADMIN_ENDPOINTS.ledgers);
-      url.searchParams.set("limit", String(limit));
-      if (search) url.searchParams.set("user_id", search);
-      return adminApiClient.get(url.toString());
-    },
+    queryFn: () =>
+      adminApiClient.get(
+        buildApiUrl(ADMIN_ENDPOINTS.ledgers, { limit, user_id: search || undefined })
+      ),
   });
 
   const typeColor: Record<string, string> = {
@@ -100,13 +99,13 @@ export default function AdminLedgersPage() {
               />
             </div>
           )}
-          {ledger && ledger.total > limit && (
+          {ledger && ledger.data.length >= limit && (
             <div className="p-4 border-t border-outline-subtle/50 flex justify-center">
               <Button
                 variant="secondary"
                 onClick={() => setLimit((l) => l + 100)}
               >
-                Load More ({ledger.total - limit} remaining)
+                Load More
               </Button>
             </div>
           )}

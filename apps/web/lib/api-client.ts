@@ -13,6 +13,15 @@ export class ApiError extends Error {
   }
 }
 
+/** Standard list envelope from the Fastify API (`{ data: T }`) */
+export interface ApiDataResponse<T> {
+  data: T;
+}
+
+export function unwrapData<T>(response: ApiDataResponse<T>): T {
+  return response.data;
+}
+
 let cachedSessionToken: string | null | undefined;
 let sessionTokenCacheExpiresAt = 0;
 

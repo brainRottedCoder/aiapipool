@@ -38,6 +38,7 @@ export const ENDPOINTS = {
     topUp: `${API_BASE}/api/user/top-up`,
     invoices: `${API_BASE}/api/user/invoices`,
     changePassword: `${API_BASE}/api/user/change-password`,
+    models: `${API_BASE}/api/user/models`,
   },
 
   // Admin API
@@ -79,3 +80,19 @@ export const ENDPOINTS = {
 
 /** Alias for admin portal API client */
 export const ADMIN_ENDPOINTS = ENDPOINTS.admin;
+
+/** Append query params; works with relative dev paths (`/api/proxy/...`) and absolute URLs */
+export function buildApiUrl(
+  path: string,
+  params?: Record<string, string | number | undefined | null>
+): string {
+  if (!params) return path;
+  const search = new URLSearchParams();
+  for (const [key, value] of Object.entries(params)) {
+    if (value !== undefined && value !== null && value !== "") {
+      search.set(key, String(value));
+    }
+  }
+  const qs = search.toString();
+  return qs ? `${path}?${qs}` : path;
+}

@@ -1,7 +1,7 @@
 "use client";
 
 import type React from "react";
-import { forwardRef } from "react";
+import { forwardRef, useEffect, useState } from "react";
 import { Shader } from "react-shaders";
 import { cn } from "@/lib/utils";
 
@@ -95,6 +95,22 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
 }
 `;
 
+function canUseWebGL(): boolean {
+  if (typeof window === "undefined") return false;
+
+  try {
+    const canvas = document.createElement("canvas");
+    return !!(
+      canvas.getContext("webgl") ?? canvas.getContext("experimental-webgl")
+    );
+  } catch {
+    return false;
+  }
+}
+
+const fallbackClassName =
+  "bg-gradient-to-b from-emerald-950/50 via-black to-purple-950/40";
+
 export const AuroraShaders = forwardRef<HTMLDivElement, AuroraShadersProps>(
   (
     {
@@ -108,9 +124,40 @@ export const AuroraShaders = forwardRef<HTMLDivElement, AuroraShadersProps>(
     },
     ref,
   ) => {
+    const [shaderKey, setShaderKey] = useState(0);
+    const [webglSupported, setWebglSupported] = useState(false);
+
+    useEffect(() => {
+      let active = true;
+
+      setWebglSupported(canUseWebGL());
+
+      // Defer until after Strict Mode's simulated unmount/remount cycle so
+      // react-shaders never re-inits WebGL on a canvas whose context was lost.
+      const timer = window.setTimeout(() => {
+        if (active) setShaderKey((key) => key + 1);
+      }, 0);
+
+      return () => {
+        active = false;
+        window.clearTimeout(timer);
+      };
+    }, []);
+
+    if (shaderKey === 0 || !webglSupported) {
+      return (
+        <div
+          className={cn("w-full h-full", fallbackClassName, className)}
+          ref={ref}
+          {...props}
+        />
+      );
+    }
+
     return (
       <div className={cn("w-full h-full", className)} ref={ref} {...props}>
         <Shader
+          key={shaderKey}
           fs={auroraShader}
           style={{ width: "100%", height: "100%" } as unknown as CSSStyleDeclaration}
           uniforms={{

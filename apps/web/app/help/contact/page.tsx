@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useState } from "react";
 import { Mail, Send } from "lucide-react";
+import { SITE } from "@/lib/constants";
 
 export default function ContactPage() {
   const [subject, setSubject] = useState("");
@@ -73,7 +74,11 @@ export default function ContactPage() {
                 <Mail className="w-5 h-5 text-primary" />
                 <div>
                   <p className="font-sans text-body-md font-medium text-on-surface">Email</p>
-                  <p className="font-mono text-label-sm text-on-surface-variant">support@softix.in</p>
+                  <p className="font-mono text-label-sm text-on-surface-variant">
+                    <a href={`mailto:${SITE.contactEmail}`} className="hover:text-primary transition-colors">
+                      {SITE.contactEmail}
+                    </a>
+                  </p>
                 </div>
               </div>
             </CardContent>

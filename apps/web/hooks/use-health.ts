@@ -1,14 +1,19 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { apiClient, ENDPOINTS } from "@/lib/api-client";
+import { apiClient, ENDPOINTS, unwrapData, type ApiDataResponse } from "@/lib/api-client";
 import { adminApiClient, ADMIN_ENDPOINTS } from "@/lib/admin-api-client";
 import type { ProviderHealth } from "@/types/api";
 
 export function useHealth() {
   return useQuery<ProviderHealth[]>({
     queryKey: ["health"],
-    queryFn: () => apiClient.get(ENDPOINTS.admin.healthProviders),
+    queryFn: async () => {
+      const res = await apiClient.get<ApiDataResponse<ProviderHealth[]>>(
+        ENDPOINTS.admin.healthProviders
+      );
+      return unwrapData(res);
+    },
     refetchInterval: 30_000,
   });
 }
@@ -16,12 +21,18 @@ export function useHealth() {
 export function useAdminHealth() {
   return useQuery({
     queryKey: ["admin-health"],
-    queryFn: () =>
-      Promise.all([
-        adminApiClient.get(ADMIN_ENDPOINTS.healthProviders),
-        adminApiClient.get(ADMIN_ENDPOINTS.healthKeys),
-        adminApiClient.get(ADMIN_ENDPOINTS.healthQueues),
-      ]).then(([providers, keys, queues]) => ({ providers, keys, queues })),
+    queryFn: async () => {
+      const [providersRes, keysRes, queuesRes] = await Promise.all([
+        adminApiClient.get<ApiDataResponse<unknown[]>>(ADMIN_ENDPOINTS.healthProviders),
+        adminApiClient.get<ApiDataResponse<unknown[]>>(ADMIN_ENDPOINTS.healthKeys),
+        adminApiClient.get<ApiDataResponse<unknown[]>>(ADMIN_ENDPOINTS.healthQueues),
+      ]);
+      return {
+        providers: unwrapData(providersRes),
+        keys: unwrapData(keysRes),
+        queues: unwrapData(queuesRes),
+      };
+    },
     refetchInterval: 30_000,
   });
 }

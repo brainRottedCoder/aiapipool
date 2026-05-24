@@ -14,6 +14,7 @@ import {
   Settings,
   HelpCircle,
   ChevronLeft,
+  Cpu,
 } from "lucide-react";
 import { DASHBOARD_SIDEBAR } from "@/lib/constants";
 import { Logo, LogoSmall } from "@/components/shared/logo";
@@ -29,6 +30,7 @@ const iconMap: Record<string, React.ElementType> = {
   Activity,
   Settings,
   HelpCircle,
+  Cpu,
 };
 
 export function DashboardSidebar() {

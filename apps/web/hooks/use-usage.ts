@@ -1,17 +1,19 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { apiClient, ENDPOINTS } from "@/lib/api-client";
+import { apiClient, ENDPOINTS, unwrapData, type ApiDataResponse } from "@/lib/api-client";
+import { buildApiUrl } from "@/lib/api-endpoints";
 import type { UsageStats } from "@/types/api";
 
 export function useUsage(period: "day" | "month" = "day", model?: string) {
-  const url = new URL(ENDPOINTS.user.usage);
-  url.searchParams.set("period", period);
-  if (model) url.searchParams.set("model", model);
+  const url = buildApiUrl(ENDPOINTS.user.usage, { period, model });
 
   return useQuery<UsageStats[]>({
     queryKey: ["usage", period, model],
-    queryFn: () => apiClient.get(url.toString()),
+    queryFn: async () => {
+      const res = await apiClient.get<ApiDataResponse<UsageStats[]>>(url);
+      return unwrapData(res);
+    },
   });
 }
 

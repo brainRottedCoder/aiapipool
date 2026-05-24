@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { useState } from "react";
 import { HelpCircle, Mail, MessageSquare, BookOpen, ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { SITE } from "@/lib/constants";
 
 export default function HelpPage() {
   const [search, setSearch] = useState("");
@@ -36,7 +37,13 @@ export default function HelpPage() {
             <MessageSquare className="w-6 h-6 text-primary mt-1" />
             <div>
               <h3 className="font-sans text-headline-md text-on-surface group-hover:text-primary transition-colors">Contact Support</h3>
-              <p className="font-sans text-body-md text-on-surface-variant mt-1">Submit a ticket or email our team directly.</p>
+              <p className="font-sans text-body-md text-on-surface-variant mt-1">
+                Submit a ticket or email{" "}
+                <a href={`mailto:${SITE.contactEmail}`} className="text-primary hover:underline font-mono text-label-sm">
+                  {SITE.contactEmail}
+                </a>
+                .
+              </p>
             </div>
           </div>
         </Link>

@@ -51,7 +51,7 @@ export function Footer() {
                 { label: "Quickstart", href: "/docs/quickstart" },
                 { label: "API Reference", href: "/docs/api-reference" },
                 { label: "SDKs", href: "/docs/sdks" },
-                { label: "Authentication", href: "/docs" },
+                { label: "Authentication", href: "/docs#authentication" },
               ].map((link) => (
                 <li key={link.href}>
                   <Link
@@ -71,21 +71,35 @@ export function Footer() {
             <h4 className={cn("font-sans font-semibold text-body-md mb-4", isLanding ? "text-white" : "text-on-surface")}>Company</h4>
             <ul className="space-y-2">
               {[
-                { label: "About", href: "#" },
-                { label: "Blog", href: "#" },
+                { label: "About", href: "/about" },
+                { label: "Blog", href: "/blog" },
                 { label: "Contact", href: "/help/contact" },
-                { label: "Twitter", href: "#" },
+                { label: "Twitter", href: "https://x.com/softix", external: true },
               ].map((link) => (
                 <li key={link.label}>
-                  <Link
-                    href={link.href}
-                    className={cn(
-                      "text-body-md transition-colors",
-                      isLanding ? "text-white/50 hover:text-white" : "text-on-surface-variant hover:text-on-surface",
-                    )}
-                  >
-                    {link.label}
-                  </Link>
+                  {link.external ? (
+                    <a
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={cn(
+                        "text-body-md transition-colors",
+                        isLanding ? "text-white/50 hover:text-white" : "text-on-surface-variant hover:text-on-surface",
+                      )}
+                    >
+                      {link.label}
+                    </a>
+                  ) : (
+                    <Link
+                      href={link.href}
+                      className={cn(
+                        "text-body-md transition-colors",
+                        isLanding ? "text-white/50 hover:text-white" : "text-on-surface-variant hover:text-on-surface",
+                      )}
+                    >
+                      {link.label}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>
@@ -94,9 +108,9 @@ export function Footer() {
             <h4 className={cn("font-sans font-semibold text-body-md mb-4", isLanding ? "text-white" : "text-on-surface")}>Legal</h4>
             <ul className="space-y-2">
               {[
-                { label: "Privacy Policy", href: "#" },
-                { label: "Terms of Service", href: "#" },
-                { label: "Security", href: "#" },
+                { label: "Privacy Policy", href: "/legal/privacy" },
+                { label: "Terms of Service", href: "/legal/terms" },
+                { label: "Security", href: "/security" },
               ].map((link) => (
                 <li key={link.label}>
                   <Link

@@ -23,8 +23,13 @@ export default function DashboardPage() {
   const { data: keys } = useApiKeys();
   const { data: usage } = useUsage("day");
 
-  const totalRequests = usage?.reduce((sum, u) => sum + u.requests, 0) ?? 0;
-  const totalTokens = usage?.reduce((sum, u) => sum + u.tokens_input + u.tokens_output, 0) ?? 0;
+  const totalRequests =
+    usage?.reduce((sum, u) => sum + Number(u.requests), 0) ?? 0;
+  const totalTokens =
+    usage?.reduce(
+      (sum, u) => sum + Number(u.tokens_input) + Number(u.tokens_output),
+      0
+    ) ?? 0;
 
   return (
     <div className="space-y-8">

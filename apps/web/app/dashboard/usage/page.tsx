@@ -89,7 +89,7 @@ export default function UsagePage() {
                       <td className="p-3 font-mono text-body-md text-on-surface">{u.requests.toLocaleString()}</td>
                       <td className="p-3 font-mono text-body-md text-on-surface-variant">{u.tokens_input.toLocaleString()}</td>
                       <td className="p-3 font-mono text-body-md text-on-surface-variant">{u.tokens_output.toLocaleString()}</td>
-                      <td className="p-3 font-mono text-body-md text-on-surface">${u.cost.toFixed(4)}</td>
+                      <td className="p-3 font-mono text-body-md text-on-surface">${Number(u.user_charge).toFixed(4)}</td>
                       <td className="p-3 text-right">
                         <Link href={`/dashboard/usage/${i}`}>
                           <Button variant="ghost" size="sm">

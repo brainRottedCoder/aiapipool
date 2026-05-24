@@ -4,6 +4,8 @@ export const SITE = {
   description:
     "Universal OpenAI-compatible gateway with intelligent key pooling, automatic failover, and real-time credit tracking.",
   url: "https://sapi.gateway",
+  contactEmail: "support@softix.in",
+  legalEntity: "Softix Technologies",
 };
 
 export const NAV_LINKS = [
@@ -201,6 +203,7 @@ export const DASHBOARD_SIDEBAR = [
     items: [
       { label: "Dashboard", href: "/dashboard", icon: "LayoutDashboard" },
       { label: "API Keys", href: "/dashboard/api-keys", icon: "Key" },
+      { label: "Models", href: "/dashboard/models", icon: "Cpu" },
       { label: "Usage", href: "/dashboard/usage", icon: "BarChart3" },
       { label: "Billing", href: "/dashboard/billing", icon: "CreditCard" },
     ],

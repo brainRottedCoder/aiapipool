@@ -10,6 +10,13 @@ export interface PaginatedResponse<T> {
   limit: number;
 }
 
+/** Ledger list envelope from user/admin API routes */
+export interface LedgerListResponse {
+  data: LedgerEntry[];
+  limit: number;
+  offset: number;
+}
+
 export interface ApiKey {
   id: string;
   name: string | null;
@@ -25,7 +32,8 @@ export interface UsageStats {
   requests: number;
   tokens_input: number;
   tokens_output: number;
-  cost: number;
+  upstream_cost: number | string;
+  user_charge: number | string;
 }
 
 export interface LedgerEntry {

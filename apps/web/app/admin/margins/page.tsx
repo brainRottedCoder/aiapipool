@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { adminApiClient, ADMIN_ENDPOINTS } from "@/lib/admin-api-client";
+import { buildApiUrl } from "@/lib/api-endpoints";
+import { unwrapData, type ApiDataResponse } from "@/lib/api-client";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -15,10 +17,11 @@ export default function AdminMarginsPage() {
 
   const { data: margins, isLoading } = useQuery<MarginReport[]>({
     queryKey: ["admin-margins", period],
-    queryFn: () => {
-      const url = new URL(ADMIN_ENDPOINTS.margins);
-      url.searchParams.set("period", period);
-      return adminApiClient.get(url.toString());
+    queryFn: async () => {
+      const res = await adminApiClient.get<ApiDataResponse<MarginReport[]>>(
+        buildApiUrl(ADMIN_ENDPOINTS.margins, { period })
+      );
+      return unwrapData(res);
     },
   });
 

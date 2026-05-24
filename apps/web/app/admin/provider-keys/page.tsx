@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { adminApiClient, ADMIN_ENDPOINTS } from "@/lib/admin-api-client";
+import { unwrapData, type ApiDataResponse } from "@/lib/api-client";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -31,7 +32,12 @@ export default function AdminProviderKeysPage() {
 
   const { data: keys, isLoading } = useQuery<ProviderKey[]>({
     queryKey: ["admin-provider-keys"],
-    queryFn: () => adminApiClient.get(ADMIN_ENDPOINTS.providerKeys),
+    queryFn: async () => {
+      const res = await adminApiClient.get<ApiDataResponse<ProviderKey[]>>(
+        ADMIN_ENDPOINTS.providerKeys
+      );
+      return unwrapData(res);
+    },
   });
 
   const addKey = useMutation({

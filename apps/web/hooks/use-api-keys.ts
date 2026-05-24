@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiClient, ENDPOINTS } from "@/lib/api-client";
+import { apiClient, ENDPOINTS, unwrapData, type ApiDataResponse } from "@/lib/api-client";
 import type { ApiKey } from "@/types/api";
 
 const KEYS_QUERY_KEY = ["api-keys"];
@@ -10,8 +10,8 @@ export function useApiKeys() {
   return useQuery<ApiKey[]>({
     queryKey: KEYS_QUERY_KEY,
     queryFn: async () => {
-      const res = await apiClient.get<{ data: ApiKey[] }>(ENDPOINTS.user.apiKeys);
-      return res.data;
+      const res = await apiClient.get<ApiDataResponse<ApiKey[]>>(ENDPOINTS.user.apiKeys);
+      return unwrapData(res);
     },
   });
 }

@@ -2,15 +2,14 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { apiClient, ENDPOINTS } from "@/lib/api-client";
-import type { LedgerEntry, PaginatedResponse } from "@/types/api";
+import { buildApiUrl } from "@/lib/api-endpoints";
+import type { LedgerListResponse } from "@/types/api";
 
 export function useLedger(limit = 100, offset = 0) {
-  const url = new URL(ENDPOINTS.user.ledger);
-  url.searchParams.set("limit", String(limit));
-  url.searchParams.set("offset", String(offset));
+  const url = buildApiUrl(ENDPOINTS.user.ledger, { limit, offset });
 
-  return useQuery<PaginatedResponse<LedgerEntry>>({
+  return useQuery<LedgerListResponse>({
     queryKey: ["ledger", limit, offset],
-    queryFn: () => apiClient.get(url.toString()),
+    queryFn: () => apiClient.get<LedgerListResponse>(url),
   });
 }

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { adminApiClient, ADMIN_ENDPOINTS } from "@/lib/admin-api-client";
+import { unwrapData, type ApiDataResponse } from "@/lib/api-client";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -23,7 +24,12 @@ export default function AdminModelMappingsPage() {
 
   const { data: mappings, isLoading } = useQuery<ModelMapping[]>({
     queryKey: ["admin-model-mappings"],
-    queryFn: () => adminApiClient.get(ADMIN_ENDPOINTS.modelMappings),
+    queryFn: async () => {
+      const res = await adminApiClient.get<ApiDataResponse<ModelMapping[]>>(
+        ADMIN_ENDPOINTS.modelMappings
+      );
+      return unwrapData(res);
+    },
   });
 
   const addMapping = useMutation({

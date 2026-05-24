@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { SectionHeader } from "./section-header";
 
 export function DashboardSection() {
   const containerRef = useRef<HTMLElement>(null);
@@ -11,34 +12,30 @@ export function DashboardSection() {
     offset: ["start end", "center center"],
   });
 
-  const rotateX = useTransform(scrollYProgress, [0, 1], [20, 0]);
-  const scale = useTransform(scrollYProgress, [0, 1], [1.05, 1]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [0, 1]);
-  const y = useTransform(scrollYProgress, [0, 1], [100, 0]);
+  const rotateX = useTransform(scrollYProgress, [0, 1], [14, 0]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1.03, 1]);
+  const opacity = useTransform(scrollYProgress, [0, 0.45], [0, 1]);
+  const y = useTransform(scrollYProgress, [0, 1], [60, 0]);
 
   return (
-    <section ref={containerRef} className="flex items-center justify-center px-4 md:px-20 py-8 relative bg-[#0a0a0b]" style={{ perspective: "1000px" }}>
-      <div className="w-full max-w-[1024px] py-10 relative">
-        {/* Title */}
-        <div className="max-w-[1024px] mx-auto text-center mb-8">
-          <motion.div style={{ opacity, y: useTransform(scrollYProgress, [0, 1], [40, 0]) }}>
-            <div className="flex items-center justify-center gap-3 mb-6">
-              <span className="w-2 h-2 rounded-full bg-[#9acbff]" />
-              <span className="text-[11px] tracking-[5px] uppercase" style={{ color: "rgba(154,203,255,0.35)" }}>
-                The Gateway
-              </span>
-            </div>
-            <h2 className="text-[clamp(36px,5.5vw,76px)] font-black tracking-[-4px] leading-[0.88] mb-5 text-white" style={{ fontFamily: "'Satoshi', sans-serif" }}>
+    <section
+      ref={containerRef}
+      className="landing-section -mt-16 md:-mt-24 pt-0"
+      style={{ perspective: "1000px" }}
+    >
+      <div className="landing-section-glow" aria-hidden />
+      <div className="landing-container landing-container--narrow">
+        <SectionHeader
+          eyebrow="The Gateway"
+          title={
+            <>
               Your AI<br />
-              <span style={{ color: "transparent", WebkitTextStroke: "1.5px rgba(154,203,255,0.3)" }}>command center.</span>
-            </h2>
-            <p className="text-base max-w-lg mx-auto leading-relaxed" style={{ color: "rgba(255,255,255,0.38)" }}>
-              Route requests to any model. Track every token. Automatic failover and key rotation, all in real-time.
-            </p>
-          </motion.div>
-        </div>
+              <span className="landing-title-stroke">command center.</span>
+            </>
+          }
+          description="Route requests to any model. Track every token. Automatic failover and key rotation, all in real-time."
+        />
 
-        {/* Dashboard Card */}
         <motion.div
           className="dash-card mx-auto"
           style={{
@@ -51,7 +48,6 @@ export function DashboardSection() {
           }}
         >
           <div className="h-full w-full overflow-hidden rounded-2xl bg-[#18181b] p-4 flex flex-col">
-            {/* Titlebar */}
             <div className="flex items-center justify-between px-5 py-3 border-b border-white/[0.06] shrink-0">
               <div className="flex gap-1.5">
                 <span className="w-2.5 h-2.5 rounded-full bg-white/20" />
@@ -64,7 +60,6 @@ export function DashboardSection() {
               <span className="text-[10px] font-semibold" style={{ color: "rgba(74,222,128,0.8)" }}>● Live</span>
             </div>
 
-            {/* Metrics */}
             <div className="grid grid-cols-2 md:grid-cols-4 border-b border-white/[0.06] shrink-0">
               {[
                 { val: "142M", label: "Tokens Routed", delta: "+24%" },
@@ -80,9 +75,8 @@ export function DashboardSection() {
               ))}
             </div>
 
-            {/* Request table */}
             <div className="overflow-hidden flex-1">
-              <div className="grid grid-cols-5 text-[9px] uppercase tracking-[2px] border-b border-white/[0.05] px-5 py-2"
+              <div className="grid grid-cols-5 text-[9px] uppercase tracking-[2px] border-b border-white/[0.05] px-5 py-2 max-md:hidden"
                 style={{ color: "rgba(255,255,255,0.2)" }}>
                 <span>Model</span><span>Provider</span><span>Tokens</span><span>Latency</span><span>Cost</span>
               </div>
@@ -93,10 +87,10 @@ export function DashboardSection() {
                 { model: "mixtral-8x7b", provider: "Groq", tokens: "856", latency: "18ms", cost: "$0.001" },
                 { model: "gemini-1.5", provider: "Google", tokens: "5,120", latency: "280ms", cost: "$0.006" },
               ].map((r) => (
-                <div key={r.model} className="grid grid-cols-5 text-[10px] px-5 py-2.5 border-b border-white/[0.04] hover:bg-white/[0.02] transition-colors">
-                  <span className="font-semibold" style={{ color: "rgba(255,255,255,0.85)" }}>{r.model}</span>
-                  <span style={{ color: "rgba(255,255,255,0.4)" }}>{r.provider}</span>
-                  <span style={{ color: "rgba(255,255,255,0.35)" }}>{r.tokens}</span>
+                <div key={r.model} className="grid grid-cols-2 md:grid-cols-5 text-[10px] px-5 py-2.5 border-b border-white/[0.04] hover:bg-white/[0.02] transition-colors gap-1 md:gap-0">
+                  <span className="font-semibold md:col-span-1" style={{ color: "rgba(255,255,255,0.85)" }}>{r.model}</span>
+                  <span className="md:col-span-1" style={{ color: "rgba(255,255,255,0.4)" }}>{r.provider}</span>
+                  <span className="max-md:hidden" style={{ color: "rgba(255,255,255,0.35)" }}>{r.tokens}</span>
                   <span style={{ color: "rgba(154,203,255,0.6)" }}>{r.latency}</span>
                   <span className="font-bold text-white">{r.cost}</span>
                 </div>

@@ -41,7 +41,7 @@ export function HeroSection() {
   }, []);
 
   return (
-    <section className="relative min-h-[115vh] flex items-center justify-center overflow-x-clip overflow-y-visible pt-48 pb-40">
+    <section className="relative min-h-[100svh] flex items-center justify-center overflow-x-clip pt-36 md:pt-44 pb-28 md:pb-36">
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
         <div className="ambient-particles absolute inset-0" />
         <div className="volumetric-glow glow-center" />
@@ -65,12 +65,12 @@ export function HeroSection() {
       </div>
 
       <div className="max-w-4xl mx-auto px-6 relative z-20 text-center flex flex-col items-center">
-        {/* Badge */}
-        {/* <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[rgba(154,203,255,0.15)] text-[11px] tracking-[4px] uppercase mb-8"
-          style={{ color: "rgba(154,203,255,0.6)" }}>
+        {/* Launching Soon badge */}
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[rgba(154,203,255,0.2)] text-[11px] tracking-[4px] uppercase mb-8"
+          style={{ color: "rgba(154,203,255,0.75)", background: "rgba(154,203,255,0.06)" }}>
           <span className="w-1.5 h-1.5 rounded-full bg-[#9acbff]" style={{ animation: "sapi-pulse 2s ease-in-out infinite" }} />
-          AI INFRASTRUCTURE
-        </div> */}
+          Launching Soon
+        </div>
 
         {/* Headline */}
         <h1 className="font-display text-6xl md:text-8xl lg:text-[7rem] font-medium leading-[1] tracking-tight mb-8 text-white">
@@ -80,9 +80,10 @@ export function HeroSection() {
           </span>
         </h1>
 
-        <p className="text-base md:text-lg max-w-md mx-auto mb-10 font-light tracking-wide leading-relaxed"
+        <p className="text-base md:text-lg max-w-lg mx-auto mb-10 font-light tracking-wide leading-relaxed"
           style={{ color: "rgba(255,255,255,0.35)" }}>
-          Universal OpenAI-compatible gateway. Every model, every provider, zero overhead.
+          Universal OpenAI-compatible gateway. Every model, every provider — plus a unified SQL layer
+          for agent data access. Zero overhead.
         </p>
 
         {/* Chat/Terminal input */}
@@ -100,7 +101,7 @@ export function HeroSection() {
 
         {/* Social proof */}
         <p className="text-xs tracking-[3px] uppercase mt-6" style={{ color: "rgba(255,255,255,0.2)" }}>
-          OpenAI compatible · 6+ providers · Pay as you go
+          OpenAI compatible · Agent SQL layer · Pay as you go
         </p>
       </div>
     </section>

@@ -4,23 +4,26 @@ import Link from "next/link";
 import { useEffect } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { SplineRobot } from "@/components/marketing/spline-robot";
+import { SectionHeader } from "./section-header";
 
 export function StatsSection() {
   return (
-    <section className="py-24 border-y border-white/[0.05]">
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-12 text-center">
-          {[
-            { val: "6+", label: "Providers" },
-            { val: "50+", label: "Models" },
-            { val: "99.9%", label: "Uptime SLA" },
-            { val: "<20ms", label: "Routing Overhead" },
-          ].map((s) => (
-            <div key={s.label}>
-              <p className="font-display text-5xl font-bold mb-2">{s.val}</p>
-              <p className="text-xs uppercase tracking-widest" style={{ color: "rgba(255,255,255,0.35)" }}>{s.label}</p>
-            </div>
-          ))}
+    <section className="landing-section--tight">
+      <div className="landing-container">
+        <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] px-6 py-10 md:px-12 md:py-14">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 text-center">
+            {[
+              { val: "6+", label: "Providers" },
+              { val: "50+", label: "Models" },
+              { val: "99.9%", label: "Uptime SLA" },
+              { val: "<20ms", label: "Routing Overhead" },
+            ].map((s) => (
+              <div key={s.label}>
+                <p className="font-display text-4xl md:text-5xl font-bold mb-2 text-white">{s.val}</p>
+                <p className="text-[10px] uppercase tracking-[0.2em] text-white/35">{s.label}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -36,8 +39,8 @@ export function CodeSection() {
 
   const rotateX = useTransform(springY, [-1, 1], [4, -4]);
   const rotateY = useTransform(springX, [-1, 1], [-6, 6]);
-  const translateX = useTransform(springX, [-1, 1], [-20, 20]);
-  const translateY = useTransform(springY, [-1, 1], [-20, 20]);
+  const translateX = useTransform(springX, [-1, 1], [-16, 16]);
+  const translateY = useTransform(springY, [-1, 1], [-16, 16]);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -51,51 +54,51 @@ export function CodeSection() {
   }, [mouseX, mouseY]);
 
   return (
-    <section className="py-24 relative overflow-hidden bg-[#0a0a0b]">
-      <div className="max-w-7xl mx-auto px-6 relative z-10 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-
-          {/* Left: Framed Robot */}
-          <div className="relative w-full h-[540px] md:h-[640px] rounded-[24px] border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.02)] overflow-hidden shadow-2xl"
-            style={{ perspective: 1200 }}>
+    <section className="landing-section overflow-hidden">
+      <div className="landing-section-glow" aria-hidden />
+      <div className="landing-container landing-container--wide">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          <div
+            className="relative w-full h-[420px] md:h-[540px] rounded-2xl border border-white/[0.08] bg-white/[0.02] overflow-hidden shadow-2xl order-2 lg:order-1"
+            style={{ perspective: 1200 }}
+          >
             <div className="absolute top-5 left-5 z-20 flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/50 backdrop-blur-md border border-white/10">
               <div className="w-5 h-5 rounded-full bg-white flex items-center justify-center">
                 <span className="text-black text-[10px] font-black">S</span>
               </div>
-              <span className="text-[11px] font-bold tracking-[3px] uppercase text-white/80 font-sans">SAPI</span>
+              <span className="text-[11px] font-bold tracking-[0.2em] uppercase text-white/80">SAPI</span>
             </div>
 
-            <div className="absolute top-[40%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-[#9acbff] opacity-15 blur-[100px] rounded-full pointer-events-none z-10" />
+            <div className="absolute top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] h-[280px] bg-[#9acbff] opacity-10 blur-[100px] rounded-full pointer-events-none z-10" />
 
             <motion.div
               style={{ rotateX, rotateY, x: translateX, y: translateY }}
-              className="absolute top-0 left-0 w-full h-[calc(100%+60px)] pointer-events-auto"
+              className="absolute inset-0 pointer-events-auto"
             >
-              <div className="w-full h-full animate-robot-idle" style={{ transformOrigin: "center center" }}>
+              <div className="w-full h-full animate-robot-idle">
                 <SplineRobot className="w-full h-full" />
               </div>
             </motion.div>
 
-            <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#0a0a0b]/80 to-transparent z-10 pointer-events-none" />
+            <div className="absolute bottom-0 inset-x-0 h-20 bg-gradient-to-t from-[#0a0a0b]/90 to-transparent z-10 pointer-events-none" />
           </div>
 
-          {/* Right: Text & Code Block */}
-          <div className="pointer-events-auto flex flex-col justify-center">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[rgba(154,203,255,0.12)] text-[11px] tracking-[3px] uppercase mb-8"
-              style={{ color: "rgba(154,203,255,0.5)" }}>
-              <span className="w-1.5 h-1.5 rounded-full bg-[#9acbff]" style={{ animation: "sapi-pulse 2s ease-in-out infinite" }} />
-              Drop-in replacement
-            </div>
-            <h2 className="text-[clamp(42px,5vw,72px)] font-black leading-[0.9] tracking-[-3px] mb-8">
-              <span className="text-white">More</span><br />
-              <span style={{ color: "transparent", WebkitTextStroke: "2px rgba(154,203,255,0.35)" }}>models.</span><br />
-              <span style={{ color: "transparent", WebkitTextStroke: "2px rgba(154,203,255,0.35)" }}>FASTER.</span>
-            </h2>
-            <p className="text-[15px] leading-relaxed max-w-md mb-10" style={{ color: "rgba(255,255,255,0.45)" }}>
-              Change one line of code to unlock every AI model. Your existing OpenAI SDK, Cursor, LangChain — everything just works.
-            </p>
+          <div className="order-1 lg:order-2">
+            <SectionHeader
+              align="left"
+              eyebrow="Drop-in replacement"
+              title={
+                <>
+                  More <span className="landing-title-stroke">models.</span>
+                  <br />
+                  <span className="landing-title-stroke">Faster.</span>
+                </>
+              }
+              description="Change one line of code to unlock every AI model. Your existing OpenAI SDK, Cursor, LangChain — everything just works."
+              className="mb-8 md:mb-10"
+            />
 
-            <div className="terminal-box shadow-[0_20px_60px_rgba(0,0,0,0.5)] border-[rgba(154,203,255,0.15)] bg-[rgba(10,10,11,0.8)] backdrop-blur-2xl mb-8">
+            <div className="terminal-box shadow-[0_20px_60px_rgba(0,0,0,0.4)] mb-8">
               <div className="terminal-bar">
                 <div className="terminal-dots"><span /><span /><span /></div>
                 <span className="text-[10px] tracking-[3px] uppercase" style={{ color: "rgba(154,203,255,0.4)" }}>python</span>
@@ -111,7 +114,7 @@ export function CodeSection() {
               </div>
             </div>
 
-            <div className="flex gap-4 items-center">
+            <div className="flex flex-wrap gap-3">
               <Link href="/register"
                 className="inline-block px-8 py-3 rounded-full bg-[#9acbff] text-[#0a0a0b] font-bold text-sm tracking-wide hover:opacity-90 transition-opacity no-underline">
                 Start Building →
@@ -130,34 +133,40 @@ export function CodeSection() {
 
 export function CtaSection() {
   return (
-    <section className="py-32 relative overflow-hidden">
-      <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
-        <div className="flex justify-center mb-10">
-          <div className="w-14 h-14 rounded-full bg-[rgba(154,203,255,0.1)] flex items-center justify-center">
-            <svg className="w-7 h-7 text-[#9acbff] opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <section className="landing-section overflow-hidden pb-24 md:pb-32">
+      <div className="landing-section-glow" aria-hidden />
+      <div className="landing-container landing-container--narrow text-center relative z-10">
+        <div className="flex justify-center mb-8">
+          <div className="w-14 h-14 rounded-full bg-[rgba(154,203,255,0.1)] flex items-center justify-center border border-[rgba(154,203,255,0.15)]">
+            <svg className="w-7 h-7 text-[#9acbff] opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
           </div>
         </div>
-        <h2 className="font-display text-5xl md:text-8xl italic mb-12">
+
+        <h2 className="landing-title italic mb-6">
           Ship faster,<br />pay less.
         </h2>
+        <p className="landing-desc mx-auto max-w-md mb-10">
+          The gateway is live. The agent data layer is launching soon — one platform for inference and operational data.
+        </p>
+
         <Link href="/register"
-          className="inline-flex items-center justify-center px-12 py-5 bg-[#9acbff] text-[#0a0a0b] font-bold uppercase tracking-widest text-sm rounded-full hover:opacity-90 transition-opacity no-underline">
-          Start Building Free
+          className="inline-flex items-center justify-center px-10 md:px-12 py-4 md:py-5 bg-[#9acbff] text-[#0a0a0b] font-bold uppercase tracking-widest text-sm rounded-full hover:opacity-90 transition-opacity no-underline">
+          Join Early Access
         </Link>
-        <p className="text-xs mt-6" style={{ color: "rgba(255,255,255,0.25)" }}>No credit card required</p>
+        <p className="text-xs mt-6 tracking-wide text-white/25">Launching soon · No credit card required</p>
       </div>
 
-      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-60">
         <svg viewBox="0 0 696 316" fill="none" preserveAspectRatio="xMidYMid slice" className="absolute inset-0 w-full h-full">
-          {Array.from({ length: 12 }).map((_, i) => {
-            const y = 136 + i * 3.5;
+          {Array.from({ length: 8 }).map((_, i) => {
+            const y = 136 + i * 4;
             const amp = 2 + i * 2;
-            const op = 0.06 + i * 0.03;
+            const op = 0.05 + i * 0.025;
             const sw = 0.2 + i * 0.04;
-            const dur = 9 + (i % 5);
-            const del = -(i % 10);
+            const dur = 10 + (i % 4);
+            const del = -(i % 8);
             return (
               <path key={i}
                 d={`M-20 ${y}C${120 - amp * 4} ${y - amp} ${280 + amp * 4} ${y + amp} 348 ${y}C${416 - amp * 4} ${y - amp} ${576 + amp * 4} ${y + amp} 716 ${y}`}

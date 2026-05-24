@@ -70,6 +70,11 @@ export default function AboutPage() {
           <li>Usage dashboard with analytics, billing, and API key management</li>
           <li>Pay-as-you-go pricing with no subscriptions or minimum commitments</li>
         </ul>
+        <p className="mt-4">
+          <strong>Launching soon:</strong> an agent data layer that lets AI workflows query GitHub, Linear,
+          Datadog, Stripe, and other sources through a single SQL interface — with cross-source JOINs,
+          MCP support, and fewer tool calls than stitching APIs together by hand.
+        </p>
       </ContentSection>
 
       <ContentSection title="Our Values">

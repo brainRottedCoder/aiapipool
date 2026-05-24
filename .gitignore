@@ -81,3 +81,11 @@ temp/
 .next
 .next/
 .next/**
+
+
+
+coral
+./coral
+coral/
+coral/**
+

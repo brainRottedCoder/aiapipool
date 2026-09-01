@@ -21,18 +21,18 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "SAPI — One API. Every model. Zero overhead.",
-    template: "%s — SAPI",
+    default: "SOFTIX — One query for every agent.",
+    template: "%s — SOFTIX",
   },
   description:
-    "Universal OpenAI-compatible gateway with intelligent key pooling, automatic failover, and real-time credit tracking. Pay only for what you use.",
+    "The data access layer for AI agents. Query GitHub, Linear, Datadog, Stripe, and your files through a single SQL interface over MCP — built on a battle-tested multi-provider AI gateway.",
   openGraph: {
     type: "website",
     locale: "en_US",
     siteName: "SOFTIX",
-    title: "SAPI — One API. Every model. Zero overhead.",
+    title: "SOFTIX — One query for every agent.",
     description:
-      "Universal OpenAI-compatible gateway with intelligent key pooling and real-time credit tracking.",
+      "Query GitHub, Linear, Datadog, Stripe, and your files through a single SQL interface over MCP.",
   },
   robots: {
     index: true,

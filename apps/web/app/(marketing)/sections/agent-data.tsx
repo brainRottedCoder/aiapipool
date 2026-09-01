@@ -27,7 +27,7 @@ export function AgentDataSection() {
 
       <div className="landing-container">
         <SectionHeader
-          eyebrow="Agent Data Layer"
+          eyebrow="The Product"
           badge="soon"
           title={
             <>

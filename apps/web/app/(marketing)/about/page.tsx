@@ -8,33 +8,33 @@ import { SITE } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: "About",
-  description: `Learn about ${SITE.name} — the universal OpenAI-compatible AI API gateway built by Softix for developers and teams.`,
+  description: `Learn about ${SITE.name} — the data access layer for AI agents, built by Softix for developers and teams.`,
 };
 
 const VALUES = [
   {
     icon: Globe,
-    title: "Universal Compatibility",
+    title: "One Query, Every Source",
     description:
-      "One OpenAI-compatible endpoint for GPT, Claude, Llama, Gemini, and more — no provider-specific SDKs required.",
-  },
-  {
-    icon: Key,
-    title: "Operational Reliability",
-    description:
-      "Intelligent key pooling, automatic failover, and real-time credit tracking keep your applications running without manual intervention.",
+      "GitHub, Linear, Datadog, Stripe, and your own files — queried through a single SQL interface with cross-source JOINs, exposed over MCP.",
   },
   {
     icon: Zap,
-    title: "Developer-First",
+    title: "Fewer Tool Calls, Better Agents",
     description:
-      "Drop-in replacement for existing OpenAI integrations. Change your base URL, keep your code. Start building in minutes.",
+      "Agents shouldn't burn a dozen tool calls chasing one answer. One query replaces the tool-call chains that make agents slow and expensive to run.",
+  },
+  {
+    icon: Key,
+    title: "Built on Proven Infrastructure",
+    description:
+      "The data layer runs on the same gateway that already routes production AI traffic — intelligent key pooling, automatic failover, and real-time tracking.",
   },
   {
     icon: Shield,
     title: "Security by Design",
     description:
-      "AES-256-GCM encryption, HMAC-SHA256 key hashing, zero message content logging, and immutable audit trails.",
+      "AES-256-GCM encryption, HMAC-SHA256 key hashing, zero content logging, and immutable audit trails. Credentials never leave your trust boundary.",
   },
 ];
 
@@ -42,39 +42,41 @@ export default function AboutPage() {
   return (
     <ContentPage
       title={`About ${SITE.name}`}
-      description={`${SITE.name} is a universal OpenAI-compatible AI API gateway built by ${SITE.legalEntity}. We help developers and teams access multiple AI providers through a single, reliable interface.`}
+      description={`${SITE.name} is the data access layer for AI agents, built by ${SITE.legalEntity}. We help agents query the tools and data they depend on through a single, reliable SQL interface.`}
     >
       <ContentSection title="Our Mission">
         <p>
-          AI inference should not require juggling multiple provider APIs, managing dozens of API keys,
-          or building custom failover logic. {SITE.name} abstracts that complexity into a single,
-          production-ready gateway so you can focus on building your product.
+          AI agents spend more time calling APIs than reasoning about them — paginating, retrying,
+          re-authenticating, and stitching JSON together across a dozen tools just to answer one
+          question. {SITE.name} replaces that chain with a single query.
         </p>
         <p>
-          Whether you are an indie developer prototyping with GPT-4o, a SaaS team routing traffic
-          across providers for cost optimization, or a hackathon builder who needs reliable model
-          access on a budget — {SITE.name} gives you one API, every model, and zero overhead.
+          Whether you are building an autonomous coding agent that needs to cross-reference GitHub
+          and Linear, a support agent that joins Stripe billing data with Datadog incidents, or any
+          workflow that talks to more than one API — {SITE.name} gives it one interface, one query,
+          and fewer tool calls.
         </p>
       </ContentSection>
 
       <ContentSection title="What We Build">
         <p>
-          {SITE.name} is an infrastructure platform, not a model provider. We route your requests
-          to upstream providers — OpenAI, Anthropic, Groq, Together AI, OpenRouter, Google Gemini, and
-          others — through a managed key pool with automatic rotation, health monitoring, and
-          OpenAI-compatible response normalization.
+          <strong>Launching soon — the Agent Data Layer:</strong> a unified SQL interface that lets AI
+          workflows query GitHub, Linear, Datadog, Stripe, and other sources with cross-source JOINs,
+          native MCP support, and credentials that never leave your trust boundary.
+        </p>
+        <p>
+          That product is built on infrastructure we already operate in production: a universal,
+          OpenAI-compatible AI gateway that routes requests across OpenAI, Anthropic, Groq, Together AI,
+          OpenRouter, Google Gemini, and others through a managed key pool with automatic rotation,
+          health monitoring, and real-time cost tracking.
         </p>
         <ul className="list-disc pl-5 space-y-2">
-          <li>OpenAI-compatible <code className="font-mono text-label-sm text-primary">/v1/chat/completions</code> endpoint</li>
+          <li>One SQL interface across every connected data source</li>
+          <li>MCP-native — plug straight into your existing agent runtime</li>
+          <li>OpenAI-compatible <code className="font-mono text-label-sm text-primary">/v1/chat/completions</code> endpoint, already live</li>
           <li>SSE streaming with real-time token-level cost tracking</li>
-          <li>Usage dashboard with analytics, billing, and API key management</li>
           <li>Pay-as-you-go pricing with no subscriptions or minimum commitments</li>
         </ul>
-        <p className="mt-4">
-          <strong>Launching soon:</strong> an agent data layer that lets AI workflows query GitHub, Linear,
-          Datadog, Stripe, and other sources through a single SQL interface — with cross-source JOINs,
-          MCP support, and fewer tool calls than stitching APIs together by hand.
-        </p>
       </ContentSection>
 
       <ContentSection title="Our Values">

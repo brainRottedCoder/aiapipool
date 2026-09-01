@@ -3,11 +3,11 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 
 const TYPING_PHRASES = [
-  "Route to GPT-4o via OpenAI...",
-  "Switch to Claude 3.5 Sonnet...",
-  "Failover to Llama 3.1 on Groq...",
-  "Stream tokens in real-time...",
-  "Track credits per request...",
+  "SELECT * FROM github.pulls JOIN linear.issues...",
+  "Querying Stripe, Datadog, and GitHub in one call...",
+  "Replacing 12 tool calls with 1 JOIN...",
+  "Exposing your stack over MCP...",
+  "Agents stop guessing. Start querying...",
 ];
 
 export function HeroSection() {
@@ -69,21 +69,22 @@ export function HeroSection() {
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[rgba(154,203,255,0.2)] text-[11px] tracking-[4px] uppercase mb-8"
           style={{ color: "rgba(154,203,255,0.75)", background: "rgba(154,203,255,0.06)" }}>
           <span className="w-1.5 h-1.5 rounded-full bg-[#9acbff]" style={{ animation: "sapi-pulse 2s ease-in-out infinite" }} />
-          Launching Soon
+          Agent Data Infrastructure
         </div>
 
         {/* Headline */}
         <h1 className="font-display text-6xl md:text-8xl lg:text-[7rem] font-medium leading-[1] tracking-tight mb-8 text-white">
           SOFTIX. <br />
           <span className="italic font-light" style={{ color: "rgba(255,255,255,0.4)" }}>
-            One API for all AI.
+            One query for every agent.
           </span>
         </h1>
 
         <p className="text-base md:text-lg max-w-lg mx-auto mb-10 font-light tracking-wide leading-relaxed"
           style={{ color: "rgba(255,255,255,0.35)" }}>
-          Universal OpenAI-compatible gateway. Every model, every provider — plus a unified SQL layer
-          for agent data access. Zero overhead.
+          Agents shouldn&apos;t burn a dozen tool calls to answer one question. Query GitHub, Linear,
+          Datadog, Stripe, and your own files through a single SQL interface — exposed over MCP,
+          built on infrastructure that already routes millions of AI requests.
         </p>
 
         {/* Chat/Terminal input */}
@@ -101,7 +102,7 @@ export function HeroSection() {
 
         {/* Social proof */}
         <p className="text-xs tracking-[3px] uppercase mt-6" style={{ color: "rgba(255,255,255,0.2)" }}>
-          OpenAI compatible · Agent SQL layer · Pay as you go
+          One SQL interface · MCP-native · Fewer tool calls
         </p>
       </div>
     </section>

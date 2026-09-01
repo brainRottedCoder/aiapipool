@@ -29,11 +29,11 @@ export function DashboardSection() {
           eyebrow="The Gateway"
           title={
             <>
-              Your AI<br />
-              <span className="landing-title-stroke">command center.</span>
+              The infra proof<br />
+              <span className="landing-title-stroke">behind the pitch.</span>
             </>
           }
-          description="Route requests to any model. Track every token. Automatic failover and key rotation, all in real-time."
+          description="Millions of requests already route through this engine — automatic failover, key rotation, and token-level tracking in real-time. It's the same reliability layer the agent data product is built on."
         />
 
         <motion.div

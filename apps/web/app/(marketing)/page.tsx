@@ -13,15 +13,15 @@ export default function LandingPage() {
       <div className="landing-noise" />
       <HeroSection />
       <div className="landing-divider" aria-hidden />
+      <AgentDataSection />
+      <div className="landing-divider" aria-hidden />
+      <CardsSection />
+      <div className="landing-divider" aria-hidden />
       <DashboardSection />
       <div className="landing-divider" aria-hidden />
       <FeaturesSection />
       <div className="landing-divider" aria-hidden />
-      <CardsSection />
-      <div className="landing-divider" aria-hidden />
       <CodeSection />
-      <div className="landing-divider" aria-hidden />
-      <AgentDataSection />
       <div className="landing-divider" aria-hidden />
       <StatsSection />
       <div className="landing-divider" aria-hidden />

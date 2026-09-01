@@ -13,8 +13,8 @@ export function StatsSection() {
         <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] px-6 py-10 md:px-12 md:py-14">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 text-center">
             {[
-              { val: "6+", label: "Providers" },
-              { val: "50+", label: "Models" },
+              { val: "12→1", label: "Tool Calls to One Query" },
+              { val: "8+", label: "Connected Sources" },
               { val: "99.9%", label: "Uptime SLA" },
               { val: "<20ms", label: "Routing Overhead" },
             ].map((s) => (
@@ -66,7 +66,7 @@ export function CodeSection() {
               <div className="w-5 h-5 rounded-full bg-white flex items-center justify-center">
                 <span className="text-black text-[10px] font-black">S</span>
               </div>
-              <span className="text-[11px] font-bold tracking-[0.2em] uppercase text-white/80">SAPI</span>
+              <span className="text-[11px] font-bold tracking-[0.2em] uppercase text-white/80">SOFTIX</span>
             </div>
 
             <div className="absolute top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] h-[280px] bg-[#9acbff] opacity-10 blur-[100px] rounded-full pointer-events-none z-10" />
@@ -89,12 +89,12 @@ export function CodeSection() {
               eyebrow="Drop-in replacement"
               title={
                 <>
-                  More <span className="landing-title-stroke">models.</span>
+                  The engine <span className="landing-title-stroke">underneath</span>
                   <br />
-                  <span className="landing-title-stroke">Faster.</span>
+                  <span className="landing-title-stroke">it all.</span>
                 </>
               }
-              description="Change one line of code to unlock every AI model. Your existing OpenAI SDK, Cursor, LangChain — everything just works."
+              description="The same gateway that will power the agent data layer. Change one line of code to unlock every AI model — your existing OpenAI SDK, Cursor, LangChain, everything just works."
               className="mb-8 md:mb-10"
             />
 
@@ -109,7 +109,7 @@ export function CodeSection() {
                 <span style={{ color: "rgba(255,255,255,0.3)" }}># Change the base URL</span><br />
                 client = OpenAI(<br />
                 {"  "}api_key=<span style={{ color: "rgba(74,222,128,0.8)" }}>&quot;sk_live_xxx&quot;</span>,<br />
-                {"  "}base_url=<span style={{ color: "rgba(74,222,128,0.8)" }}>&quot;https://api.sapi.dev/v1&quot;</span><br />
+                {"  "}base_url=<span style={{ color: "rgba(74,222,128,0.8)" }}>&quot;https://api.softix.in/v1&quot;</span><br />
                 )<br />
               </div>
             </div>
@@ -145,10 +145,11 @@ export function CtaSection() {
         </div>
 
         <h2 className="landing-title italic mb-6">
-          Ship faster,<br />pay less.
+          Stop stitching APIs.<br />Start querying.
         </h2>
         <p className="landing-desc mx-auto max-w-md mb-10">
-          The gateway is live. The agent data layer is launching soon — one platform for inference and operational data.
+          The gateway is live and already routing production traffic. The agent data layer is launching soon —
+          join early access to query your stack in SQL before anyone else.
         </p>
 
         <Link href="/waitlist"

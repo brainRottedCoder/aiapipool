@@ -1,8 +1,8 @@
 export const SITE = {
   name: "SOFTIX",
-  tagline: "One API. Every model. Zero overhead.",
+  tagline: "One query for every agent.",
   description:
-    "Universal OpenAI-compatible gateway with intelligent key pooling, automatic failover, and real-time credit tracking.",
+    "The data access layer for AI agents. Query GitHub, Linear, Datadog, Stripe, and your files through a single SQL interface over MCP — built on a battle-tested multi-provider AI gateway.",
   url: "https://sapi.gateway",
   contactEmail: "support@softix.in",
   legalEntity: "Softix Technologies",

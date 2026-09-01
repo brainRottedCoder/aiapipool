@@ -12,14 +12,14 @@ export function FeaturesSection() {
 
       <div className="landing-container relative z-10">
         <SectionHeader
-          eyebrow="Platform"
+          eyebrow="The Engine Underneath"
           title={
             <>
-              We remove the friction from{" "}
-              <span className="landing-title-italic">every AI call.</span>
+              The same reliability engine,{" "}
+              <span className="landing-title-italic">pointed at your data.</span>
             </>
           }
-          description="SAPI's gateway normalizes every provider, rotates keys automatically, and tracks every token — while our upcoming agent data layer replaces brittle tool chains with one SQL interface."
+          description="Softix's inference gateway already normalizes every provider, rotates keys automatically, and tracks every token at scale. The agent data layer runs on that same battle-tested infrastructure — proven reliability, now applied to your APIs instead of your models."
         />
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 md:gap-8 items-center justify-items-center">
@@ -41,24 +41,6 @@ export function CardsSection() {
   const cards = [
     {
       num: "01",
-      variant: "light" as const,
-      title: <>Universal<br />Gateway</>,
-      desc: "One endpoint for every AI model. OpenAI-compatible API that works with Cursor, LangChain, and any SDK.",
-      icon: (
-        <path d="M13 10V3L4 14h7v7l9-11h-7z" />
-      ),
-    },
-    {
-      num: "02",
-      variant: "dark" as const,
-      title: <>Key Pool<br />Mastery</>,
-      desc: "Managed key pool with automatic rotation, credit tracking, and circuit breaker failover. Zero downtime.",
-      icon: (
-        <path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-      ),
-    },
-    {
-      num: "03",
       variant: "soon" as const,
       title: <>Agent<br />Data Layer</>,
       desc: "Query GitHub, Linear, Datadog, and more through SQL. Cross-source JOINs, MCP-ready, fewer tool calls.",
@@ -67,6 +49,24 @@ export function CardsSection() {
           <path d="M4 7h16M4 12h10M4 17h14" strokeLinecap="round" />
           <path d="M18 12l2 2-2 2" strokeLinecap="round" strokeLinejoin="round" />
         </>
+      ),
+    },
+    {
+      num: "02",
+      variant: "light" as const,
+      title: <>Universal<br />Gateway</>,
+      desc: "One endpoint for every AI model. OpenAI-compatible API that works with Cursor, LangChain, and any SDK.",
+      icon: (
+        <path d="M13 10V3L4 14h7v7l9-11h-7z" />
+      ),
+    },
+    {
+      num: "03",
+      variant: "dark" as const,
+      title: <>Key Pool<br />Mastery</>,
+      desc: "Managed key pool with automatic rotation, credit tracking, and circuit breaker failover. Zero downtime.",
+      icon: (
+        <path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
       ),
     },
   ];
@@ -79,10 +79,10 @@ export function CardsSection() {
           eyebrow="Capabilities"
           title={
             <>
-              Build your <span className="landing-title-italic">AI infrastructure</span>
+              Build your <span className="landing-title-italic">agent infrastructure</span>
             </>
           }
-          description="Three pillars — inference routing, key pool management, and unified agent data access."
+          description="Three pillars — unified agent data access, inference routing, and key pool management."
         />
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
